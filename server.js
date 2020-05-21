@@ -15,6 +15,7 @@ require('dotenv').config();
 const Busboy = require('busboy');
 const busboy = require('connect-busboy');
 const busboyBodyParser = require('busboy-body-parser')
+const cors = require('cors')
 
 app.use(morgan('dev'));
 
@@ -37,7 +38,8 @@ client.connect(function(err) {
 
 
   // GET CUSTOM INVENTORY
-app.get('/api/posts', function (req, response) {
+  app.options('/api/posts', cors())
+app.get('/api/posts', cors(), function (req, response) {
     
     client.query(
        "SELECT * from cds_inventory", (error, results) => {

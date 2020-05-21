@@ -83,6 +83,7 @@ text-align:center;
   p#title-sub {
     width:100%;
     text-align:center;
+    margin-top:-2%;
     }
   }
  
@@ -95,6 +96,7 @@ text-align:center;
     position: fixed;
     width: 100%;
     top: 5%;
+    height:100px;
 }
   
 p#title-sub {

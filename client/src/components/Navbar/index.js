@@ -31,7 +31,7 @@ function Navigation (props) {
           <NavDropdown.Item href="/browse/gun_action">Gun Action</NavDropdown.Item> */}
           {/* <NavDropdown.Item href="/rifles" value="rifles">Rifles</NavDropdown.Item>
           <NavDropdown.Item href="/pistols">Pistols</NavDropdown.Item> */}
-          <NavDropdown.Divider />
+          {/* <NavDropdown.Divider /> */}
           {/* <NavDropdown.Item href="#action/3.4">Specials</NavDropdown.Item> */}
         </NavDropdown>
         </Nav>
@@ -40,7 +40,7 @@ function Navigation (props) {
         <Button className="search-btn" variant="outline-success">Search</Button>
       </Form> */}
     </Navbar.Collapse>
-        <div className="title-container" href="/" alt="Coleman Defense Solutions"><p id="title-name">Coleman Defense Solutions</p></div>
+      <a className="title-container"  alt="Coleman Defense Solutions" href="/"><div><p id="title-name">Coleman Defense Solutions</p></div></a>
        
 
     <p id="title-sub">est 2018</p>

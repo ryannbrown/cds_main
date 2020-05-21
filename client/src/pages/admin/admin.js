@@ -40,7 +40,6 @@ class AdminPage extends Component {
 
     }
 
-
     //   ReactDOM.findDOMNode(ref)
 
     render() {

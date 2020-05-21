@@ -86,14 +86,14 @@ componentDidMount () {
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card'>
             <span onClick={() => this.handleDelete(item.id)} className="delete-icon"><img style={{width:'25px'}} src="https://image.flaticon.com/icons/png/512/61/61848.png"></img></span>
-            <p className="text-center">{item.product_name}</p>
+            <p className="text-center">Product Name: {item.product_name}</p>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
         />
-         <p className="text-center">{item.product_description}</p>
-         <p className="text-center">{item.msrp_price}</p>
-         <p className="text-center">{item.sale_price}</p>
+         <p className="text-center">Item Description: {item.product_description}</p>
+         <p className="text-center">MSRP Price: {item.msrp_price}</p>
+         <p className="text-center">Sale Price: {item.sale_price}</p>
          
         </Card>
         );

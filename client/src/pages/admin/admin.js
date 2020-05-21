@@ -28,9 +28,8 @@ class AdminPage extends Component {
         event.preventDefault();
         let email = this.email.current.value
         let pass = this.pass.current.value
-        console.log(process.env.PASS)
         
-        if (pass === process.env.PASS && email === process.env.LOGIN) {
+        if (pass === process.env.REACT_APP_PASS && email === process.env.REACT_APP_LOGIN) {
             this.setState({
                 isLoggedIn: true
             })

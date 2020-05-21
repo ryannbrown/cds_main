@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "../Home";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Alert } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import AdminPanel from '../../components/AdminPanel/index';
+require('dotenv').config()
 
 // const queryString = require('query-string');
 
@@ -27,13 +28,14 @@ class AdminPage extends Component {
         event.preventDefault();
         let email = this.email.current.value
         let pass = this.pass.current.value
-
-        // if (pass === 'password1' && email ==='michael.judy@colemandefense.com') {
-        if (pass === 'test' && email === 'test@cd.com') {
+        console.log(process.env.PASS)
+        
+        if (pass === process.env.PASS && email === process.env.LOGIN) {
             this.setState({
                 isLoggedIn: true
             })
         } else {
+            alert("incorrect password")
         }
 
 
@@ -52,9 +54,7 @@ class AdminPage extends Component {
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control ref={this.email} type="email" placeholder="Enter email" />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-          </Form.Text>
+                           
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">

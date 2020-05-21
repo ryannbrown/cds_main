@@ -34,7 +34,7 @@ export default class Home extends Component {
         <Fragment>
         
         <Bio></Bio>
-        <div class="box-container">
+        <div className="box-container">
           {/* <Container>
   <Row> */}
           <Col><a href="tel:9193571884"><MobileBoxes text="Call" id="main2" /></a></Col>
@@ -43,15 +43,15 @@ export default class Home extends Component {
 
         </div>
 
-        <iframe src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" class="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
+        <iframe src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
         <Container>
           
           <Row>
-            <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img class="pulse" src={insta}></img></a></Col>
+            <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img className="pulse" src={insta}></img></a></Col>
          
             <Col><a target="_blank" href="https://www.facebook.com/colemandefense/">
             
-            <img class="pulse" src={fbLogo}></img></a></Col>
+            <img className="pulse" src={fbLogo}></img></a></Col>
         </Row>
         
         </Container>

@@ -16,7 +16,7 @@ render() {
     const { name, id, link } = this.props;
     return (
         
-        <div class={`content-box ${id} hvr-pulse`}>
+        <div className={`content-box ${id} hvr-pulse`}>
         <p>{this.props.text}</p>
        
     </div>

@@ -69,7 +69,7 @@ componentDidMount () {
             return (
 
                 <div className="text-center m-5">
-                    <h1 style={{textTransform: 'uppercase'}} className="mt-5">In house shit</h1>
+                    <h1 style={{textTransform: 'uppercase'}} className="mt-5">In house Inventory</h1>
                     <CardDeck>
                      {items}
                     </CardDeck>

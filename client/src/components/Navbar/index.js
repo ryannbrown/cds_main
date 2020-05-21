@@ -40,11 +40,11 @@ function Navigation (props) {
         <Button className="search-btn" variant="outline-success">Search</Button>
       </Form> */}
     </Navbar.Collapse>
-        <Navbar.Brand href="/" alt="Coleman Defense Solutions"><p id="title-name">Coleman Defense Solutions</p>
+        <div className="title-container" href="/" alt="Coleman Defense Solutions"><p id="title-name">Coleman Defense Solutions</p></div>
        
-     </Navbar.Brand>
+
     <p id="title-sub">est 2018</p>
-        <div class="letter-img">
+        <div className="letter-img">
            <img alt="colemandefense" src={logo}></img>
           </div>
      

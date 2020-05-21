@@ -16,6 +16,7 @@ const Busboy = require('busboy');
 const busboy = require('connect-busboy');
 const busboyBodyParser = require('busboy-body-parser')
 const cors = require('cors')
+app.use(cors());
 
 app.use(morgan('dev'));
 
@@ -35,6 +36,10 @@ client.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
   }
+
+  app.get('/', function(req, res){
+    res.send({answer: "hello world!"});
+})
 
 
   // GET CUSTOM INVENTORY

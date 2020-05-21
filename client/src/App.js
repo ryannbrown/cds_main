@@ -32,6 +32,7 @@ export default function App() {
     <Router>
       <div>
         <Nav></Nav>
+        
 
         <Switch>
           <Route exact path="/" component={() =>

@@ -36,7 +36,7 @@ client.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);
   }
-
+});
   app.get('/', function(req, res){
     res.send({answer: "hello world!"});
 })
@@ -99,7 +99,7 @@ app.get('/api/posts', cors(), function (req, response) {
       }
     );
   })
-});
+
 
 
 

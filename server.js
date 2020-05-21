@@ -37,9 +37,9 @@ client.connect(function(err) {
     return console.error('could not connect to postgres', err);
   }
 });
-  app.get('/', function(req, res){
-    res.send({answer: "hello world!"});
-})
+//   app.get('/', function(req, res){
+//     res.send({answer: "hello world!"});
+// })
 
 
   // GET CUSTOM INVENTORY

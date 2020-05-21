@@ -1,0 +1,112 @@
+ /* NEW CSS */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+    font-family: "Bebas Neue" !important;
+}
+
+/* footer {
+    display:none !important;
+} */
+
+.sticky-top{
+padding: 0px 50px;
+}
+#title-name {
+text-align:center;
+letter-spacing:.25rem;
+}
+
+.css-d4hhgg-Title {
+    font-family: "HindSiliguri-Regular";
+    color:black !important;
+}
+
+a.nav-link {
+    margin: 0px auto;
+    font-size: 25px;
+}
+
+.box-container{
+    margin-top:5%;
+    display:flex;
+}
+
+
+ .navbar-brand {
+    color: rgba(0,0,0,.9);
+    text-align:center;
+    margin-right:-5%;
+    width:100%;
+}
+
+/* @media (max-width:991px) {
+    #title-name {
+        font-size:1rem !important;
+        margin-top:20%;
+        z-index:55
+    }
+} */
+
+
+
+
+
+a {
+    text-decoration:none;
+    color:inherit;
+}
+a:hover {
+    text-decoration:none;
+    color:inherit;
+}
+
+
+
+.css-hyc5to {
+    color:#d15650 !important;
+}
+
+.insta {
+    width:100%;
+    float:left;
+}
+
+.col {
+    text-align:center !important;
+}
+
+nav.navbar.navbar-expand-lg.navbar-light.sticky-top {
+    background-color: black !important;
+    color:white;
+}
+
+.nav-link { 
+    color:white !important;
+}
+
+
+#title-name {
+    color:white;
+    font-size:35px
+}
+
+.card-deck .card {
+    flex: 1 0 30%;
+    margin-bottom:20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+
+.more-info-btn {
+    margin: 0px auto;
+}
+
+.button-box {
+    margin-top:1px;
+    border: 2px solid #28a745;
+    background-color:#e0f1e4;
+}

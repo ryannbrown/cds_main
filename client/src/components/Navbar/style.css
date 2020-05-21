@@ -1,0 +1,32 @@
+@media(max-width:576px){
+    .search-btn{
+        margin: 0px auto;
+    }
+}
+
+.navbar-nav .dropdown-menu {
+    position: inherit;
+    float: none;
+}
+
+.logo-img{
+    width:100px;
+}
+
+
+/* NEW NAV
+
+@media(max-width:576px){
+    .search-btn{
+        margin: 0px auto;
+    }
+}
+
+.navbar-nav .dropdown-menu {
+    position: inherit;
+    float: none;
+}
+
+.logo-img{
+    width:100px;
+} */

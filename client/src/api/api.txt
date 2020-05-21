@@ -1,0 +1,111 @@
+f you need assistance, reply to this email with any questions. They will be given to the appropriate party on our end and will be responded to shortly thereafter.
+
+ 
+
+ 
+
+Your development team will need to write software that will integrate with our web services. It is completely up to your development team, and you as to how much integration that you want it to have. Ideally, the software your development team builds will pull inventory information from our web services on a daily routine and populate this data into a database on your web server. Your website will then use this database to display the product data. Your development team can also use the ordering part of the web services to have your website send orders back to us. Which will also need to be developed by your team.
+
+ 
+
+ 
+
+To get started, we have 4 main sets of web services. These web services are all XML based and can be called with SOAP, POST, or GET protocols.
+
+ 
+
+ 
+
+• Inventory: http://webservices.theshootingwarehouse.com/smart/inventory.asmx
+
+• Images: http://webservices.theshootingwarehouse.com/smart/images.asmx
+
+• Orders: http://webservices.theshootingwarehouse.com/smart/orders.asmx
+
+• Invoices: http://webservices.theshootingwarehouse.com/smart/invoices.asmx
+
+ 
+
+ 
+
+• Inventory is used to obtain all product data, excluding images.
+
+• Images is used to obtain all product images.
+
+• Orders is used to create, maintain, and submit fulfillment orders to us.
+
+• Invoices is used to check on placed orders (typically to get tracking numbers).
+
+ 
+
+ 
+
+Each of the above links will present you with a list of all available functions for that web service. Most of these are self explanatory. Please feel free to play around and test with them as much as you need. We will let you know if your calls become too excessive.
+
+ 
+
+ 
+
+TESTING CREDENTIALS FOR INVENTORY & IMAGES:
+
+Username: Your Sports South Account Number
+
+CustomerNumber: Your Sports South Account Number
+
+Password: Your 5 Digit Zip Code
+
+Source: Your Sports South Account Number
+
+ 
+
+TESTING CREDENTIALS FOR ORDERS & INVOICES
+
+Username: 99994
+
+CustomerNumber: 99994
+
+Password: 99998
+
+Source: Your Sports South Account Number
+
+ 
+
+ 
+
+IMPORTANT: Using Your Sports South Account Number for ORDERS & INVOICES will result in a live order that will be filled.
+
+ 
+
+ 
+
+A few tips to help you get started:
+
+ 
+
+ 
+
+• In the Inventory web service, the main function you will be calling is the DailyItemUpdate. This contains most of the data you will need to build your product database. This function allows you to pull down data for all products by using the date 1/1/1990 for the LastUpdate and -1 for the LastItem field. After this initial download, all future calls can use the date of the last update and -1. This will reduce the amount of data being transmitted by only returning to you information for items that have been either added or modified since that date you specify.
+
+ 
+
+ 
+
+• Be sure to always use either IncrementalOnhandUpdate, OnhandUpdate, or OnhandInquiry for accurate inventory levels and prices (don’t use the price that is returned in the DailyItemUpdate).
+
+ 
+
+ 
+
+• All product data is updated daily, so there is no need to call this more than once per day. All Onhand data is updated approximately every 10 minutes. You can call this as often as that to ensure accurate inventory levels.
+
+ 
+
+ 
+
+• For creating orders, you first must call AddHeader within the Orders web service. This creates the order in our system. You then must call AddDetail for each line item on the order. After that, you must call the Submit function to send the order to us.
+
+ 
+
+ 
+
+It is always best to look over all of the web services before asking questions. If you do have any questions, please contact us at support@sportssouth.biz. We will only be able to provide support for questions or problems directly relating to our web services. We will not be able to assist your programmers with their actual code development.

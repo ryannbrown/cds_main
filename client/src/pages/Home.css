@@ -1,0 +1,566 @@
+/* .App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 40vmin;
+    pointer-events: none;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /*PAGINATION*/
+  /* html, body {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.2em;
+  }
+  
+  #page-numbers {
+    list-style: none;
+    display: flex;
+  }
+  
+  #page-numbers > li {
+    margin-right: 0.3em;
+    color: blue;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .home-parent{
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/coleman-defense-solutions.appspot.com/o/specna-arms-ADR-OV5gpQ8-unsplash.jpg?alt=media&token=865307eb-4b6d-4d44-85b9-1949a126221a");
+    background-size: cover;
+    background-position-y: 6%;
+    background-position-x: 75%;
+    height: 300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.home-title {
+    margin: 0px auto;
+    color: white;
+}
+
+.feature-list{
+    height:150px;
+}
+
+@media(max-width:997px){
+    .feature-list{
+        margin-top: 20%;
+    }
+}
+@media(min-width:997px){
+    .feature-list{
+        margin-top: 10%;
+    }
+}
+
+div#basic-navbar-nav {
+    background-color: #fff;
+    padding:10px;
+}
+
+.pick-up-box{
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    background-color:#f8f9fa;
+    padding:15px;
+}
+
+.pick-up-container{
+    max-width:90%;
+}
+
+p {
+    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} */ 
+
+ /* NEW CSS */
+
+ @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+ * {
+     font-family: "Bebas Neue" !important;
+ }
+ 
+ /* footer {
+     display:none !important;
+ } */
+ 
+ .sticky-top{
+ padding: 0px 50px;
+ }
+ #title-name {
+ text-align:center;
+ letter-spacing:.25rem;
+ }
+ 
+ .css-d4hhgg-Title {
+     font-family: "HindSiliguri-Regular";
+     color:black !important;
+ }
+ 
+ a.nav-link {
+     margin: 0px auto;
+     font-size: 25px;
+ }
+ 
+ .box-container{
+     margin-top:5%;
+     display:flex;
+ }
+ 
+ 
+
+
+ #title-name {
+  color:white;
+  font-size:35px;
+  font-size:1rem;
+}
+
+
+
+ @media (max-width:667px) {
+  #title-name {
+    font-size: 1.5rem !important;
+    z-index: 55;
+    margin-top: 10%;
+    margin-right: 17%;
+}
+p#title-sub {
+  /* display: inline; */
+  position: fixed;
+  top: 15%;
+  left: 48%;
+  font-size: .9em;
+}
+
+.navbar-brand {
+  color: rgba(0,0,0,.9);
+  text-align:center;
+  position:fixed;
+  width:25%;
+  top:15%;
+  left:40%;
+}
+}
+
+ 
+ @media (min-width:668px) and (max-width:991px) {
+
+  
+p#title-sub {
+    /* display: inline; */
+    position: fixed;
+    top: 11%;
+    left: 48%;
+    font-size: .9em;
+}
+  }
+ 
+ @media (min-width:992px) {
+
+
+  .navbar-brand {
+    color: rgba(0,0,0,.9);
+    text-align:center;
+    position:fixed;
+    width:25%;
+    top:7%;
+    left:40%;
+}
+  
+p#title-sub {
+    /* display: inline; */
+    position: fixed;
+    top: 11%;
+    left: 51%;
+    font-size: .9em;
+}
+  }
+
+
+ 
+ 
+ 
+ 
+ 
+ a {
+     text-decoration:none;
+     color:inherit;
+ }
+ a:hover {
+     text-decoration:none;
+     color:inherit;
+ }
+ 
+ 
+ 
+ .css-hyc5to {
+     color:#d15650 !important;
+ }
+ 
+ .insta {
+     width:100%;
+     float:left;
+ }
+ 
+ .col {
+     text-align:center !important;
+ }
+ 
+ nav.navbar.navbar-expand-lg.navbar-light.sticky-top {
+     background-color: black !important;
+     color:white;
+ }
+ 
+ .nav-link { 
+     color:white !important;
+ }
+ 
+ 
+
+ 
+ .insta-img {
+     /* position:fixed;
+     left:2px;
+     bottom:2px; */
+     text-align:right;
+     margin:0px auto;
+ }
+ .fb-img {
+     /* position:fixed;
+     left:2px;
+     bottom:2px; */
+     text-align:right;
+     margin:0px auto;
+ }
+ 
+
+ .bio-img {
+  border-radius: 25px;
+  max-height: 400px;
+  max-width: 400px;
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.bio-text {
+  width: 50%;
+  margin: 1% auto;
+}
+
+.bio-text>p {
+  width: 90%;
+  line-height: 2.5em;
+  font-size:22px;
+}
+
+.bio-text-transfer {
+  width: 50%;
+  margin: 1% auto;
+}
+
+.bio-text-transfer >p {
+  width: 90%;
+  line-height: 2.5em;
+  font-size:22px;
+}
+
+
+@media (max-width:991px) {
+.bio-text>p {
+  width: 100%;
+  line-height: 1.5em;
+}
+}
+
+
+@media (max-width:991px) {
+  .bio-img {
+      margin-top: 20%;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      /* max-height: 200px;
+      max-width: 250px; */
+  }
+
+  .bio-box {
+      padding: 2%;
+      display: flex;
+      margin: 0px auto;
+  }
+  
+  .bio-text > p {
+      width: 100%;
+      line-height: 2em;
+      font-size:20px;
+      text-align:center;
+      margin-bottom:10%;
+  }
+  .bio-text-transfer > p {
+      width: 100%;
+      line-height: 2em;
+      font-size:20px;
+      text-align:center;
+  }
+  .bio-text > h1 {
+
+      width: 100%;
+  }
+  .nav-bar-brand {
+  margin-top:20% !important;
+}
+
+a.transfers-link.nav-link {
+  position:fixed;
+  top:5px;
+  left:20px;
+}
+
+}
+
+img.pulse {
+  width: 35%;
+  margin: 10%;
+}
+img.pulse:hover {
+ opacity:.8;
+}
+
+
+
+.bio-box {
+  padding: 5%;
+  display: flex;
+  margin: 0px auto;
+}
+
+
+
+@media (max-width:991px) {
+.bio-box {
+
+  padding: 0%;
+  display: inline-block;
+  /* margin: 0px auto !important; */
+  width: 100%;
+  text-align:center;
+}
+
+.bio-text {
+  width: 90%;
+  margin: 1% auto;
+}
+
+}
+
+.transf-back-btn {
+  position:fixed;
+}
+
+
+
+.content-box {
+  height: 100px;
+  color: #ffff;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  font-size: 50px;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 0 6px 6px rgba(0,0,0,0.2);
+  letter-spacing: 5px;
+  /* text-shadow: 0 2px 1px #747474; */
+  background-color:black;
+}
+
+@media (min-width:1200px){
+.box-container{
+  padding:50px;
+}
+}
+
+.main-box > * {
+  margin-top:5vh;
+}
+
+.box-container{
+margin-top:-5% !important;
+}
+
+.content-box > p {
+  position: relative;
+  top: 10%;
+}
+
+.content-box:hover{
+  opacity:.75;
+}
+
+@media (max-width:997px) {
+.content-box {
+  height:150px;
+ width: 41vw;
+  color:#ffff;
+  display:flex;
+  justify-content:center;
+  flex-direction:row-reverse;
+  font-size:40px;
+  margin:5px;
+  border-radius:5px;
+  box-shadow:0 6px 6px rgba(0,0,0,0.2);
+  letter-spacing: 5px;
+  /* text-shadow: 0 2px 1px #747474; */
+  text-transform:uppercase;
+}
+.content-box > p {
+  position: relative;
+  top: 30%;
+}
+}
+
+
+@media (min-width:768px) {
+
+  .letter-img{
+      margin:0px auto;
+      text-align:center;
+  }
+  
+  /* .letter-img > img {
+      border-radius:25px;
+      width:90%;
+  } */
+  
+  .letter-img > img {
+    position:fixed;
+      border-radius: 25px;
+      width: 150px;
+      height: auto;
+      top: 0px;
+      right: 0px;
+      letter-spacing: 5px;
+  }
+  
+  /* .letter-img:hover{
+      transform: scale(1.25);
+    transition: all .5s ease-in-out;
+  } */
+  
+  }
+  
+  
+   @media (max-width:991px) {
+  
+  
+  
+  .letter-img > img {
+      position:absolute;
+      border-radius: 25px;
+      width: 100px;
+      height: 90px;
+      top:0px;
+      right:0px;
+      letter-spacing: 5px;
+      z-index:-5;
+  }
+   }
+  
+  
+
+
+
+
+.navbar-toggler-icon {
+  background-color: rgb(221, 103, 23);
+  border-color: rgba(0,0,0,.1);
+  border-radius:5px;
+
+}
+
+.navbar-light .navbar-toggler {
+  position: fixed;
+  top: 2.5%;
+  left: 5px;
+}
+
+
+@media (max-width:992px) {
+.navbar-nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: row;
+  padding:5px;
+  margin-bottom: 0;
+  list-style: none;
+  position: fixed;
+  background-color: rgb(221, 103, 23);
+  top: 18%;
+  width: 75%;
+  border-radius: 5px;
+  z-index: 1000000;
+}
+
+.navbar-brand {
+  color: rgba(0,0,0,.9);
+  text-align:center;
+  position:fixed;
+  width:25%;
+  top:7%;
+  left:40%;
+}
+      
+
+.navbar-nav .dropdown-menu {
+  position: fixed;
+  float: none;
+  top: 25%;
+  left:50%;
+}
+}
+@media (max-width:667px) {
+
+.navbar-brand {
+  color: rgba(0,0,0,.9);
+  text-align:center;
+  position:fixed;
+  width:25%;
+  top:7%;
+  left:15%;
+}
+      
+
+}
+
+/* TODO: fix centering on navbar once and for all */
+/* TODO: Make title bigger for bigger screens */

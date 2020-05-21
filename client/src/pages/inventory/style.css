@@ -1,0 +1,80 @@
+.card-deck {
+    width: 75%;
+    margin: 0px auto;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
+    background-color:#fbfbfb;
+    background-color:#f8f9fa;
+    border-radius:25px;
+}
+
+
+
+
+/* .cat-text {
+    padding: 5%;
+    font-style: italic;
+    font-family: 'Staatliches', cursive;
+    font-family: 'Teko', sans-serif;
+    font-family: 'Electrolize', sans-serif;
+    font-family: 'Russo One', sans-serif;
+}
+
+* {
+    font-family: 'Staatliches', cursive;
+font-family: 'Teko', sans-serif;
+font-family: 'Electrolize', sans-serif;
+font-family: 'Russo One', sans-serif;
+} */
+
+@media(max-width:997px){
+    .deck-wrapper{
+        margin-top: 20%;
+    }
+}
+@media(min-width:997px){
+    .deck-wrapper{
+        margin-top: 10%;
+    }
+}
+
+/* 
+.gun-img{
+    max-width:200px;
+    max-height:300px;
+    margin:0px auto;
+} */
+.gun-img {
+    max-width: 90%;
+    max-height: 300px;
+    margin: 0px auto;
+}
+
+.gun-img-detailspg{
+    max-width:100%;
+    max-height:auto;
+    margin:0px auto;
+}
+
+.retail-price {
+    text-decoration: line-through;
+}
+
+/* TODO: Implement hover on items */
+.inventory-card:hover {
+    transform:scale(1.1);
+    transition-duration: .25s;
+}
+a:hover {
+    text-decoration:none;
+    color:inherit;
+}
+a {
+    color:inherit;
+}
+
+
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

@@ -32,8 +32,8 @@ var pg = require('pg');
 
 var conString = process.env.CONNSTRING //Can be found in the Details page
 var client = new pg.Client(conString);
-client.connect(function(err) {
-  if(err) {
+client.connect(function (err) {
+  if (err) {
     return console.error('could not connect to postgres', err);
   }
 });
@@ -42,69 +42,69 @@ client.connect(function(err) {
 // })
 
 
-  // GET CUSTOM INVENTORY
-  app.options('/api/posts', cors())
+// GET CUSTOM INVENTORY
+app.options('/api/posts', cors())
 app.get('/api/posts', cors(), function (req, response) {
-    
-    client.query(
-       "SELECT * from cds_inventory", (error, results) => {
-         if (error) {
-           throw error
-         }
-         var data = results.rows
-         response.send(JSON.stringify({ data }));
-       }
-     );
-   })
+
+  client.query(
+    "SELECT * from cds_inventory", (error, results) => {
+      if (error) {
+        throw error
+      }
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
+    }
+  );
+})
 
 
 //    POST CUSTOM INVENTORY
-   let posts = []
-   app.post('/api/post', function (req, res) {
-   console.log("keys")
-     const data = {
-       image: req.body.image,
-       product_name: req.body.product_name,
-       product_description: req.body.product_description,
-       msrp_price: req.body.msrp_price,
-       sale_price: req.body.sale_price
-     };
-   
-     posts.push(data)
+let posts = []
+app.post('/api/post', function (req, res) {
+  console.log("keys")
+  const data = {
+    image: req.body.image,
+    product_name: req.body.product_name,
+    product_description: req.body.product_description,
+    msrp_price: req.body.msrp_price,
+    sale_price: req.body.sale_price
+  };
 
-     const query = `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
+  posts.push(data)
+
+  const query = `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
      VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5)`
-     const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price];
-    //  FOR DEV
-    //  console.log(query)
-    //  console.log(values)
+  const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price];
+  //  FOR DEV
+  //  console.log(query)
+  //  console.log(values)
 
-     client.query(query, values, (error, results) => {
-         if (error) {
-           throw error
-         }
-         res.send('POST request to the homepage')
-       }
-     );
-   })
+  client.query(query, values, (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.send('POST request to the homepage')
+  }
+  );
+})
 
 //    DELETE CUSTOM INVENTORY
-   app.delete('/api/remove_post', function (req, response) {
-    let id = req.body.id
-    console.log(id);
-    client.query(
-      `DELETE FROM cds_inventory WHERE id = '${id}' `, (error, results) => {
-        console.log(error, results);
-        if (error) {
-          throw error
-        }
-    
-        // var data = results.rows
-        var data = results.rows
-        response.send(JSON.stringify({ data }));
+app.delete('/api/remove_post', function (req, response) {
+  let id = req.body.id
+  console.log(id);
+  client.query(
+    `DELETE FROM cds_inventory WHERE id = '${id}' `, (error, results) => {
+      console.log(error, results);
+      if (error) {
+        throw error
       }
-    );
-  })
+
+      // var data = results.rows
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
+    }
+  );
+})
 
 
 
@@ -121,19 +121,19 @@ function uploadToS3(file) {
     Bucket: BUCKET_NAME
   });
   s3bucket.createBucket(function () {
-      var params = {
-        Bucket: BUCKET_NAME,
-        Key: file.name,
-        Body: file.data
-      };
-      s3bucket.upload(params, function (err, data) {
-        if (err) {
-          console.log('error in callback');
-          console.log(err);
-        }
-        console.log('success');
-        console.log(data);
-      });
+    var params = {
+      Bucket: BUCKET_NAME,
+      Key: file.name,
+      Body: file.data
+    };
+    s3bucket.upload(params, function (err, data) {
+      if (err) {
+        console.log('error in callback');
+        console.log(err);
+      }
+      console.log('success');
+      console.log(data);
+    });
   });
 }
 
@@ -142,15 +142,15 @@ app.post('/api/upload', function (req, res, next) {
   console.log("body", req.body)
   // console.log("req", req)
   const element1 = req.body.element1;
-console.log(element1)
+  console.log(element1)
   var busboy = new Busboy({ headers: req.headers });
 
   // The file upload has completed
-  busboy.on('finish', function() {
+  busboy.on('finish', function () {
     console.log('Upload finished');
     const file = req.files.element1;
     console.log(file);
- 
+
     uploadToS3(file);
   });
 
@@ -177,9 +177,9 @@ app.post('/api/world', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files
   app.use(express.static(path.join(__dirname, 'client/build')));
-    
+
   // Handle React routing, return all requests to React app
-  app.get('*', function(req, res) {
+  app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }

@@ -11,11 +11,7 @@ class AdminPanel extends Component {
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
             editSession: false,
-            posts:[],
-            updatePosts: false,
-            itemDeleted: false,
-            itemPosted: null,
-            pageRefresh: false
+            posts:[]
         };
     }
 
@@ -68,11 +64,12 @@ componentDidMount () {
          
             return (
 
-                <div className="text-center m-5">
+                <div className="text-center mt-5">
                     <h1 style={{textTransform: 'uppercase'}} className="mt-5">Current Inventory</h1>
                     <CardDeck>
                      {items}
                     </CardDeck>
+                    <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a>
 
                 </div>
             )

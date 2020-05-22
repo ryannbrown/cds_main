@@ -33,7 +33,7 @@ const browserHistory = createBrowserHistory()
 browserHistory.listen((location, action) => {
   ReactGA.pageview(location.pathname + location.search)
 })
-
+// check
 
 export default function App() {
 

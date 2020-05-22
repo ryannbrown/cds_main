@@ -75,6 +75,9 @@ app.get('/api/posts', cors(), function (req, response) {
      const query = `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
      VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5)`
      const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price];
+    //  FOR DEV
+    //  console.log(query)
+    //  console.log(values)
 
      client.query(query, values, (error, results) => {
          if (error) {

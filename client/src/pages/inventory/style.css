@@ -55,6 +55,11 @@ font-family: 'Russo One', sans-serif;
     margin:0px auto;
 }
 
+.gun-desc {
+    max-height: 150px;
+    overflow: scroll;
+}
+
 .retail-price {
     text-decoration: line-through;
 }

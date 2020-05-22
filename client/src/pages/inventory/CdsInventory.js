@@ -54,7 +54,7 @@ componentDidMount () {
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
         />
-         <p className="text-center">{item.product_description}</p>
+         <p className="text-center gun-desc">{item.product_description}</p>
          <p className="text-center retail-price">{item.msrp_price}</p>
          <p className="text-center">{item.sale_price}</p>
          

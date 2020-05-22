@@ -62,7 +62,7 @@ app.get('/api/posts', cors(), function (req, response) {
    let posts = []
    app.post('/api/post', function (req, res) {
    console.log("keys")
-     const newPost = {
+     const data = {
        image: req.body.image,
        product_name: req.body.product_name,
        product_description: req.body.product_description,
@@ -70,10 +70,13 @@ app.get('/api/posts', cors(), function (req, response) {
        sale_price: req.body.sale_price
      };
    
-     posts.push(newPost)
-     client.query(
-       `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
-       VALUES(uuid_generate_v4(),'${newPost.image}', '${newPost.product_name}', '${newPost.product_description}', '${newPost.msrp_price}', '${newPost.sale_price}');`, (error, results) => {
+     posts.push(data)
+
+     const query = `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
+     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5)`
+     const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price];
+
+     client.query(query, values, (error, results) => {
          if (error) {
            throw error
          }

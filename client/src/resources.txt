@@ -81,3 +81,7 @@ if there is a map.. sell it at map, or else if not, we use our own margin
 
 AKIAJTWNSYTFKDURYKSA
 CfFIDMoEsituiSDOJwT2cL4XuVyi84vpIGB7O7Y6
+
+
+previous address in gdomains
+45.55.110.124

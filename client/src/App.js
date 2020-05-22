@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,10 +23,26 @@ import Details from './pages/inventory/Details';
 import AdminPage from './pages/admin/admin';
 import CdsInventory from "./pages/inventory/CdsInventory";
 import Transfers from "./pages/Transfers.js"
+import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
+import ReactGA from 'react-ga'
+
+// Google analytics
+ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_NO)
+const browserHistory = createBrowserHistory()
+browserHistory.listen((location, action) => {
+  ReactGA.pageview(location.pathname + location.search)
+})
 
 
 export default function App() {
+
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  }, [])
+
+
 
   return (
     <Router>

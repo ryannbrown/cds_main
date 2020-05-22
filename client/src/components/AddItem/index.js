@@ -121,11 +121,11 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>MSRP Price</Form.Label>
-                            <Form.Control ref={this.msrp} type="number" placeholder="MSRP" />
+                            <Form.Control ref={this.msrp} type="number" step="0.01" placeholder="MSRP" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Listing Price</Form.Label>
-                            <Form.Control ref={this.price} type="number" />
+                            <Form.Control ref={this.price} type="number" step="0.01" placeholder="Listing Price" />
                         </Form.Group>
                         <Button style={{ backgroundColor: '#dd6717' }} variant='dark' type="submit">
                             Submit

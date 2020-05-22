@@ -66,7 +66,7 @@ componentDidMount () {
 
                 <div className="text-center mt-5">
                     <h1 style={{textTransform: 'uppercase'}} className="mt-5">Current Inventory</h1>
-                    <CardDeck>
+                    <CardDeck className="mb-5">
                      {items}
                     </CardDeck>
                     <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a>

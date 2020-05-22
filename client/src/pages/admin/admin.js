@@ -3,8 +3,6 @@ import "../Home";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Alert } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import AdminPanel from '../../components/AdminPanel/index';
-require('dotenv').config()
-
 // const queryString = require('query-string');
 
 require("dotenv").config();
@@ -31,7 +29,7 @@ class AdminPage extends Component {
         
         console.log(process.env.PASS)
         console.log(process.env.LOGIN)
-        if (pass === process.env.PASS && email === process.env.LOGIN) {
+        if (pass === process.env.REACT_APP_PASS && email === process.env.REACT_APP_LOGIN) {
             this.setState({
                 isLoggedIn: true
             })

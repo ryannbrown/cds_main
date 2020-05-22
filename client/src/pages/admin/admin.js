@@ -34,7 +34,7 @@ class AdminPage extends Component {
                 isLoggedIn: true
             })
         } else {
-            alert("incorrect password")
+            alert("incorrect password...")
         }
 
 

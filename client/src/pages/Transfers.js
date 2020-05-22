@@ -59,11 +59,13 @@ class Transfers extends Component {
   render() {
 
     return (
-      <Container>
-         <a href="/">
+      <div>
+          <a href="/">
                 <Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn mt-3">Back</Button>
 
               </a>
+      <Container>
+       
         <Row>
           <Col className="transf-col">
             <div>
@@ -96,6 +98,7 @@ class Transfers extends Component {
           </Col>
         </Row>
       </Container>
+      </div>
     );
   }
 }

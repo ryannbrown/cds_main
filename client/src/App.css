@@ -6,9 +6,6 @@
     font-family: "Bebas Neue" !important;
 }
 
-/* footer {
-    display:none !important;
-} */
 
 .sticky-top{
 padding: 0px 50px;
@@ -40,15 +37,6 @@ a.nav-link {
     margin-right:-5%;
     width:100%;
 }
-
-/* @media (max-width:991px) {
-    #title-name {
-        font-size:1rem !important;
-        margin-top:20%;
-        z-index:55
-    }
-} */
-
 
 
 
@@ -96,11 +84,13 @@ nav.navbar.navbar-expand-lg.navbar-light.sticky-top {
     font-size:35px
 }
 
+
 .card-deck .card {
     flex: 1 0 30%;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     margin-top: 10px;
     text-align: center;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2);
 }
 
 

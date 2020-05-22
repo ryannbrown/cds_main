@@ -45,14 +45,14 @@ componentDidMount () {
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card'>
-            <p className="text-center">{item.product_name}</p>
+            <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
         />
          <p className="text-center gun-desc">{item.product_description}</p>
-         <p className="text-center retail-price">{item.msrp_price}</p>
-         <p className="text-center">{item.sale_price}</p>
+         <h5 className="text-center retail-price">{item.msrp_price}</h5>
+         <h4 className="text-center">{item.sale_price}</h4>
          
         </Card>
         );
@@ -63,14 +63,19 @@ componentDidMount () {
         if (!editSession) {
          
             return (
-
+                <div>
+                    <a href="/">
+                <Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn mt-3">Back</Button>
+                </a>
                 <div className="text-center mt-5">
+                    
                     <h1 style={{textTransform: 'uppercase'}} className="mt-5">Current Inventory</h1>
                     <CardDeck className="mb-5">
                      {items}
                     </CardDeck>
                     <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a>
 
+                </div>
                 </div>
             )
         } 

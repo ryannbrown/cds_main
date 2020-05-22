@@ -32,6 +32,7 @@ export default class Home extends Component {
     render() {
     return (
         <Fragment>
+          <div className="homepage-container">
         
         <Bio></Bio>
         <div className="box-container">
@@ -56,7 +57,7 @@ export default class Home extends Component {
         
         </Container>
 
-
+        </div>
       </Fragment>
     )
 }

@@ -57,7 +57,6 @@
     text-decoration: line-through;
 }
 
-/* TODO: Implement hover on items */
 .inventory-card:hover {
     transform:scale(1.1);
     transition-duration: .25s;

@@ -26,7 +26,6 @@ class Transfers extends Component {
       .then(res => res.json())
       .then(json => {
         console.log("json", json)
-        // TO DO: map through the possible values with below code to map out critera
 
         var size = Object.keys(json.data).length;
         var criteriaVals = [];

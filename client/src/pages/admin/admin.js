@@ -67,7 +67,7 @@ class AdminPage extends Component {
 
             );
         }
-        // TODO: PASS in is logged in props
+    
         if (isLoggedIn) {
             return (
                 <AdminPanel isLoggedIn ={isLoggedIn}></AdminPanel>

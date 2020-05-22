@@ -138,7 +138,6 @@ class AddItem extends Component {
             return (
                 <div>
                     <p className="text-center">Item has been posted!</p>
-                    {/* TODO: Pass is logged in props */}
                     <AdminPanel itemPosted="true"></AdminPanel>
                     {/* <a href="/admin"><Button style={{ backgroundColor: '#dd6717', margin: '0px auto;' }} variant='dark'>Inventory List</Button></a> */}
                 </div>

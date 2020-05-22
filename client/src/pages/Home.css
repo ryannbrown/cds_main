@@ -468,11 +468,38 @@ margin-top:-5% !important;
 
 }
 
-
-
-
 .navbar-expand-lg .navbar-collapse {
   z-index:1500;
 }
-/* TODO: fix centering on navbar once and for all */
-/* TODO: Make title bigger for bigger screens */
+
+.homepage-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+    @media (min-width: 992px) {
+      .homepage-container {
+          max-width: 960px;
+          
+      }
+
+      .bio-text>p {
+        line-height:2em;
+      }
+
+      img.pulse {
+        width:25%;
+      }
+      }
+
+@media (min-width: 1200px) {
+.homepage-container {
+    max-width: 1140px;
+}
+}
+
+
+

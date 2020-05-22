@@ -100,7 +100,6 @@ componentDidMount () {
 
         const placeholderText = <div>There are no items in inventory</div>
 
-// TO DO: Pass in isloggedin props
         if (editSession) {
             return (
                 <AddItem></AddItem>

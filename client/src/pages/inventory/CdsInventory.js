@@ -65,7 +65,7 @@ componentDidMount () {
             return (
                 <div>
                     <a href="/">
-                <Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn mt-3">Back</Button>
+                <Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button>
                 </a>
                 <div className="text-center mt-5">
                     

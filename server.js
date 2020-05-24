@@ -159,17 +159,139 @@ app.post('/api/upload', function (req, res, next) {
 
 
 
+// INACTIVE DB
+const Pool = require('pg').Pool
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: 'localhost',
+  database: 'postgres',
+  password: process.env.DB_PASS,
+  port: 5432,
+})
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
-});
 
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
-  );
-});
+app.get('/browse/:criteria', (req, response) => {
+  var criteria = req.params.criteria;
+  console.log(criteria);
+
+  pool.query(`SELECT DISTINCT ${criteria} FROM davidsons_inventory WHERE ${criteria} IS NOT NULL`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+  });
+
+
+})
+
+// TODO: Change inventory to davidsons_inventory
+// TO DO : SLIM ALL THIS DOWN 
+// MANUFACTURER
+app.get('/manufacturer/:manufacturer', (req, response) => {
+  var manufacturer = req.params.manufacturer;
+  console.log(manufacturer);
+
+  pool.query(`SELECT *
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory.item_no = davidsons_quantity.item_number
+  WHERE davidsons_inventory.manufacturer ILIKE '%${manufacturer}%'
+  ORDER BY image1 ASC,
+  total_quantity ASC`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+app.get('/gun_type/:gun_type', (req, response) => {
+  var gun_type = req.params.gun_type;
+  console.log("these are the params")
+  console.log(gun_type);
+
+  pool.query(`SELECT *
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory.item_no = davidsons_quantity.item_number
+  WHERE davidsons_inventory.gun_type ILIKE '%${gun_type}%'
+  ORDER BY image1 ASC,
+  total_quantity ASC`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+app.get('/caliber/:caliber', (req, response) => {
+  var caliber = req.params.caliber;
+  console.log(caliber);
+
+  pool.query(`SELECT *
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory.item_no = davidsons_quantity.item_number
+  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'
+  ORDER BY image1 ASC,
+  total_quantity ASC`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+app.get('/api/model/:item_no', (req, response) => {
+  var item_no = req.params.item_no;
+  console.log(item_no);
+
+  // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+  pool.query(` SELECT * FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory.item_no = davidsons_quantity.item_number
+  WHERE davidsons_inventory.item_no = '${item_no}'`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+
+
+
+
+
+
+
+
 
 
 

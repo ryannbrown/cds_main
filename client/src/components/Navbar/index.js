@@ -12,6 +12,13 @@ import logo from '../../media/cds.jpg'
 
 // import './style.css';
 function Navigation (props) {
+
+
+  // TO DO: potentially use this logic to render component
+// const renderComponent = () => {
+//   console.log("hi")
+// }
+
     return (
 <Router>
   <Navbar sticky="top" bg="light" expand="lg" style={{height: '150px'}}>
@@ -26,7 +33,10 @@ function Navigation (props) {
         {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
         <NavDropdown title="Browse" id="basic-nav-dropdown">
           <NavDropdown.Item href="/cds/inventory">Current Inventory</NavDropdown.Item>
-          {/* <NavDropdown.Item href="/browse/manufacturer">Manufacturer</NavDropdown.Item> */}
+          <NavDropdown.Item
+          href="/browse/manufacturer"
+          //  onClick={renderComponent}
+           > Manufacturer</NavDropdown.Item>
           {/* <NavDropdown.Item href="/browse/gun_type">Gun Type</NavDropdown.Item>
           <NavDropdown.Item href="/browse/gun_action">Gun Action</NavDropdown.Item> */}
           {/* <NavDropdown.Item href="/rifles" value="rifles">Rifles</NavDropdown.Item>

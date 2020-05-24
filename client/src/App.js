@@ -56,7 +56,9 @@ export default function App() {
 
           <Route path="/browse/:criteria" component={Browse} />
 
-          <Route path="/inventory/:brand_name" component={Inventory} />
+          <Route path="/gun_type/:gun_type" component={Inventory} />
+          <Route path="/manufacturer/:manufacturer" component={Inventory} />
+          <Route path="/caliber/:caliber" component={Inventory} />
 
           <Route path="/api/model/:item_no" component={Details} />
 

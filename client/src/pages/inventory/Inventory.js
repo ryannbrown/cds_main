@@ -16,7 +16,8 @@ class Inventory extends Component {
       gunData: [],
       isLoaded: false,
       catData: [],
-      param: ''
+      keyParam: '',
+      valParam: ''
     };
   }
 
@@ -30,12 +31,14 @@ usePlaceholderImg(ev){
 
    console.log(this.props.match.params)
 
-   let param = Object.values(this.props.match.params);
+   let keyParam = Object.keys(this.props.match.params);
+   let valParam = Object.values(this.props.match.params);
    this.setState({
-    param: param
+    keyParam: keyParam,
+    valParam: valParam
   })
 
-    fetch(`/inventory/${param}`)
+    fetch(`/${keyParam}/${valParam}`)
       .then(res => res.json())
       .then(json => {
         console.log("json", json)
@@ -63,7 +66,6 @@ usePlaceholderImg(ev){
       <a href={`/api/model/${item.item_no}`}>
    <img className="gun-img" alt={`${item.itemdesc1}`}
    // TODO: come up with better way to get images than this solution
-  //  TODO: make images pop up on click perhaps https://www.npmjs.com/package/react-image-lightbox
     src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
     onError={this.usePlaceholderImg}
     />
@@ -76,7 +78,7 @@ usePlaceholderImg(ev){
     return (
       <div className="deck-wrapper">
         {/* TODO: make dynamic for others besides manufacturer */}
-           <a href={`/browse/manufacturer`}><Button variant="outline-info">back</Button></a>
+           <a href={`/`}><Button variant="outline-info">back</Button></a>
      
         <CardDeck>
         {items}

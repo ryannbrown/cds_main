@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "../Home";
+import "../../pages/Home"
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form } from 'react-bootstrap';
-
+import './style.css'
 // const queryString = require('query-string');
 
 require("dotenv").config();
@@ -12,8 +12,7 @@ class Browse extends Component {
     this.state = {
       data: [],
       isLoaded: false,
-      catData: [],
-      param: ''
+      catData: []
     };
   }
 
@@ -39,15 +38,23 @@ class Browse extends Component {
 
   componentDidMount() {
 
-   console.log(this.props.match.params)
+    console.log(this.props.param)
 
-   let param = Object.values(this.props.match.params);
-
-   this.setState({
+    let param = (this.props.param);
+    this.setState({
      param: param
    })
 
-    fetch(`/browse/${param}`)
+//    console.log(this.props.match.params)
+
+  //  let param = Object.values(this.props.match.params);
+  //  this.setState({
+  //   param: param
+  // })
+
+    // fetch(`/browse/${param}`)
+    // fetch(`/browse/manufacturer`)
+    fetch(this.props.link)
       .then(res => res.json())
       .then(json => {
         console.log("json", json)
@@ -81,7 +88,6 @@ class Browse extends Component {
 
 
   render() {
-
     var { param } = this.state;
 // TO DO: Potentialy use Custom Dropdown Component from react bootstrap docs
     // var slug = "/api/inventory/" + {item.manuf};
@@ -95,17 +101,15 @@ class Browse extends Component {
 );
     return (
       <div className="deck-wrapper">
-        <Form style={{width: '50%', margin: '0px auto'}} >
+        <Form className="search-filter" style={{margin: '0px auto'}} >
   <Form.Group controlId="exampleForm.SelectCustom">
-    <Form.Label>Search by Manufacturer</Form.Label>
+ 
     <Form.Control onChange={this.fileChanged.bind(this)} as="select" custom>
       {formOptions}
     </Form.Control>
+    {/* <Form.Label>Search by Manufacturer</Form.Label> */}
   </Form.Group>
 </Form>
-      <CardDeck>
-      {items}
-      </CardDeck>
     </div>
     );
   }

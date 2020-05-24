@@ -32,6 +32,7 @@
  .box-container{
      margin-top:5%;
      display:flex;
+     margin-left:-20px;
  }
  
  
@@ -183,7 +184,7 @@ p#title-sub {
 }
 
 .bio-text-transfer {
-  width: 50%;
+  width: 75%;
   margin: 1% auto;
 }
 
@@ -226,7 +227,7 @@ p#title-sub {
   }
   .bio-text-transfer > p {
       width: 100%;
-      line-height: 2em;
+      line-height: 1.5em;
       font-size:20px;
       text-align:center;
   }
@@ -475,6 +476,7 @@ margin-top:-5% !important;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  overflow:hidden;
 }
 
     @media (min-width: 992px) {

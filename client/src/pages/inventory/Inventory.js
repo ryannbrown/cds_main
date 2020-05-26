@@ -70,8 +70,15 @@ usePlaceholderImg(ev){
     onError={this.usePlaceholderImg}
     />
      <p className="text-center">{item.item_description}</p>
-     <p className="retail-price text-center">${item.retailprice}</p>
-     <p className="text-center">{item.dealer_price}</p>
+     <p className="text-center">{item.model_series}</p>
+     <h5 className="retail-price text-center">${item.retailprice}</h5>
+     <h4 className="text-center">{item.dealer_price}</h4>
+     { item.total_quantity ? (
+       <h5 className="text-center">{item.total_quantity} Left</h5>
+     ): (
+      <h5 className="text-center">Out of Stock</h5>
+     )}
+    
      </a>
     </Card>
     );

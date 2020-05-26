@@ -44,16 +44,19 @@ componentDidMount () {
         console.log(this.state.posts)
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
-        <Card className= 'card'>
-            <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
+        <Card className= 'card inventory-card'>
+            <a href={`/cds/details/${item.uuid}`}>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
         />
-         <p className="text-center gun-desc">{item.product_description}</p>
+        <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
+         {/* <p className="text-center gun-desc">{item.product_description}</p> */}
          <h5 className="text-center retail-price">{item.msrp_price}</h5>
          <h4 className="text-center">{item.sale_price}</h4>
-         
+         <h4 className="text-center">{item.quantity}</h4>
+         <h4 className="text-center">{item.caliber}</h4>
+         </a>
         </Card>
         );
 

@@ -30,8 +30,9 @@ function Navigation (props) {
         Home
         </Nav.Link>
         <Nav.Link href="/cds/transfers">Transfers</Nav.Link>
+        <Nav.Link href="/cds/about">About</Nav.Link>
         {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
-        <NavDropdown title="Browse" id="basic-nav-dropdown">
+        {/* <NavDropdown title="Browse" id="basic-nav-dropdown">
           <NavDropdown.Item href="/cds/inventory">Current Inventory</NavDropdown.Item>
           <NavDropdown.Item
           href="/browse/manufacturer"
@@ -43,7 +44,7 @@ function Navigation (props) {
           <NavDropdown.Item href="/pistols">Pistols</NavDropdown.Item> */}
           {/* <NavDropdown.Divider /> */}
           {/* <NavDropdown.Item href="#action/3.4">Specials</NavDropdown.Item> */}
-        </NavDropdown>
+        {/* </NavDropdown>  */}
         </Nav>
       {/* <Form inline>
         <FormControl type="text" placeholder="Search Inventory" className="mr-sm-2" />

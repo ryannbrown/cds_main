@@ -57,6 +57,19 @@ app.get('/api/posts', cors(), function (req, response) {
   );
 })
 
+app.get('/api/posts/:id', cors(), function (req, response) {
+  var gun_id = req.params.id;
+  client.query(
+    `SELECT * from cds_inventory WHERE uuid = '${gun_id}'`, (error, results) => {
+      if (error) {
+        throw error
+      }
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
+    }
+  );
+})
+
 
 //    POST CUSTOM INVENTORY
 let posts = []
@@ -173,8 +186,9 @@ const pool = new Pool({
 app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
   console.log(criteria);
-
-  pool.query(`SELECT DISTINCT ${criteria} FROM davidsons_inventory WHERE ${criteria} IS NOT NULL`, (error, results) => {
+  // WHERE ${criteria} IS NOT NULL
+  pool.query(`SELECT DISTINCT ${criteria} FROM davidsons_inventory 
+  ORDER BY ${criteria} DESC`, (error, results) => {
     if (error) {
       throw error
     }
@@ -200,8 +214,8 @@ app.get('/manufacturer/:manufacturer', (req, response) => {
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
   WHERE davidsons_inventory.manufacturer ILIKE '%${manufacturer}%'
-  ORDER BY image1 ASC,
-  total_quantity ASC`, (error, results) => {
+  ORDER BY
+  total_quantity DESC`, (error, results) => {
     if (error) {
       throw error
     }
@@ -225,8 +239,8 @@ app.get('/gun_type/:gun_type', (req, response) => {
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
   WHERE davidsons_inventory.gun_type ILIKE '%${gun_type}%'
-  ORDER BY image1 ASC,
-  total_quantity ASC`, (error, results) => {
+  ORDER BY
+  total_quantity DESC`, (error, results) => {
     if (error) {
       throw error
     }
@@ -249,8 +263,8 @@ app.get('/caliber/:caliber', (req, response) => {
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
   WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'
-  ORDER BY image1 ASC,
-  total_quantity ASC`, (error, results) => {
+  ORDER BY
+  total_quantity DESC`, (error, results) => {
     if (error) {
       throw error
     }
@@ -266,13 +280,33 @@ app.get('/api/model/:item_no', (req, response) => {
   var item_no = req.params.item_no;
   console.log(item_no);
 
+// Took this away from below query because additional spec call comes later
+  // LEFT JOIN davidsons_attributes
+  // ON davidsons_attributes.itemno = davidsons_inventory.item_no
+
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
   pool.query(` SELECT * FROM davidsons_inventory
-  LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory.item_no
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
   WHERE davidsons_inventory.item_no = '${item_no}'`, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+app.get('/api/specs/:item_no', (req, response) => {
+  var item_no = req.params.item_no;
+  console.log(item_no);
+
+  // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+  pool.query(` SELECT * FROM davidsons_attributes
+ WHERE itemno = '${item_no}'`, (error, results) => {
     if (error) {
       throw error
     }

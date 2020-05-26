@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { Component, Fragment } from "react";
 
 // import logo from "./logo.svg";
@@ -14,8 +15,11 @@ import insta from "../media/instagram.png"
 import fbLogo from "../media/fb.jpg"
 import Filter from "../components/Filter/Filter"
 import BrowseTabber from "../components/BrowseTabber/BrowseTabber"
+import image from "../media/field22.jpg"
 import "./Home.css"
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 require("dotenv").config();
+
 
 export default class Home extends Component {
   constructor(props) {
@@ -34,19 +38,19 @@ export default class Home extends Component {
   render() {
     return (
       <Fragment>
+          <div className="hero-pic">
+            <h1 className="heroTitle">Coleman Defense Solutions</h1>
+          <h2 className="heroSub">Quality Firearms</h2>
+         <FontAwesomeIcon className="heroArrow" icon={faArrowDown}/>
+          </div>
         <div className="homepage-container">
           <BrowseTabber/>
-          <Bio></Bio>
-          <div className="box-container">
-            {/* <Container>
-  <Row> */}
-            <Col><a href="tel:9193571884"><MobileBoxes text="Call" id="main2" /></a></Col>
 
-            <Col><a href="mailto: info@colemandefense.com"><MobileBoxes link="/service" text="Email" id="main3" /></a></Col>
 
-          </div>
 
-          <iframe src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
+
+
+          <iframe  className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
           <Container>
 
             <Row>

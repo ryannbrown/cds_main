@@ -22,7 +22,9 @@
     "express": "^4.16.4",
     "morgan": "^1.10.0",
     "pg": "^8.2.1",
-    "react-ga": "^2.7.0"
+    "react-ga": "^2.7.0",
+    "react-router-hash-link": "^1.2.2",
+    "react-scroll-into-view": "^1.8.2"
   },
   "devDependencies": {
     "concurrently": "^4.0.1"

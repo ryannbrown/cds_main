@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../pages/Home"
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form, Dropdown } from 'react-bootstrap';
 import './style.css'
 // const queryString = require('query-string');
 
@@ -92,24 +92,26 @@ class Browse extends Component {
 // TO DO: Potentialy use Custom Dropdown Component from react bootstrap docs
     // var slug = "/api/inventory/" + {item.manuf};
  const formOptions = this.state.data.map((item, i) =>
- <option value={`/${param}/${item}`}>{item}</option>
+//  <div>{item}</div>
+ <Dropdown.Item href={`/${param}/${item}`}>{item}</Dropdown.Item>
  );
 
- const items = this.state.data.map((item, i) =><Card>
-   <a href={`/${param}/${item}`}>
-     <div className="text-center" key={i}>{item}</div></a></Card>
-);
+//  const items = this.state.data.map((item, i) =><Card>
+//    <a href={`/${param}/${item}`}>
+//      <div className="text-center" key={i}>{item}</div></a></Card>
+// );
     return (
       <div className="deck-wrapper">
-        <Form className="search-filter" style={{margin: '0px auto'}} >
-  <Form.Group controlId="exampleForm.SelectCustom">
- 
-    <Form.Control onChange={this.fileChanged.bind(this)} as="select" custom>
+        <Dropdown className="search-filter" style={{margin: '0px auto'}} >
+  {/* <Form.Group controlId="exampleForm.SelectCustom"> */}
+      <Dropdown.Toggle className="mt-3" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px', color: 
+    'white' }} variant = "basic" id="dropdown-basic"> Choose one</Dropdown.Toggle>
+    <Dropdown.Menu className="dropdown-menu">
       {formOptions}
-    </Form.Control>
+    </Dropdown.Menu>
     {/* <Form.Label>Search by Manufacturer</Form.Label> */}
-  </Form.Group>
-</Form>
+  {/* </Form.Group> */}
+</Dropdown>
     </div>
     );
   }

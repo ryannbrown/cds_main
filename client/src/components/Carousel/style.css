@@ -1,0 +1,30 @@
+.carousel-caption {
+    color:white;
+    text-shadow: 1px 1px black;
+font-size:24px
+}
+
+/* .carousel {
+    margin-top:35%;
+} */
+
+.gun-img-carousel {
+max-height:650px;
+filter: brightness(.65);
+}
+
+.carousel-title {
+  font-size:75px;
+  color:white;
+  margin-top:15%;
+  text-align:left;
+}
+
+.carousel {
+    width: 75%;
+    margin: 0px auto;
+}
+
+/* .carousel.slide {
+    margin-bottom: 75%;
+} */

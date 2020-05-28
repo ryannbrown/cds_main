@@ -4,6 +4,7 @@ import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
+import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 
 // const queryString = require('query-string');
 
@@ -60,6 +61,7 @@ class CdsDetails extends Component {
   <div className="text-center">
      
     <Card className= 'card details-page'>
+    <a href="/cds/inventory"><Button style={{backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px'}}>Back to Featured Products</Button></a>
    <img className="gun-img-detailspg" alt={`${gunData.itemdesc1}`}
     src={`https://cdsinventoryimages.s3.amazonaws.com/${gunData.image}`}
     onError={this.usePlaceholderImg}
@@ -70,8 +72,9 @@ class CdsDetails extends Component {
      <h4>{gunData.sale_price}</h4>
      {/* <h4 className="">{gunData.quantity}</h4>
      <h4 className="">{gunData.caliber}</h4> */}
-     <p style={{fontSize: '24px'}}>{gunData.product_description}</p>
+     <p className="gun-desc" style={{fontSize: '24px'}}>{gunData.product_description}</p>
     </Card>
+    <BrowseTabber title="Search Again"/>
   </div>
     )
       }

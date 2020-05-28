@@ -108,16 +108,21 @@ p#title-sub {
 }
   }
 
+  .transf-col {
+    background-color:white;
+    border-radius:15px;
+  }
+
 
  
  
  
  
  
- a {
+ /* a {
      text-decoration:none;
      color:inherit;
- }
+ } */
  a:hover {
      text-decoration:none;
      color:inherit;
@@ -250,6 +255,7 @@ a.transfers-link.nav-link {
 img.pulse {
   width: 35%;
   margin: 10%;
+  border-radius:15px;
 }
 img.pulse:hover {
  opacity:.8;
@@ -544,6 +550,27 @@ margin-top:-5% !important;
  left:50%;
  animation: arrow-pulse-down 700ms linear infinite;
 }
+
+  .carArrow {
+    font-size: 24px;
+   bottom:100px;
+   left:50%;
+   animation: arrow-pulse-down 700ms linear infinite;
+  }
+  .browseArrow {
+    font-size: 24px;
+   bottom:100px;
+   left:50%;
+   animation: arrow-pulse-down 700ms linear infinite;
+  }
+  
+  .headliner {
+      font-size: 75px;
+      color: white;
+      margin-top: 30vw;
+      margin-left:13%;
+  }
+
 	@keyframes arrow-pulse-down {
 		0% {
 			bottom: 40px;
@@ -562,7 +589,51 @@ margin-top:-5% !important;
 			bottom: 20px;
 			opacity: 1;
 		}
-	}
+  }
+@media (min-width:997px) {
+  .trippy-nav{
+    display:inline-block !important;
+    position:fixed !important;
+    bottom:0px;
+    color:whitesmoke;
+    z-index:9999999;
+  }
+  
+
+  .trippy-nav .nav-link:hover{
+    color:grey !important;
+    /* opacity:; */
+  }
+  }
 
 
+  .nav-pills .nav-link.active {
+    opacity: .5;
+    background-color:transparent;
+  }
 
+
+  .carArrow {
+    margin-top: 1vw;
+}
+
+.tab-car {
+  text-align:center;
+}
+  .browseArrow {
+    margin-top: 3vw;
+}
+
+.tab-browse {
+  text-align:center;
+}
+
+
+.homepage-container.about {
+  background-color:white;
+  border-radius:15px;
+}
+
+.homepage{
+  background-color:black;
+}

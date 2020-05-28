@@ -28,7 +28,7 @@ class About extends Component {
   render() {
     return (
       <Fragment>
-      <div className="homepage-container">
+      <div className="homepage-container about">
         <Bio></Bio>
         <div className="box-container">
           {/* <Container>
@@ -43,7 +43,7 @@ class About extends Component {
         <Container>
 
           <Row>
-            <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img className="pulse" src={insta}></img></a></Col>
+            <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img className="pulse" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png"></img></a></Col>
 
             <Col><a target="_blank" href="https://www.facebook.com/colemandefense/">
 

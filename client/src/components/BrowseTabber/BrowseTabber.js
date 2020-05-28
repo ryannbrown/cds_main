@@ -23,10 +23,10 @@ class BrowseTabber extends Component {
         return (
 
             <div className="browseTabber">
-                <h1 className="text-center mt-4 ml-5">Browse Inventory By</h1>
+                <h1 className="text-center mt-4">{this.props.title}</h1>
                 <Tabs style={{ marginTop: '10px' }} defaultActiveKey="featured" id="uncontrolled-tab-example">
                     <Tab eventKey="featured" title="Featured">
-                        <a href="/cds/inventory"><div className="text-center mt-2"><button type="button" class=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Check Out Our Featured Inventory</button></div></a>
+                        <a href="/cds/inventory"><div className="text-center mt-2"><button type="button" class=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Browse Featured</button></div></a>
                     </Tab>
                     <Tab eventKey="home" title="Manufacturer">
                         <Filter param="manufacturer" link="/browse/manufacturer" />

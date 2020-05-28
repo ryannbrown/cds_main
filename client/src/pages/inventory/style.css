@@ -7,7 +7,7 @@
 
 @media(max-width:997px){
     .deck-wrapper{
-        margin-top: 20%;
+        /* margin-top: 20%; */
     }
 }
 @media(min-width:997px){
@@ -24,12 +24,12 @@
 
 .gun-img-detailspg{
     max-width:100%;
-    max-height:auto;
+    max-height:500px;
     margin:0px auto;
 }
 
 .gun-desc {
-    max-height: 150px;
+    max-height: 250px;
     overflow: scroll;
     padding:15px;
 }
@@ -56,18 +56,28 @@
 .retail-price {
     text-decoration: line-through;
 }
+.inventory-card {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
 
 .inventory-card:hover {
     transform:scale(1.1);
-    transition-duration: .25s;
+    /* transition-duration: .25s; */
+
 }
-a:hover {
+/* a:hover {
     text-decoration:none;
     color:inherit;
-}
-a {
+} */
+/* a {
     color:inherit;
-}
+} */
 
 
 .delete-icon {
@@ -92,4 +102,20 @@ a {
 .additionalinfo-btn {
     color: white;
     background-color: black;
+}
+
+.browseTabber {
+    box-shadow:0px 1px 4px 0px rgba(0,0,0,0.2);
+    height:300px;
+    padding:25px;
+    background-color: white;
+    border-radius: 15px;
+    margin:0px auto;
+    width:75%;
+    /* margin-bottom:55%; */
+}
+
+.tab-div{
+    text-align:center;
+
 }

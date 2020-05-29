@@ -57,7 +57,7 @@ export default class Home extends Component {
           <ScrollIntoView selector="#car"><Nav.Link eventKey="link-1">Featured</Nav.Link></ScrollIntoView>
           <ScrollIntoView selector="#tabber"><Nav.Link eventKey="link-2">Browse</Nav.Link></ScrollIntoView>
           <ScrollIntoView selector="#contact"><Nav.Link eventKey="link-3">
-            Contact
+            Social
   </Nav.Link></ScrollIntoView>
         </Nav>
         <div className="hero-pic">
@@ -79,20 +79,20 @@ export default class Home extends Component {
           <div className="tab-browse" style={{ marginBottom: '55%' }}><BrowseTabber />
             <ScrollIntoView selector="#contact"> <FontAwesomeIcon className="browseArrow" icon={faArrowDown} /></ScrollIntoView></div>
           <Container>
-
-            <Row>
+          <a id="contact"></a>
+            <Row className="social-row">
               <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img className="pulse" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png"></img></a></Col>
 
               <Col><a target="_blank" href="https://www.facebook.com/colemandefense/">
 
                 <img className="pulse" src={fbLogo}></img></a></Col>
             </Row>
-            <a id="contact"></a>
+            
           </Container>
-
-          <iframe className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
         </div>
-
+          <div className="insta-div">
+          <iframe className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: 'auto' }}></iframe>
+          </div>
       </div>
     )
   }

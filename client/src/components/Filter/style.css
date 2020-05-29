@@ -12,7 +12,11 @@
     padding-top:25px;
 }
 
-.dropdown-menu {
-    height:300px;
+/* .dropdown-menu {
+    max-height:300px;
+    overflow: scroll;
+} */
+.search-filter .dropdown-menu {
+    max-height:300px;
     overflow: scroll;
 }

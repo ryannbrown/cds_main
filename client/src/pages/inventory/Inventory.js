@@ -22,21 +22,21 @@ class Inventory extends Component {
   }
 
 
-usePlaceholderImg(ev){
-  ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
-  console.log(ev);
-}
+  usePlaceholderImg(ev) {
+    ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
+    console.log(ev);
+  }
 
   componentDidMount() {
 
-   console.log(this.props.match.params)
+    console.log(this.props.match.params)
 
-   let keyParam = Object.keys(this.props.match.params);
-   let valParam = Object.values(this.props.match.params);
-   this.setState({
-    keyParam: keyParam,
-    valParam: valParam
-  })
+    let keyParam = Object.keys(this.props.match.params);
+    let valParam = Object.values(this.props.match.params);
+    this.setState({
+      keyParam: keyParam,
+      valParam: valParam
+    })
 
     fetch(`/${keyParam}/${valParam}`)
       .then(res => res.json())
@@ -52,43 +52,66 @@ usePlaceholderImg(ev){
       });
 
 
-   
+
 
   };
 
 
 
   render() {
+
+    const profitMargin = 1.15;
+    // var equation= gunData.dealer_price * profitMargin;
+    // var price= Math.floor(equation * 100) / 100
     var { param } = this.state;
+
+
+
     // console.log({this.state.gunData.image1})
     const items = this.state.gunData.map((item, i) =>
-    <Card key={i} className= 'inventory-card'>
-      <a href={`/api/model/${item.item_no}`}>
-   <img className="gun-img" alt={`${item.itemdesc1}`}
-   // TODO: come up with better way to get images than this solution
-    src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
-    onError={this.usePlaceholderImg}
-    />
-     <p className="text-center">{item.item_description}</p>
-     <p className="text-center">{item.model_series}</p>
-     <h5 className="retail-price text-center">${item.retailprice}</h5>
-     <h4 className="text-center">{item.dealer_price}</h4>
-     { item.total_quantity ? (
-       <h5 className="text-center">{item.total_quantity} Left</h5>
-     ): (
-      <h5 className="text-center">Out of Stock</h5>
-     )}
-    
-     </a>
-    </Card>
+      <Card key={i} className='inventory-card'>
+        <a href={`/api/model/${item.item_no}`}>
+          {
+            item.image1 ? (
+              <img className="gun-img" alt={`${item.itemdesc1}`}
+            // TODO: come up with better way to get images than this solution
+            src={`https://www.davidsonsinc.com/ProdImageSm/${item.image1}`}
+            onError={this.usePlaceholderImg}
+          />
+            ) : (
+          
+          <img className="gun-img" alt={`${item.itemdesc1}`}
+            // TODO: come up with better way to get images than this solution
+            src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
+            onError={this.usePlaceholderImg}
+          />
+            )
+          }
+          <p className="text-center">{item.item_description}</p>
+          <p className="text-center">{item.model_series}</p>
+          <h5 className="retail-price text-center">${item.retail_price}</h5>
+          {item.retailmap ? (
+            <h4 className="text-center">${item.retailmap}</h4>
+          ) : (
+              <h4 className="text-center">${(item.dealer_price * profitMargin).toFixed(2)}</h4>
+            )
+          }
+          {item.total_quantity ? (
+            <h5 className="text-center">{item.total_quantity} Left</h5>
+          ) : (
+              <h5 className="text-center">Out of Stock</h5>
+            )}
+
+        </a>
+      </Card>
     );
     return (
       <div className="deck-wrapper">
         {/* TODO: make dynamic for others besides manufacturer */}
-           <a href={`/`}><Button variant="outline-info">back</Button></a>
-     
+        <a><Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button></a>
+
         <CardDeck>
-        {items}
+          {items}
         </CardDeck>
       </div>
 

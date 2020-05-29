@@ -26,6 +26,18 @@ class Details extends Component {
   }
 
 
+
+  fetchAdditionalData = (param) => {
+    fetch(`/api/specs/${param}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("specs", json.data[0])
+        this.setState({
+          gunSpecs: json.data[0],
+        }, console.log(this.state.gunSpecs))
+      }
+      )
+  }
   fetchAdditionalData = (param) => {
     fetch(`/api/specs/${param}`)
       .then(res => res.json())
@@ -73,7 +85,13 @@ class Details extends Component {
 
   render() {
 
+    const profitMargin = 1.15
+
     var { param, descriptionKeys, descriptionValues, gunData, gunSpecs } = this.state;
+
+
+   var price= (gunData.dealer_price * profitMargin).toFixed(2);
+  
 
     // gunData.dealer_price = this.state.gunData.dealer_price * 1.25;
 
@@ -85,12 +103,18 @@ class Details extends Component {
     return (
       <div className="">
         <Card className="text-center details-page">
-    <a href={`/manufacturer/${gunData.manufacturer}`}><Button style={{backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px'}}>Explore More From {gunData.manufacturer}</Button></a>
+    <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px'}}>Explore More From {gunData.manufacturer}</Button></a>
           {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
           <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData.item_no}.jpg`}></img>
           {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
-          <h2 className="retail-price">{gunData.retail_price}</h2>
-          <h1>{gunData.dealer_price}</h1>
+          <h2 className="retail-price">${gunData.retail_price}</h2>
+          {gunSpecs.retailmap > 0 ? (
+            <h1 className="text-center">${gunSpecs.retailmap}</h1>
+          ) : (
+            <h1>${price}</h1>
+            )
+          }
+         
           <h1>{gunData.model}</h1>
           <h1>{gunData.model_series}</h1>
           <h2>{gunData.gun_type}</h2>

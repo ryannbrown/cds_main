@@ -77,9 +77,9 @@ export default function App() {
 
 
         </Switch>
-
-
-      </div>
+   
+</div>
+<footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
     </Router>
 
   );

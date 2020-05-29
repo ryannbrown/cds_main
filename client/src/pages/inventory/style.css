@@ -104,17 +104,6 @@
     background-color: black;
 }
 
-.browseTabber {
-    box-shadow:0px 1px 4px 0px rgba(0,0,0,0.2);
-    height:300px;
-    padding:25px;
-    background-color: white;
-    border-radius: 15px;
-    margin:0px auto;
-    width:75%;
-    /* margin-bottom:55%; */
-}
-
 .tab-div{
     text-align:center;
 

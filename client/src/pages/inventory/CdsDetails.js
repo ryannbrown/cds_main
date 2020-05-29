@@ -55,8 +55,6 @@ class CdsDetails extends Component {
   render() {
 
     var { gunData } = this.state;
-
-   
     return (
   <div className="text-center">
      

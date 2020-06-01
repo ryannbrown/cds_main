@@ -90,13 +90,13 @@ class Inventory extends Component {
           <p className="text-center">{item.item_description}</p>
           <p className="text-center">{item.model_series}</p>
           <h5 className="retail-price text-center">${item.retail_price}</h5>
-          {item.retailmap ? (
+          {item.retailmap > 0 ? (
             <h4 className="text-center">${item.retailmap}</h4>
           ) : (
               <h4 className="text-center">${(item.dealer_price * profitMargin).toFixed(2)}</h4>
             )
           }
-          {item.total_quantity ? (
+          {item.total_quantity > 0 ? (
             <h5 className="text-center">{item.total_quantity} Left</h5>
           ) : (
               <h5 className="text-center">Out of Stock</h5>

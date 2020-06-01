@@ -140,6 +140,7 @@ p#title-sub {
  a:hover {
      text-decoration:none;
      color:inherit;
+     opacity:.8;
  }
  
  

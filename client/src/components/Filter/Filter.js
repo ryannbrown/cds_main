@@ -57,7 +57,7 @@ class Browse extends Component {
     fetch(this.props.link)
       .then(res => res.json())
       .then(json => {
-        console.log("json", json)
+        // console.log("json", json)
 
         var size = Object.keys(json.data).length;
         var criteriaVals = [];
@@ -65,7 +65,7 @@ class Browse extends Component {
           // console.log(Object.values(json.data[i]))
           criteriaVals.push(Object.values(json.data[i]))
         }
-        console.log(criteriaVals)
+        // console.log(criteriaVals)
         // var descriptionValues = Object.values(json.data)
         //  console.log(Object.keys(json.data[0]))
         // var descriptionKeys = Object.keys(json.data[0])
@@ -78,7 +78,7 @@ class Browse extends Component {
           data: criteriaVals,
           isLoaded: true
         })
-        console.log(this.state.data);
+        // console.log(this.state.data);
         var size = Object.keys(this.state.data).length;
         console.log(size);
       });

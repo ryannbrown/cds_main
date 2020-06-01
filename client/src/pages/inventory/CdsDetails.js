@@ -59,7 +59,7 @@ class CdsDetails extends Component {
   <div className="text-center">
      
     <Card className= 'card details-page'>
-    <a href="/cds/inventory"><Button style={{backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px'}}>Back to Featured Products</Button></a>
+    <a href="/cds/inventory"><Button style={{backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px'}}variant = "dark">Back to Featured Products</Button></a>
    <img className="gun-img-detailspg" alt={`${gunData.itemdesc1}`}
     src={`https://cdsinventoryimages.s3.amazonaws.com/${gunData.image}`}
     onError={this.usePlaceholderImg}
@@ -72,7 +72,7 @@ class CdsDetails extends Component {
      <h4 className="">{gunData.caliber}</h4> */}
      <p className="gun-desc" style={{fontSize: '24px'}}>{gunData.product_description}</p>
     </Card>
-    <BrowseTabber title="Search Again"/>
+    <BrowseTabber title="Search Additional Inventory"/>
   </div>
     )
       }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -14,7 +14,7 @@ class Inventory extends Component {
     super(props);
     this.state = {
       gunData: [],
-      isLoaded: false,
+      isLoading: true,
       catData: [],
       keyParam: '',
       valParam: ''
@@ -44,7 +44,7 @@ class Inventory extends Component {
         console.log("json", json)
         this.setState({
           gunData: json.data,
-          isLoaded: true
+          isLoading: false
         })
         console.log(this.state.gunData);
         var size = Object.keys(this.state.gunData).length;
@@ -63,7 +63,7 @@ class Inventory extends Component {
     const profitMargin = 1.15;
     // var equation= gunData.dealer_price * profitMargin;
     // var price= Math.floor(equation * 100) / 100
-    var { param } = this.state;
+    var { param, isLoading } = this.state;
 
 
 
@@ -105,8 +105,18 @@ class Inventory extends Component {
         </a>
       </Card>
     );
-    return (
-      <div className="deck-wrapper">
+
+      if (isLoading) {
+        return (
+          <div className="spinner-box">
+        <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+      </div> )
+      }
+  
+      else {
+        return ( <div className="deck-wrapper">
         {/* TODO: make dynamic for others besides manufacturer */}
         <a><Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button></a>
 
@@ -114,8 +124,9 @@ class Inventory extends Component {
           {items}
         </CardDeck>
       </div>
-
-    );
+        )
+      }
+    
   }
 }
 export default Inventory;

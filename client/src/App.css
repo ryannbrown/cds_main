@@ -109,3 +109,25 @@ footer#footer {
     color: white;
     padding-top:2%;
 }
+
+.spinner-box {
+    height:100vh;
+}
+.spinner-border {
+    width:5rem;
+    height:5rem;
+    position:fixed;
+    top:50%;
+    left:50%;
+}
+
+
+
+h1 {
+
+     margin: 0 0;
+}
+
+html {
+    scroll-behavior: smooth;
+  }

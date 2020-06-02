@@ -25,6 +25,7 @@ import AdminPage from './pages/admin/admin';
 import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
+import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
@@ -73,6 +74,9 @@ export default function App() {
 
           <Route path="/cds/transfers" component={Transfers} />
           <Route path="/cds/about" component={About} />
+
+
+          <Route path="/aeroprecision" component={AeroPrecision} />
           {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 

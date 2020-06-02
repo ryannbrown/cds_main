@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import Carousel from 'react-bootstrap/Carousel'
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from 'react-bootstrap';
 import App from "../../App"
 
 
@@ -9,7 +9,7 @@ class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: this.props.isLoggedIn,
+            isLoading: true,
             editSession: false,
             posts:[]
         };
@@ -28,7 +28,8 @@ class AdminPanel extends Component {
         .then(json => {
           console.log("json", json)
           this.setState({
-              posts:json.data
+              posts:json.data,
+              isLoading: false
           })
         })
     }
@@ -42,7 +43,7 @@ componentDidMount () {
 
     render() {
         console.log(this.state.posts)
-        const { editSession } = this.state;
+        const { isLoading } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>
             <a href={`/cds/details/${item.uuid}`}>
@@ -62,9 +63,16 @@ componentDidMount () {
 
         const placeholderText = <div>There are no items in inventory</div>
 
-
-        if (!editSession) {
-         
+        if (isLoading) {
+            return (
+              <div className="spinner-box">
+            <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+          </div> )
+          }
+      
+          else {
             return (
                 <div>
                     <a href="/">
@@ -82,15 +90,6 @@ componentDidMount () {
                 </div>
             )
         } 
-
-        if (this.state.posts.length === 0) {
-            return (
-                <div className="text-center m-5">
-                    {placeholderText}
-                        
-                </div>
-            )
-        }
     }
 }
 export default AdminPanel

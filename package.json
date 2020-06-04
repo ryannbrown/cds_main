@@ -20,8 +20,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "ftp": "^0.3.10",
     "morgan": "^1.10.0",
     "pg": "^8.2.1",
+    "query-string": "^6.12.1",
     "react-ga": "^2.7.0",
     "react-router-hash-link": "^1.2.2",
     "react-scroll-into-view": "^1.8.2"

@@ -55,7 +55,7 @@ of circumstances. Although our roots started in aerospace, it’s firearms where
 products possible. It’s hard to imagine what started as a couple machines in a garage would turn in to the Aero Precision you see today
 </span>
             </p>
-            <a class="f6 link dim ba ph3 pv2 mb2 dib black" href="#0">Product Information Coming Soon</a>
+            <a className="f6 link dim ba ph3 pv2 mb2 dib black" href="#0">Product Information Coming Soon</a>
           </div>
         </div>
         <div className="cf dn">

@@ -84,7 +84,7 @@ componentDidMount () {
         console.log(this.state.posts)
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
-        <Card className= 'card'>
+        <Card key={i} className= 'card'>
             <span onClick={() => this.handleDelete(item.id)} className="delete-icon"><img style={{width:'25px'}} src="https://image.flaticon.com/icons/png/512/61/61848.png"></img></span>
             <p className="text-center">Product Name: {item.product_name}</p>
        <img className="gun-img" alt={`${item.itemdesc1}`}

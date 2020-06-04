@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var Client = require('ftp');
+var fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +30,49 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+
+
+
+// var c = new Client();
+// c.on('ready', function() {
+//   // c.list(function(err, list) {
+//   //   if (err) throw err;
+//   //   console.dir(list);
+//   // })
+//   c.get('davidsons_inventory.csv', function(err, stream) {
+//     if (err) throw err;
+//     stream.pipe(fs.createWriteStream('davidsons_inventory_local.csv'));
+//     console.log("downloaded")
+//   });
+//   c.get('davidsons_quantity.csv', function(err, stream) {
+//     if (err) throw err;
+ 
+//     stream.pipe(fs.createWriteStream('davidsons_quantity_local.csv'));
+//     console.log("downloaded")
+//   });
+//   c.get('davidsons_firearm_attributes.csv', function(err, stream) {
+//     if (err) throw err;
+//     stream.pipe(fs.createWriteStream('davidsons_attributes_local.csv'));
+//     console.log("downloaded")
+//     c.end();
+//   });
+
+// });
+
+
+  
+//   // connect to localhost:21 as anonymous
+//   c.connect({
+//     host: process.env.ftpHost,
+//     // port: ,
+//     user: process.env.ftpUser, 
+//     password: process.env.ftpPassword
+//   }
+//   );
+
+
+
+
 var pg = require('pg');
 
 var conString = process.env.CONNSTRING //Can be found in the Details page
@@ -37,6 +82,9 @@ client.connect(function (err) {
     return console.error('could not connect to postgres', err);
   }
 });
+
+
+
 //   app.get('/', function(req, res){
 //     res.send({answer: "hello world!"});
 // })
@@ -181,7 +229,18 @@ const pool = new Pool({
   password: process.env.DB_PASS,
   port: 5432,
 })
+// Item_Number, UPC_Code, Quantity_NC, Quantity_AZ
 
+// pool.query('DROP TABLE IF EXISTS davidsons_quantity_new;CREATE TABLE davidsons_quantity_new(Item_Number varchar(50), UPC_Code varchar(50), Quantity_AZ varchar(50), Quantity_NC varchar(50), total_quantity integer)'
+// );
+
+// pool.query("COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER"
+// )
+
+// pool.query("DELETE FROM davidsons_quantity_new WHERE (quantity_az !~ '^[0-9]+$')")
+// // pool.query("DELETE FROM davidsons_quantity_new WHERE (quantity_nc !~ '^[0-9]+$')")
+// pool.query("ALTER TABLE davidsons_quantity_new ALTER COLUMN quantity_az TYPE INT using quantity_az::integer, ALTER COLUMN quantity_nc TYPE INT using quantity_nc::integer;")
+// pool.query("UPDATE davidsons_quantity_new SET total_quantity = quantity_nc + quantity_az;")
 
 app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
@@ -203,19 +262,46 @@ app.get('/browse/:criteria', (req, response) => {
 // TODO: Change inventory to davidsons_inventory
 // TO DO : SLIM ALL THIS DOWN 
 // MANUFACTURER
-app.get('/manufacturer/:manufacturer', (req, response) => {
-  var manufacturer = req.params.manufacturer;
-  console.log(manufacturer);
+app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
 
-  pool.query(`SELECT *
+  // const data = {
+  //   manufacturer: req.params.manufacturer
+  // }
+  var manufacturer = req.params.manufacturer;
+  var sort = req.params.sort;
+  // var sortString;
+let query = `SELECT *
   FROM davidsons_inventory
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = davidsons_inventory.item_no
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.manufacturer ILIKE '%${manufacturer}%'
-  ORDER BY
-  total_quantity DESC`, (error, results) => {
+  WHERE davidsons_inventory.manufacturer ILIKE '${manufacturer}'`;
+  // const values = [data.manufacturer];
+
+  // Removed below in order to start using sort params
+  // ORDER BY
+  // total_quantity DESC`;
+
+  if (sort == 'priceUp') {
+    query += `ORDER BY dealer_price ASC`
+  } else if (sort == 'priceDown') {
+    query += `ORDER BY dealer_price DESC`
+  } else if (sort == 'priceUpInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+  } else if (sort == 'quantityDown') {
+    query += `ORDER BY total_quantity DESC`
+  } else if (sort == 'priceDownInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+  } else if (sort == 'onlyInStock') {
+    query += `AND total_quantity > 0 `
+  }
+  console.log("query", query)
+  // console.log(manufacturer);
+console.log("sort:", sort)
+  pool.query(query,
+    //  values,
+      (error, results) => {
     if (error) {
       throw error
     }
@@ -227,20 +313,36 @@ app.get('/manufacturer/:manufacturer', (req, response) => {
 
 
 })
-app.get('/gun_type/:gun_type', (req, response) => {
+app.get('/gun_type/:gun_type/:sort', (req, response) => {
   var gun_type = req.params.gun_type;
+  var sort = req.params.sort;
   console.log("these are the params")
   console.log(gun_type);
 
-  pool.query(`SELECT *
+  let query = `SELECT *
   FROM davidsons_inventory
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = davidsons_inventory.item_no
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.gun_type ILIKE '%${gun_type}%'
-  ORDER BY
-  total_quantity DESC`, (error, results) => {
+  WHERE davidsons_inventory.gun_type ILIKE '%${gun_type}%'`
+
+
+  if (sort == 'priceUp') {
+    query += `ORDER BY dealer_price ASC`
+  } else if (sort == 'priceDown') {
+    query += `ORDER BY dealer_price DESC`
+  } else if (sort == 'priceUpInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+  } else if (sort == 'quantityDown') {
+    query += `ORDER BY total_quantity DESC`
+  } else if (sort == 'priceDownInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+  } else if (sort == 'onlyInStock') {
+    query += `AND total_quantity > 0 `
+  }
+
+  pool.query(query, (error, results) => {
     if (error) {
       throw error
     }
@@ -252,19 +354,34 @@ app.get('/gun_type/:gun_type', (req, response) => {
 
 
 })
-app.get('/caliber/:caliber', (req, response) => {
+app.get('/caliber/:caliber/:sort', (req, response) => {
   var caliber = req.params.caliber;
+  var sort = req.params.sort;
   console.log(caliber);
 
-  pool.query(`SELECT *
+ let query = `SELECT *
   FROM davidsons_inventory
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = davidsons_inventory.item_no
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'
-  ORDER BY
-  total_quantity DESC`, (error, results) => {
+  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'`
+
+  if (sort == 'priceUp') {
+    query += `ORDER BY dealer_price ASC`
+  } else if (sort == 'priceDown') {
+    query += `ORDER BY dealer_price DESC`
+  } else if (sort == 'priceUpInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+  } else if (sort == 'quantityDown') {
+    query += `ORDER BY total_quantity DESC`
+  } else if (sort == 'priceDownInStock') {
+    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+  } else if (sort == 'onlyInStock') {
+    query += `AND total_quantity > 0 `
+  }
+
+  pool.query(query, (error, results) => {
     if (error) {
       throw error
     }

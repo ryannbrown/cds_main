@@ -45,7 +45,7 @@ class AdminPanel extends Component {
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
 
-            <Carousel.Item>
+            <Carousel.Item key={i}>
                 <img
                     className="gun-img-carousel d-block w-100" alt={`${item.product_name}`}
                     src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}

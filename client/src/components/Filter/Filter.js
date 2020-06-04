@@ -93,7 +93,7 @@ class Browse extends Component {
     // var slug = "/api/inventory/" + {item.manuf};
  const formOptions = this.state.data.map((item, i) =>
 //  <div>{item}</div>
- <Dropdown.Item href={`/${param}/${item}`}>{item}</Dropdown.Item>
+ <Dropdown.Item key={i} href={`/${param}/${item}`}>{item}</Dropdown.Item>
  );
 
 //  const items = this.state.data.map((item, i) =><Card>

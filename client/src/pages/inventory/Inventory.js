@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner, Dropdown, DropdownButton} from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -18,11 +18,21 @@ class Inventory extends Component {
       catData: [],
       keyParam: '',
       valParam: '',
-      sort: "sort"
+      sort: "sort",
+      currentPage: 1,
+      itemsPerPage: 25
     };
     this.sortItem = this.sortItem.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick = event => {
+    console.log("clicked")
+    console.log(event.target.id)
+    this.setState({
+      currentPage: Number(event.target.id)
+    });
+  }
 
   usePlaceholderImg(ev) {
     ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
@@ -82,12 +92,36 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     const profitMargin = 1.15;
     // var equation= gunData.dealer_price * profitMargin;
     // var price= Math.floor(equation * 100) / 100
-    var { param, isLoading } = this.state;
+    var { param, isLoading, currentPage, itemsPerPage, gunData} = this.state;
+   
+// TODO: scroll to top when they use the pagination feature
+ // Logic for displaying current items
+ const indexOfLastTodo = currentPage * itemsPerPage;
+ const indexOfFirstTodo = indexOfLastTodo - itemsPerPage;
+ const currentItems = gunData.slice(indexOfFirstTodo, indexOfLastTodo);
 
-    // console.log({this.state.gunData.image1})
-    const items = this.state.gunData.map((item, i) =>
+     // Logic for displaying page numbers
+     const pageNumbers = [];
+     for (let i = 1; i <= Math.ceil(gunData.length / itemsPerPage); i++) {
+       pageNumbers.push(i);
+       console.log(pageNumbers)
+     }
+
+    const renderPageNumbers = pageNumbers.map(number => {
+      return (
+      <li
+        key={number}
+        id={number}
+        onClick={this.handleClick}
+      >
+        {number}
+      </li>)
+    })
+
+    const items = currentItems.map((item, i) => {
+      return (
       <Card key={i} className='inventory-card'>
-        <a href={`/api/model/${item.item_no}`}>
+        <a target="_blank" href={`/api/model/${item.item_no}`}>
           {
             item.image1 ? (
               <img className="gun-img" alt={`${item.itemdesc1}`}
@@ -121,6 +155,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
 
         </a>
       </Card>
+      )}
     );
 
     if (isLoading) {
@@ -134,11 +169,15 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
 
     else {
       return (<div className="deck-wrapper">
-        <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort Price">
+        <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort">
+        <Dropdown.Header>Price</Dropdown.Header>
             <Dropdown.Item data-sort="priceUp" onClick={this.sortItem}>Low to High</Dropdown.Item>
-            <Dropdown.Item data-sort="priceUpInStock" onClick={this.sortItem}>Low to High | Only In Stock</Dropdown.Item>
+            <Dropdown.Item data-sort="priceUpInStock" onClick={this.sortItem}>Low to High | Hide out of Stock Items</Dropdown.Item>
             <Dropdown.Item data-sort="priceDown" onClick={this.sortItem}>High to Low</Dropdown.Item>
-            <Dropdown.Item data-sort="priceDownInStock" onClick={this.sortItem}>High to Low | Only In Stock</Dropdown.Item>
+            <Dropdown.Item data-sort="priceDownInStock" onClick={this.sortItem}>High to Low | Hide Out Stock Items</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Header>Other</Dropdown.Header>
+            <Dropdown.Item data-sort="onlyInStock" onClick={this.sortItem}>Hide out of Stock Items</Dropdown.Item>
           </DropdownButton>
           {/* OPTIONAL */}
           {/* <div className="tc mt-2 dropdown">
@@ -152,6 +191,11 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
         <CardDeck>
           {items}
         </CardDeck>
+        <div className="pagination-div">
+        <ul className="center" id="page-numbers">
+              {renderPageNumbers}
+            </ul>
+            </div>
       </div>
       )
     }

@@ -108,3 +108,23 @@
     text-align:center;
 
 }
+
+.pagination-div {
+    width:50%;
+    margin:0px auto;
+}
+
+#page-numbers {
+    list-style: none;
+    width:100%;
+    display: flex;
+    font-size: 1.5em;
+  }
+  
+  #page-numbers > li {
+    justify-content:center;
+    padding:10px;
+    color: blue;
+    user-select: none;
+    cursor: pointer;
+  }

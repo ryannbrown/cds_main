@@ -60,24 +60,37 @@ export default class Home extends Component {
             Social
   </Nav.Link></ScrollIntoView>
         </Nav>
+        {/* HERO Section */}
         <div className="hero-pic">
-          <h1 className="heroTitle">Coleman Defense Solutions</h1>
+          <h1 className="heroTitle">Quality Gear &</h1>
           <h2 className="heroSub">Quality Firearms</h2>
           <ScrollIntoView alignToTop selector="#car"><FontAwesomeIcon className="heroArrow" icon={faArrowDown} /></ScrollIntoView>
         </div>
-        <div className="homepage-container">
-
+        {/* Homepage inner parrent */}
+        <div className="homepage-narrow">
           <a name="my-ref" id="car">
           </a>
-          <div className="tab-car" style={{ marginBottom: '25%' }}>
+
+
+{/* Carousel Section */}
+          <div className="carousel-div">
             <Carousel /> 
           <ScrollIntoView selector="#tabber"><FontAwesomeIcon className="carArrow" icon={faArrowDown} />
           </ScrollIntoView></div>
-          {/* <Carousel /> */}
-          <a id="tabber"> </a>
+
+{/* Browse Section */}
+<div className="browse-section">
+<a id="tabber"> </a>
+  <div className="browse-content">
           <div className="headliner">Explore 1000's of Items</div>
-          <div className="tab-browse" style={{ marginBottom: '55%' }}><BrowseTabber />
+          <div className="tab-browse"><BrowseTabber />
             <ScrollIntoView selector="#contact"> <FontAwesomeIcon className="browseArrow" icon={faArrowDown} /></ScrollIntoView></div>
+</div>
+</div>
+          
+
+            {/* Social Section */}
+            <div className="contact-div">
           <Container>
           <a id="contact"></a>
             <Row className="social-row">
@@ -89,6 +102,7 @@ export default class Home extends Component {
             </Row>
             
           </Container>
+          </div>
         </div>
           <div className="insta-div">
           <iframe className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: 'auto' }}></iframe>

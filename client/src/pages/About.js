@@ -28,7 +28,7 @@ class About extends Component {
   render() {
     return (
       <Fragment>
-      <div className="homepage-container about">
+      <div className="homepage-narrow about">
         <Bio></Bio>
         <div className="box-container">
           {/* <Container>

@@ -80,7 +80,7 @@ class AdminPanel extends Component {
 
 
         return (
-            <div>
+            <div className="carousel-contents">
                 <h1 className="carousel-title">Featured Inventory</h1>
                 <Carousel>
                     {items}

@@ -4,6 +4,7 @@ import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
+import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 const queryString = require('query-string');
 
 
@@ -152,7 +153,6 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
           ) : (
               <h5 className="text-center">Out of Stock</h5>
             )}
-
         </a>
       </Card>
       )}
@@ -196,6 +196,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
               {renderPageNumbers}
             </ul>
             </div>
+            <BrowseTabber title="Refine Your Search" />
       </div>
       )
     }

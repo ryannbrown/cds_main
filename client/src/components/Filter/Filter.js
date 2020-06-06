@@ -106,6 +106,7 @@ class Browse extends Component {
   {/* <Form.Group controlId="exampleForm.SelectCustom"> */}
       <Dropdown.Toggle className="mt-3" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px', color: 
     'white' }} variant = "basic" id="dropdown-basic"> Choose one</Dropdown.Toggle>
+     {/* {this.props.text} */}
     <Dropdown.Menu className="dropdown-menu">
       {formOptions}
     </Dropdown.Menu>

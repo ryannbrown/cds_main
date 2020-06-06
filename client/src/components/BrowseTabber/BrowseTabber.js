@@ -45,3 +45,12 @@ class BrowseTabber extends Component {
 }
 
 export default BrowseTabber
+
+
+{/* <h1 className="text-center mt-4 bb mid-gray">Browse By</h1>
+<ButtonGroup aria-label="Browse">
+<a href="/cds/inventory"><div className="text-center"><button type="button" className=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Browse Featured</button></div></a>
+<Filter text="Manufacturer" param="manufacturer" link="/browse/manufacturer" />
+  <Filter text="Gun Type" param="Gun Type" link="/browse/gun_type" />
+  <Filter text="Caliber" param="caliber" link="/browse/caliber" />
+</ButtonGroup> */}

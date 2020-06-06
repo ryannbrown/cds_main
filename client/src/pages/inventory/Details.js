@@ -131,7 +131,7 @@ class Details extends Component {
                 <h3>{gunData.gun_action}</h3>
                 <p>{gunData.features}</p>
                 <p>{gunData.finish}</p>
-
+                <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item Number : {gunData.item_no}</h2>
 
                 <Accordion>
                   <Card>
@@ -177,6 +177,7 @@ class Details extends Component {
                     </Accordion.Collapse>
                   </Card>
                 </Accordion>
+              
               </Card>
               <BrowseTabber />
             </div>
@@ -203,6 +204,7 @@ class Details extends Component {
                   <h3>{gunData.gun_action}</h3>
                   <p>{gunData.features}</p>
                   <p>{gunData.finish}</p>
+                  <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item Number : {gunData.item_no}</h2>
                 </Card>
                 <BrowseTabber />
               </div>

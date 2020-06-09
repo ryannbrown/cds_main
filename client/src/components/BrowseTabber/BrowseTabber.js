@@ -18,7 +18,7 @@ class BrowseTabber extends Component {
     }
 
     render() {
-
+console.log(this.props.title);
 
         return (
 
@@ -32,7 +32,7 @@ class BrowseTabber extends Component {
                         <Filter param="manufacturer" link="/browse/manufacturer" />
                     </Tab>
                     <Tab eventKey="profile" title="Gun Type">
-                        <Filter param="gun_type" link="/browse/gun_type" />
+                        <Filter param="gun_type" link="/browse/Gun%20Type" />
                     </Tab>
                     <Tab eventKey="contact" title="Caliber">
                         <Filter param="caliber" link="/browse/caliber" />

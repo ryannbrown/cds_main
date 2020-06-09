@@ -28,6 +28,7 @@ class Inventory extends Component {
   }
 
   handleClick = event => {
+    window.scrollTo(0, 0)
     console.log("clicked")
     console.log(event.target.id)
     this.setState({
@@ -61,6 +62,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
 }
 
   componentDidMount() {
+    
   let sort = "sort";
     console.log(this.props.match.params)
     // console.log(window.location.search)
@@ -122,7 +124,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        <a target="_blank" href={`/api/model/${item.item_no}`}>
+        <a target="_blank" href={`/api/model/${item["Item #"]}`}>
           {
             item.image1 ? (
               <img className="gun-img" alt={`${item.itemdesc1}`}
@@ -134,18 +136,18 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
 
                 <img className="gun-img" alt={`${item.itemdesc1}`}
                   // TODO: come up with better way to get images than this solution
-                  src={`https://www.davidsonsinc.com/ProdImageSm/${item.item_no}.jpg`}
+                  src={`https://www.davidsonsinc.com/ProdImageSm/${item["Item #"]}.jpg`}
                   onError={this.usePlaceholderImg}
                 />
               )
           }
-          <p className="text-center">{item.item_description}</p>
-          <p className="text-center">{item.model_series}</p>
-          <h5 className="retail-price text-center">${item.retail_price}</h5>
+          <p className="text-center">{item["Item Description"]}</p>
+          <p className="text-center">{item["Model Series"]}</p>
+          <h5 className="retail-price text-center">${item["Retail Price"]}</h5>
           {item.retailmap > 0 ? (
             <h4 className="text-center">${item.retailmap}</h4>
           ) : (
-              <h4 className="text-center">${(item.dealer_price * profitMargin).toFixed(2)}</h4>
+              <h4 className="text-center">${(item["Dealer Price"] * profitMargin).toFixed(2)}</h4>
             )
           }
           {item.total_quantity > 0 ? (

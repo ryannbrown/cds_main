@@ -46,11 +46,10 @@ class Details extends Component {
 
   // TODO: implement scrolling to bottom on click
 
-  //   scrollPage = () => {
-  //     var scrollingElement = (document.scrollingElement || document.body);
-  // scrollingElement.scrollTop = scrollingElement.scrollHeight;
-  //     console.log("clicked")
-  //   }
+    scrollPage = () => {
+     
+      setTimeout(function(){  window.scrollTo(0, 300); }, 250);
+    }
 
   componentDidMount() {
 
@@ -84,7 +83,7 @@ class Details extends Component {
     var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading } = this.state;
 
 
-    var price = (gunData.dealer_price * profitMargin).toFixed(2);
+    var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
     // gunData.dealer_price = this.state.gunData.dealer_price * 1.25;
@@ -110,13 +109,13 @@ class Details extends Component {
 
 
           {gunSpecs ? (
-            <div>
+            <div className="details">
               <Card className="text-center details-page">
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
-                <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData.item_no}.jpg`} onError={this.usePlaceholderImg}></img>
+                <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
                 {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
-                <h2 className="retail-price">${gunData.retail_price}</h2>
+                <h2 className="retail-price">${gunData["Retail Price"]}</h2>
                 {gunSpecs.retailmap > 0 ? (
                   <h1 className="text-center">${gunSpecs.retailmap}</h1>
                 ) : (
@@ -124,14 +123,14 @@ class Details extends Component {
                   )
                 }
                 <h1>{gunData.model}</h1>
-                <h1>{gunData.model_series}</h1>
-                <h2>{gunData.gun_type}</h2>
+                <h1>{gunData["Model Series"]}</h1>
+                <h2>{gunData["Gun Type"]}</h2>
                 <h2>{gunData.manufacturer}</h2>
                 <h3>{gunData.caliber}</h3>
-                <h3>{gunData.gun_action}</h3>
+                <h3>{gunData["Gun Action"]}</h3>
                 <p>{gunData.features}</p>
-                <p>{gunData.finish}</p>
-                <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item Number : {gunData.item_no}</h2>
+                <p>Finish: {gunData.finish}</p>
+                <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
 
                 <Accordion>
                   <Card>
@@ -179,10 +178,10 @@ class Details extends Component {
                 </Accordion>
               
               </Card>
-              <BrowseTabber />
+              <BrowseTabber title="Revise Search" />
             </div>
           ) : (
-              <div>
+              <div className="details">
                 <Card className="text-center details-page">
                   <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                   {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
@@ -204,9 +203,9 @@ class Details extends Component {
                   <h3>{gunData.gun_action}</h3>
                   <p>{gunData.features}</p>
                   <p>{gunData.finish}</p>
-                  <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item Number : {gunData.item_no}</h2>
+                  <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
                 </Card>
-                <BrowseTabber />
+                <BrowseTabber title="Revise Search" />
               </div>
             )}
         </div>

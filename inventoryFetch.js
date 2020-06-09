@@ -128,7 +128,7 @@ var c = new Client();
   }
 
 
-      fixAttributeFile();
+      // fixAttributeFile();
 
   function fixAttributeFile() {
 

@@ -244,10 +244,11 @@ const pool = new Pool({
 
 app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
-  console.log(criteria);
+  console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
-  pool.query(`SELECT DISTINCT ${criteria} FROM davidsons_inventory 
-  ORDER BY ${criteria} DESC`, (error, results) => {
+  pool.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory_new
+  WHERE "${criteria}" IS NOT NULL
+  ORDER BY "${criteria}" DESC`, (error, results) => {
     if (error) {
       throw error
     }
@@ -271,12 +272,12 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   var sort = req.params.sort;
   // var sortString;
 let query = `SELECT *
-  FROM davidsons_inventory
-  LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory.item_no
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.manufacturer ILIKE '${manufacturer}'`;
+  FROM davidsons_inventory_new
+  LEFT JOIN davidsons_attributes_new
+  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
+  LEFT JOIN davidsons_quantity_new
+  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
+  WHERE davidsons_inventory_new.manufacturer ILIKE '${manufacturer}'`;
   // const values = [data.manufacturer];
 
   // Removed below in order to start using sort params
@@ -284,15 +285,15 @@ let query = `SELECT *
   // total_quantity DESC`;
 
   if (sort == 'priceUp') {
-    query += `ORDER BY dealer_price ASC`
+    query += `ORDER BY "Dealer Price" ASC`
   } else if (sort == 'priceDown') {
-    query += `ORDER BY dealer_price DESC`
+    query += `ORDER BY "Dealer Price" DESC`
   } else if (sort == 'priceUpInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" ASC`
   } else if (sort == 'quantityDown') {
     query += `ORDER BY total_quantity DESC`
   } else if (sort == 'priceDownInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" DESC `
   } else if (sort == 'onlyInStock') {
     query += `AND total_quantity > 0 `
   }
@@ -320,24 +321,24 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
   console.log(gun_type);
 
   let query = `SELECT *
-  FROM davidsons_inventory
-  LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory.item_no
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.gun_type ILIKE '%${gun_type}%'`
+  FROM davidsons_inventory_new
+  LEFT JOIN davidsons_attributes_new
+  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
+  LEFT JOIN davidsons_quantity_new
+  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
+  WHERE davidsons_inventory_new."Gun Type" ILIKE '%${gun_type}%'`
 
 
   if (sort == 'priceUp') {
-    query += `ORDER BY dealer_price ASC`
+    query += `ORDER BY "Dealer Price" ASC`
   } else if (sort == 'priceDown') {
-    query += `ORDER BY dealer_price DESC`
+    query += `ORDER BY "Dealer Price" DESC`
   } else if (sort == 'priceUpInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" ASC`
   } else if (sort == 'quantityDown') {
     query += `ORDER BY total_quantity DESC`
   } else if (sort == 'priceDownInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" DESC `
   } else if (sort == 'onlyInStock') {
     query += `AND total_quantity > 0 `
   }
@@ -360,23 +361,23 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
   console.log(caliber);
 
  let query = `SELECT *
-  FROM davidsons_inventory
-  LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory.item_no
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'`
+  FROM davidsons_inventory_new
+  LEFT JOIN davidsons_attributes_new
+  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
+  LEFT JOIN davidsons_quantity_new
+  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
+  WHERE davidsons_inventory_new.caliber ILIKE '%${caliber}%'`
 
   if (sort == 'priceUp') {
-    query += `ORDER BY dealer_price ASC`
+    query += `ORDER BY "Dealer Price" ASC`
   } else if (sort == 'priceDown') {
-    query += `ORDER BY dealer_price DESC`
+    query += `ORDER BY "Dealer Price" DESC`
   } else if (sort == 'priceUpInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price ASC`
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" ASC`
   } else if (sort == 'quantityDown') {
     query += `ORDER BY total_quantity DESC`
   } else if (sort == 'priceDownInStock') {
-    query += `AND total_quantity > 0 ORDER BY dealer_price DESC `
+    query += `AND total_quantity > 0 ORDER BY "Dealer Price" DESC `
   } else if (sort == 'onlyInStock') {
     query += `AND total_quantity > 0 `
   }
@@ -402,10 +403,10 @@ app.get('/api/model/:item_no', (req, response) => {
   // ON davidsons_attributes.itemno = davidsons_inventory.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  pool.query(` SELECT * FROM davidsons_inventory
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory.item_no = davidsons_quantity.item_number
-  WHERE davidsons_inventory.item_no = '${item_no}'`, (error, results) => {
+  pool.query(` SELECT * FROM davidsons_inventory_new
+  LEFT JOIN davidsons_quantity_new
+  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
+  WHERE davidsons_inventory_new."Item #" = '${item_no}'`, (error, results) => {
     if (error) {
       throw error
     }
@@ -422,7 +423,7 @@ app.get('/api/specs/:item_no', (req, response) => {
   console.log(item_no);
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  pool.query(` SELECT * FROM davidsons_attributes
+  pool.query(` SELECT * FROM davidsons_attributes_new
  WHERE itemno = '${item_no}'`, (error, results) => {
     if (error) {
       throw error

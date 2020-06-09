@@ -63,7 +63,7 @@ class CdsDetails extends Component {
 
     else {
       return (
-        <div className="text-center">
+        <div className="text-center details">
           <Card className='card details-page'>
             <a href="/cds/inventory"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Featured Products</Button></a>
             <img className="gun-img-detailspg" alt={`${gunData.itemdesc1}`}

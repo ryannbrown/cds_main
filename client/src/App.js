@@ -26,6 +26,7 @@ import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
 import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
+import LMT from "./pages/AeroPrecision/LMT.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
@@ -77,6 +78,7 @@ export default function App() {
 
 
           <Route path="/aeroprecision" component={AeroPrecision} />
+          <Route path="/lmt" component={LMT} />
           {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 

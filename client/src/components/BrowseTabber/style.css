@@ -4,10 +4,15 @@
     padding:10px;
     background-color: white;
     border-radius: 15px;
-    /* margin-bottom:55%; */
+    /* width:50%; */
+    margin:0px auto;
 }
 
 .tab-div{
     text-align:center;
+}
 
+.details .browseTabber {
+    width:50%;
+    margin:0px auto;
 }

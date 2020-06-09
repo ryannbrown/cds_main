@@ -17,7 +17,7 @@ filter: brightness(.75);
   font-size:5vw;
   color:white;
   /* padding-top:15%; */
-  /* margin-left:13%; */
+  margin-left:13%;
   text-align:left;
 }
 
@@ -33,9 +33,9 @@ filter: brightness(.75);
  margin:0px auto;
 }
 
-.carousel {
+/* .carousel {
     width:100%;
-}
+} */
 
 @media (min-width:997px) {
     .carousel-contents {

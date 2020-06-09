@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
 import App from '../../App'
 import AddItem from '../AddItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
 class AdminPanel extends Component {
@@ -85,7 +87,7 @@ componentDidMount () {
         const { editSession } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card key={i} className= 'card'>
-            <span onClick={() => this.handleDelete(item.id)} className="delete-icon"><img style={{width:'25px'}} src="https://image.flaticon.com/icons/png/512/61/61848.png"></img></span>
+            <span onClick={() => this.handleDelete(item.id)} className="delete-icon"><FontAwesomeIcon icon={faTrash} /></span>
             <p className="text-center">Product Name: {item.product_name}</p>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}

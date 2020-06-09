@@ -87,6 +87,14 @@
     right: 10px;
 }
 
+.delete-icon:hover {
+    cursor: pointer;
+}
+
+.modal-header {
+    height:100px;
+}
+
 
 .details-page {
     padding: 2% 2%;

@@ -31,48 +31,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-
-
-// var c = new Client();
-// c.on('ready', function() {
-//   // c.list(function(err, list) {
-//   //   if (err) throw err;
-//   //   console.dir(list);
-//   // })
-//   c.get('davidsons_inventory.csv', function(err, stream) {
-//     if (err) throw err;
-//     stream.pipe(fs.createWriteStream('davidsons_inventory_local.csv'));
-//     console.log("downloaded")
-//   });
-//   c.get('davidsons_quantity.csv', function(err, stream) {
-//     if (err) throw err;
- 
-//     stream.pipe(fs.createWriteStream('davidsons_quantity_local.csv'));
-//     console.log("downloaded")
-//   });
-//   c.get('davidsons_firearm_attributes.csv', function(err, stream) {
-//     if (err) throw err;
-//     stream.pipe(fs.createWriteStream('davidsons_attributes_local.csv'));
-//     console.log("downloaded")
-//     c.end();
-//   });
-
-// });
-
-
-  
-//   // connect to localhost:21 as anonymous
-//   c.connect({
-//     host: process.env.ftpHost,
-//     // port: ,
-//     user: process.env.ftpUser, 
-//     password: process.env.ftpPassword
-//   }
-//   );
-
-
-
-
 var pg = require('pg');
 
 var conString = process.env.CONNSTRING //Can be found in the Details page
@@ -128,18 +86,29 @@ app.post('/api/post', function (req, res) {
     product_name: req.body.product_name,
     product_description: req.body.product_description,
     msrp_price: req.body.msrp_price,
-    sale_price: req.body.sale_price
+    sale_price: req.body.sale_price,
+    category: req.body.category,
+    caliber: req.body.caliber,
+    manufacturer: req.body.manufacturer,
+    model: req.body.model,
+    type: req.body.type,
+    barrelLength: req.body.barrelLength,
+    finish: req.body.finish,
+    quantity: req.body.quantity,
+    capacity: req.body.capacity,
+    sights: req.body.sights,
+    upcNumber: req.body.upcNumber
   };
 
   posts.push(data)
 
-  const query = `INSERT INTO cds_inventory( uuid, image, product_name,Product_description, msrp_price, sale_price)
-     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5)`
-  const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price];
+  const query = `INSERT INTO cds_inventory( uuid, image, product_name, Product_description, msrp_price, sale_price, category, caliber, manufacturer, model, type, barrelLength, finish, quantity, capacity, sights, upcNumber )
+     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`
+  const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price, data.category, data.caliber, data.manufacturer, data.model, data.type, data.barrelLength, data.finish, data.quantity, data.capacity, data.sights, data.upcNumber];
   //  FOR DEV
-  //  console.log(query)
+   console.log(query)
   //  console.log(values)
-
+console.log(data)
   client.query(query, values, (error, results) => {
     if (error) {
       throw error
@@ -161,13 +130,29 @@ app.post('/api/update', function (req, res) {
     product_description: req.body.product_description,
     msrp_price: req.body.msrp_price,
     sale_price: req.body.sale_price,
-    uuid: req.body.id
+    uuid: req.body.id,
+    category: req.body.category,
+    caliber: req.body.caliber,
+    manufacturer: req.body.manufacturer,
+    model: req.body.model,
+    type: req.body.type,
+    barrelLength: req.body.barrelLength,
+    finish: req.body.finish,
+    quantity: req.body.quantity,
+    capacity: req.body.capacity,
+    sights: req.body.sights,
+    upcNumber: req.body.upcNumber
   };
 
   // TODO: Potential way to cleanup below code 
   // Object.keys(data).forEach(k => (!data[k] && data[k] !== undefined) && delete data[k]);
   // const values = Object.keys(data).forEach(k => console.log(k));
   // console.log("here is pure data", data)
+
+
+  // hiding wettest code ever below for QUERY LOGIC
+  //#region 
+
 
   var criteria = ``
 
@@ -195,6 +180,85 @@ app.post('/api/update', function (req, res) {
       criteria += `sale_price = '${data.sale_price}'`
     }
   }
+  if (data.category) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price) {
+      criteria += `, category = '${data.category}'`
+    } else {
+      criteria += `category = '${data.category}'`
+    }
+  }
+  if (data.caliber) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category) {
+      criteria += `, caliber = '${data.caliber}'`
+    } else {
+      criteria += `caliber = '${data.caliber}'`
+    }
+  }
+  if (data.manufacturer) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.caliber) {
+      criteria += `, manufacturer = '${data.manufacturer}'`
+    } else {
+      criteria += `manufacturer = '${data.manufacturer}'`
+    }
+  }
+  if (data.model) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber  ) {
+      criteria += `, model = '${data.model}'`
+    } else {
+      criteria += `model = '${data.model}'`
+    }
+  }
+  if (data.type) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model) {
+      criteria += `, type = '${data.type}'`
+    } else {
+      criteria += `type = '${data.type}'`
+    }
+  }
+  if (data.barrelLength) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength) {
+      criteria += `, barrelLength = '${data.barrelLength}'`
+    } else {
+      criteria += `barrelLength = '${data.barrelLength}'`
+    }
+  }
+  if (data.finish) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish) {
+      criteria += `, finish = '${data.finish}'`
+    } else {
+      criteria += `finish = '${data.finish}'`
+    }
+  }
+  if (data.quantity) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish ) {
+      criteria += `, quantity = '${data.quantity}'`
+    } else {
+      criteria += `quantity = '${data.quantity}'`
+    }
+  }
+  if (data.capacity) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity) {
+      criteria += `, capacity = '${data.capacity}'`
+    } else {
+      criteria += `capacity = '${data.capacity}'`
+    }
+  }
+  if (data.sights) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity) {
+      criteria += `, sights = '${data.sights}'`
+    } else {
+      criteria += `sights = '${data.sights}'`
+    }
+  }
+  if (data.sale_price) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity | data.sights) {
+      criteria += `, sale_price = '${data.sale_price}'`
+    } else {
+      criteria += `sale_price = '${data.sale_price}'`
+    }
+  }
+//#endregion
+
 
   const query = `UPDATE cds_inventory SET ${criteria}
   WHERE uuid = '${data.uuid}';`
@@ -289,18 +353,6 @@ const pool = new Pool({
   password: process.env.DB_PASS,
   port: 5432,
 })
-// Item_Number, UPC_Code, Quantity_NC, Quantity_AZ
-
-// pool.query('DROP TABLE IF EXISTS davidsons_quantity_new;CREATE TABLE davidsons_quantity_new(Item_Number varchar(50), UPC_Code varchar(50), Quantity_AZ varchar(50), Quantity_NC varchar(50), total_quantity integer)'
-// );
-
-// pool.query("COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER"
-// )
-
-// pool.query("DELETE FROM davidsons_quantity_new WHERE (quantity_az !~ '^[0-9]+$')")
-// // pool.query("DELETE FROM davidsons_quantity_new WHERE (quantity_nc !~ '^[0-9]+$')")
-// pool.query("ALTER TABLE davidsons_quantity_new ALTER COLUMN quantity_az TYPE INT using quantity_az::integer, ALTER COLUMN quantity_nc TYPE INT using quantity_nc::integer;")
-// pool.query("UPDATE davidsons_quantity_new SET total_quantity = quantity_nc + quantity_az;")
 
 app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
@@ -340,10 +392,8 @@ let query = `SELECT *
   WHERE davidsons_inventory_new.manufacturer ILIKE '${manufacturer}'`;
   // const values = [data.manufacturer];
 
-  // Removed below in order to start using sort params
-  // ORDER BY
-  // total_quantity DESC`;
 
+  //#region query logic
   if (sort == 'priceUp') {
     query += `ORDER BY "Dealer Price" ASC`
   } else if (sort == 'priceDown') {
@@ -371,7 +421,7 @@ console.log("sort:", sort)
     response.send(JSON.stringify({ data }));
 
   });
-
+//#endregion
 
 })
 app.get('/gun_type/:gun_type/:sort', (req, response) => {
@@ -496,12 +546,6 @@ app.get('/api/specs/:item_no', (req, response) => {
 
 
 })
-
-
-
-
-
-
 
 
 

@@ -21,8 +21,20 @@ class AddItem extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.fileChanged = this.fileChanged.bind(this);
         this.img = React.createRef();
+        this.category = React.createRef();
         this.name = React.createRef();
         this.description = React.createRef();
+        this.caliber = React.createRef();
+        this.capacity = React.createRef();
+        this.description = React.createRef();
+        this.manufacturer = React.createRef();
+        this.model = React.createRef();
+        this.type = React.createRef();
+        this.barrelLength = React.createRef();
+        this.finish = React.createRef();
+        this.quantity = React.createRef();
+        this.sights = React.createRef();
+        this.upcNumber = React.createRef();
         this.msrp = React.createRef();
         this.price = React.createRef();
     }
@@ -44,8 +56,19 @@ class AddItem extends Component {
     handleSubmit(event) {
         event.preventDefault()
         let img = this.img.current.value
+        let category = this.category.current.value
         let name = this.name.current.value
         let description = this.description.current.value
+        let caliber = this.caliber.current.value
+        let manufacturer = this.manufacturer.current.value
+        let model = this.model.current.value
+        let type = this.type.current.value
+        let barrelLength = this.barrelLength.current.value
+        let finish = this.finish.current.value
+        let quantity = this.quantity.current.value
+        let capacity = this.capacity.current.value
+        let sights = this.sights.current.value
+        let upcNumber = this.upcNumber.current.value
         let msrp = this.msrp.current.value
         let price = this.price.current.value
 
@@ -78,6 +101,17 @@ class AddItem extends Component {
                     image: filename,
                     product_name: name,
                     product_description: description,
+                    category: category,
+                    caliber: caliber,
+                    manufacturer: manufacturer,
+                    model: model,
+                    type: type,
+                    barrelLength: barrelLength,
+                    finish: finish,
+                    quantity: quantity,
+                    capacity: capacity,
+                    sights: sights,
+                    upcNumber: upcNumber,
                     msrp_price: msrp,
                     sale_price: price
                 })
@@ -113,20 +147,64 @@ class AddItem extends Component {
 
 
                         <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Product Category</Form.Label>
+                            <Form.Control ref={this.category} type="text"  />
+                        </Form.Group>
+                        <Form.Group>
                             <Form.Label>Product Name</Form.Label>
-                            <Form.Control ref={this.name} type="text" placeholder="Product Name" />
+                            <Form.Control ref={this.name} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Description</Form.Label>
-                            <Form.Control ref={this.description} as="textarea" rows="5" placeholder="Description" />
+                            <Form.Control ref={this.description} type="textarea" rows="5"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Caliber</Form.Label>
+                            <Form.Control ref={this.caliber} type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Manufacturer</Form.Label>
+                            <Form.Control ref={this.manufacturer} type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Model</Form.Label>
+                            <Form.Control ref={this.model} type="text" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Type</Form.Label>
+                            <Form.Control ref={this.type} type="text" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Barrel Length</Form.Label>
+                            <Form.Control ref={this.barrelLength} type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Finish</Form.Label>
+                            <Form.Control ref={this.finish} type="text" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Capacity</Form.Label>
+                            <Form.Control ref={this.capacity} type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Sights</Form.Label>
+                            <Form.Control ref={this.sights} type="text" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>UPC #</Form.Label>
+                            <Form.Control ref={this.upcNumber} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>MSRP Price</Form.Label>
-                            <Form.Control ref={this.msrp} type="number" step="0.01" placeholder="MSRP" />
+                            <Form.Control ref={this.msrp} type="number" step="0.01"/>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Listing Price</Form.Label>
-                            <Form.Control ref={this.price} type="number" step="0.01" placeholder="Listing Price" />
+                            <Form.Control ref={this.price} type="number" step="0.01" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Quantity</Form.Label>
+                            <Form.Control ref={this.quantity} type="number" />
                         </Form.Group>
                         <Button style={{ backgroundColor: '#dd6717' }} variant='dark' type="submit">
                             Submit

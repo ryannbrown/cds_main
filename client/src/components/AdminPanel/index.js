@@ -3,7 +3,7 @@ import React, { Component, useState } from "react";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Modal } from 'react-bootstrap';
 import App from '../../App'
 import AddItem from '../AddItem'
-import EditItem from '../EditItem/index.js'
+// import EditItem from '../EditItem/index.js'
 import EditNewItem from '../EditNewItem/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'

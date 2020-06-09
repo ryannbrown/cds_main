@@ -188,7 +188,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
           </Button></div> */}
         
         {/* TODO: make dynamic for others besides manufacturer */}
-        <a><Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button></a>
+        <a href="/"><Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button></a>
 
         <CardDeck>
           {items}

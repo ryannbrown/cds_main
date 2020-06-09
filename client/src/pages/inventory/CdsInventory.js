@@ -10,7 +10,7 @@ class AdminPanel extends Component {
         super(props);
         this.state = {
             isLoading: true,
-            editSession: false,
+            createSession: false,
             posts:[]
         };
     }

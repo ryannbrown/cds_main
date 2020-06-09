@@ -3,8 +3,10 @@ import React, { Component, useState } from "react";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Modal } from 'react-bootstrap';
 import App from '../../App'
 import AddItem from '../AddItem'
+import EditItem from '../EditItem/index.js'
+import EditNewItem from '../EditNewItem/index.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 
 class AdminPanel extends Component {
@@ -12,6 +14,7 @@ class AdminPanel extends Component {
         super(props);
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
+            createSession: false,
             editSession: false,
             posts: [],
             updatePosts: false,
@@ -31,7 +34,14 @@ class AdminPanel extends Component {
 
     addItem = (event) => {
         this.setState({
-            editSession: true
+            createSession: true
+        })
+    }
+    editItem = (name, uuid) => {
+        console.log("editting", uuid)
+        this.setState({
+            editSession: true,
+            editId: uuid
         })
     }
     refreshFeed = (event) => {
@@ -107,11 +117,12 @@ class AdminPanel extends Component {
     render() {
 
         console.log(this.state.posts)
-        const { editSession, show, showDialogue, showId} = this.state;
+        const { createSession, editSession, show, showDialogue, showId, editId} = this.state;
+        console.log(editSession)
         const items = this.state.posts.map((item, i) =>
             <Card key={i} className='card'>
-                {/* <span onClick={() => this.handleDelete(item.id)} className="delete-icon"><FontAwesomeIcon icon={faTrash} /></span> */}
                 <span onClick={() => this.handleShow(item.product_name, item.id)}  className="delete-icon"><FontAwesomeIcon icon={faTrash} /></span>
+                <span onClick={() => this.editItem(item.product_name, item.uuid)}  className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
                 <p className="text-center">Product Name: {item.product_name}</p>
                 <img className="gun-img" alt={`${item.itemdesc1}`}
                     src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
@@ -121,6 +132,7 @@ class AdminPanel extends Component {
                 <p className="text-center">MSRP Price: {item.msrp_price}</p>
                 <p className="text-center">Sale Price: {item.sale_price}</p>
                 
+                {/* Modal for confirming deletion */}
                 <Modal centered show={show} onHide={this.handleClose}>
 
                         <Modal.Header closeButton>
@@ -142,13 +154,21 @@ class AdminPanel extends Component {
 
         const placeholderText = <div>There are no items in inventory</div>
 
+
         if (editSession) {
             return (
-                <AddItem></AddItem>
+                <EditNewItem id={editId} />
             )
         }
 
-        if (this.state.posts.length === 0) {
+        if (createSession) {
+            return (
+                <AddItem/>
+            )
+        }
+      
+
+       if (this.state.posts.length === 0) {
             return (
                 <div className="text-center m-5">
                     <Button style={{ backgroundColor: '#dd6717' }} variant='dark' onClick={this.addItem}>Add Item</Button>
@@ -160,7 +180,7 @@ class AdminPanel extends Component {
             )
         }
 
-        if (!editSession) {
+        if (!createSession) {
 
             return (
 
@@ -176,6 +196,7 @@ class AdminPanel extends Component {
                 </div>
             )
         }
+      
     }
 }
 export default AdminPanel

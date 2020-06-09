@@ -10,7 +10,7 @@ class AdminPanel extends Component {
         super(props);
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
-            editSession: false,
+            createSession: false,
             posts: []
         };
     }
@@ -42,7 +42,7 @@ class AdminPanel extends Component {
 
     render() {
         console.log(this.state.posts)
-        const { editSession } = this.state;
+        const { createSession } = this.state;
         const items = this.state.posts.map((item, i) =>
 
             <Carousel.Item key={i}>

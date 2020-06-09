@@ -149,6 +149,66 @@ app.post('/api/post', function (req, res) {
   );
 })
 
+
+
+// UPDATE cds inventory
+// let updateFields = []
+app.post('/api/update', function (req, res) {
+  // console.log("keys")
+  const data = {
+    // image: req.body.image,
+    product_name: req.body.product_name,
+    product_description: req.body.product_description,
+    msrp_price: req.body.msrp_price,
+    sale_price: req.body.sale_price,
+    uuid: req.body.id
+  };
+
+  // TODO: Potential way to cleanup below code 
+  // Object.keys(data).forEach(k => (!data[k] && data[k] !== undefined) && delete data[k]);
+  // const values = Object.keys(data).forEach(k => console.log(k));
+  // console.log("here is pure data", data)
+
+  var criteria = ``
+
+  if (data.product_name) {
+    criteria += `product_name = '${data.product_name}'`
+  }
+  if (data.product_description) {
+    if (data.product_name) {
+      criteria += `, product_description = '${data.product_description}'`
+    } else {
+      criteria += `product_description = '${data.product_description}'`
+    }
+  }
+  if (data.msrp_price) {
+    if (data.product_name || data.product_description) {
+      criteria += `, msrp_price = '${data.msrp_price}'`
+    } else {
+      criteria += `msrp_price = '${data.msrp_price}'`
+    }
+  }
+  if (data.sale_price) {
+    if (data.product_name || data.product_description || data.msrp_price) {
+      criteria += `, sale_price = '${data.sale_price}'`
+    } else {
+      criteria += `sale_price = '${data.sale_price}'`
+    }
+  }
+
+  const query = `UPDATE cds_inventory SET ${criteria}
+  WHERE uuid = '${data.uuid}';`
+console.log(query)
+
+  client.query(query, (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.send('POST request to the homepage')
+  }
+  );
+})
+
 //    DELETE CUSTOM INVENTORY
 app.delete('/api/remove_post', function (req, response) {
   let id = req.body.id

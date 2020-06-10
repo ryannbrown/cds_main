@@ -1,0 +1,51 @@
+.carousel-caption {
+    color:white;
+    text-shadow: 1px 1px black;
+font-size:1em;
+}
+
+/* .carousel {
+    margin-top:35%;
+} */
+
+.gun-img-carousel {
+max-height:650px;
+filter: brightness(.75);
+}
+
+.carousel-title {
+  font-size:5vw;
+  color:white;
+  /* padding-top:15%; */
+  margin-left:13%;
+  text-align:left;
+}
+
+.carousel {
+    width: 75%;
+    margin: 0px auto;
+}
+
+
+
+.carousel-contents {
+    width: 100%;
+ margin:0px auto;
+}
+
+/* .carousel {
+    width:100%;
+} */
+
+@media (min-width:997px) {
+    .carousel-contents {
+        width: 100%;
+     margin:0px auto;
+    }
+}
+
+
+
+/* .carousel.slide {
+    margin-bottom: 75%;
+} */

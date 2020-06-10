@@ -1,9 +1,10 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
+import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 
 // const queryString = require('query-string');
 
@@ -15,43 +16,61 @@ class Details extends Component {
     super(props);
     this.state = {
       gunData: [] || '',
-      isLoaded: false,
+      isLoading: true,
       catData: [],
+      gunSpecs: [],
       param: '',
       descriptionKeys: [],
       descriptionValues: []
     };
   }
 
+
+  usePlaceholderImg(ev) {
+    ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
+    console.log(ev);
+  }
+
+  fetchAdditionalData = (param) => {
+    fetch(`/api/specs/${param}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("specs", json.data[0])
+        this.setState({
+          gunSpecs: json.data[0],
+          isLoading: false
+        }, console.log(this.state.gunSpecs))
+      }
+      )
+  }
+
+  // TODO: implement scrolling to bottom on click
+
+    scrollPage = () => {
+     
+      setTimeout(function(){  window.scrollTo(0, 300); }, 250);
+    }
+
   componentDidMount() {
 
-   console.log(this.props.match.params)
+    console.log(this.props.match.params)
 
-   let param = Object.values(this.props.match.params);
-   this.setState({
-    param: param
-  })
+    let param = Object.values(this.props.match.params);
+    this.setState({
+      param: param
+    })
 
     fetch(`/api/model/${param}`)
       .then(res => res.json())
       .then(json => {
-        console.log("json", json)
-        // console.log(Object.keys(json.data[0]))
-        // var descriptionKeys = Object.keys(json.data[0])
-        // var descriptionValues = Object.values(json.data[0])
-        // console.log(Array.prototype.push.apply(descriptionKeys,descriptionValues))
-        // console.log(descriptionKeys)
-        // console.log(Object.values(json.data[0]))
+        console.log("inventory", json.data[0])
         this.setState({
           gunData: json.data[0],
-          isLoaded: true,
-        //   descriptionKeys: descriptionKeys,
-        //   descriptionValues: descriptionValues
+          // isLoading: false,
         })
-        console.log(this.state.gunData);
         var size = Object.keys(this.state.gunData).length;
         console.log(size);
-      });
+      }).then(this.fetchAdditionalData(param))
   };
 
 
@@ -59,41 +78,140 @@ class Details extends Component {
 
   render() {
 
-    var { param, descriptionKeys, descriptionValues, gunData } = this.state;
-    // const keys = descriptionKeys.map((item1, i) =><li>{item1}</li>);
-    // const values = descriptionValues.map((item2, i) =><li>{item2}</li>);
-    return (
-        <div>
-                <Card className="text-center">
-                <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a>
-                    <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img>
-                    <h1 className="retail-price">${gunData.retailprice}</h1>
-                        <h1>${gunData.dealerprice}</h1>
-                      <h1>{gunData.model}</h1>
-                      <h2>{gunData.manuf}</h2>
-                      <p>{gunData.caliber}</p>
-                      <p>{gunData.features1}</p>
-                          <p>{gunData.features2}</p>
-                          <p>{gunData.features3}</p>
-                          <p>Additional Features:</p>
-                          {/*TODO: potentially target this list group with jquery to fill nulls with NA */}
-                      <ListGroup horizontal>
-                          <ListGroupItem> Frame Material: {gunData.framematerial}</ListGroupItem>
-                          <ListGroupItem>Capacity: {gunData.capacity}</ListGroupItem>
-                          <ListGroupItem>Stock: {gunData.stock}</ListGroupItem>
-                          <ListGroupItem>Mag Type: {gunData.magtype}</ListGroupItem>
-                          <ListGroupItem>Overall Length {gunData.overalllength}</ListGroupItem>
-                          <ListGroupItem>Sight Front: {gunData.sightfront}</ListGroupItem>
-                          <ListGroupItem>Sight Rear: {gunData.sightrear}</ListGroupItem>
-                          <ListGroupItem>Trigger Guard: {gunData.triggerguard}</ListGroupItem>
-                          <ListGroupItem>Weight: {gunData.weight}</ListGroupItem>
-                          <ListGroupItem>Frame Finish: {gunData.finishframe}</ListGroupItem>
-                          <ListGroupItem>Class Finish: {gunData.finishclass}</ListGroupItem>
-                      </ListGroup>
-                </Card>
-      </div>
+    const profitMargin = 1.15
 
-    );
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading } = this.state;
+
+
+    var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
+
+
+    // gunData.dealer_price = this.state.gunData.dealer_price * 1.25;
+
+    // const dealerPrice = this.state.gunData.msp;
+    // console.log(Number(dealerPrice));
+    // gunDat.replace(/[$,]+/g,"");
+    // var result = parseFloat(currency) + .05;
+
+    if (isLoading) {
+      return (
+        <div className="spinner-box">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="">
+
+
+
+          {gunSpecs ? (
+            <div className="details">
+              <Card className="text-center details-page">
+                <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
+                <h1 className="pt4">{gunData["Item Description"]}</h1>
+                {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
+                <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
+                {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
+                <h2 className="retail-price">${gunData["Retail Price"]}</h2>
+                {gunSpecs.retailmap > 0 ? (
+                  <h1 className="text-center">${gunSpecs.retailmap}</h1>
+                ) : (
+                    <h1>${price}</h1>
+                  )
+                }
+                <h1>{gunData.model}</h1>
+                <h1>{gunData["Model Series"]}</h1>
+                <h2>{gunData["Gun Type"]}</h2>
+                <h2>{gunData.manufacturer}</h2>
+                <h3>{gunData.caliber}</h3>
+                <h3>{gunData["Gun Action"]}</h3>
+                <p>{gunData.features}</p>
+                <p>Finish: {gunData.finish}</p>
+                <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
+
+                <Accordion>
+                  <Card>
+                    <Accordion.Toggle className="additionalinfo-btn" as={Button} variant="button" eventKey="0" onClick={this.scrollPage}>
+                      <a>Click for Additional information</a>
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                      <Card.Body className="description-list">
+                        <ListGroup variant="flush" style={{ width: '50%', margin: '0px auto' }}>
+                          <p>Features:</p>
+                          {gunData.features1 ? (
+                            <ListGroupItem>{gunSpecs.features1}</ListGroupItem>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunData.features2 ? (
+                            <ListGroupItem>{gunSpecs.features2}</ListGroupItem>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunData.features3 ? (
+                            <ListGroupItem>{gunSpecs.features3}</ListGroupItem>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          <ListGroupItem> Frame Material: {gunSpecs.framematerial}</ListGroupItem>
+                          <ListGroupItem>Capacity: {gunSpecs.capacity}</ListGroupItem>
+                          <ListGroupItem>Stock: {gunSpecs.stock}</ListGroupItem>
+                          <ListGroupItem>Mag Type: {gunSpecs.magtype}</ListGroupItem>
+                          <ListGroupItem>Overall Length {gunSpecs.overalllength}</ListGroupItem>
+                          <ListGroupItem>Sight Front: {gunSpecs.sightfront}</ListGroupItem>
+                          <ListGroupItem>Sight Rear: {gunSpecs.sightrear}</ListGroupItem>
+                          <ListGroupItem>Trigger Guard: {gunSpecs.triggerguard}</ListGroupItem>
+                          <ListGroupItem>Weight: {gunSpecs.weight}</ListGroupItem>
+                          <ListGroupItem>Frame Finish: {gunSpecs.finishframe}</ListGroupItem>
+                          <ListGroupItem>Class Finish: {gunSpecs.finishclass}</ListGroupItem>
+                        </ListGroup>
+                        <a name="scrolltobottom"></a>
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
+                </Accordion>
+              
+              </Card>
+              <BrowseTabber title="Revise Search" />
+            </div>
+          ) : (
+              <div className="details">
+                <Card className="text-center details-page">
+                  <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
+                  {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
+                  <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
+                  {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
+                  <h2 className="retail-price">${gunData.retail_price}</h2>
+                  {gunData.retailmap > 0 ? (
+                    <h1 className="text-center">${gunSpecs.retailmap}</h1>
+                  ) : (
+                      <h1>${price}</h1>
+                    )
+                  }
+
+                  <h1>{gunData.model}</h1>
+                  <h1>{gunData.model_series}</h1>
+                  <h2>{gunData.gun_type}</h2>
+                  <h2>{gunData.manufacturer}</h2>
+                  <h3>{gunData.caliber}</h3>
+                  <h3>{gunData.gun_action}</h3>
+                  <p>{gunData.features}</p>
+                  <p>{gunData.finish}</p>
+                  <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
+                </Card>
+                <BrowseTabber title="Revise Search" />
+              </div>
+            )}
+        </div>
+      )
+    }
   }
 }
 export default Details;

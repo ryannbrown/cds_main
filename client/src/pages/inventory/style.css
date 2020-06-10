@@ -7,12 +7,13 @@
 
 @media(max-width:997px){
     .deck-wrapper{
-        margin-top: 20%;
+        /* margin-top: 20%; */
     }
 }
 @media(min-width:997px){
     .deck-wrapper{
-        margin-top: 10%;
+        /* margin-top: 10%; */
+        /* min-height:80vh; */
     }
 }
 
@@ -24,12 +25,12 @@
 
 .gun-img-detailspg{
     max-width:100%;
-    max-height:auto;
+    max-height:500px;
     margin:0px auto;
 }
 
 .gun-desc {
-    max-height: 150px;
+    max-height: 250px;
     overflow: scroll;
     padding:15px;
 }
@@ -56,22 +57,103 @@
 .retail-price {
     text-decoration: line-through;
 }
+.inventory-card {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
 
 .inventory-card:hover {
     transform:scale(1.1);
-    transition-duration: .25s;
+    /* transition-duration: .25s; */
+
 }
-a:hover {
+/* a:hover {
     text-decoration:none;
     color:inherit;
-}
-a {
+} */
+/* a {
     color:inherit;
-}
+} */
 
 
 .delete-icon {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+.edit-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.delete-icon:hover {
+    cursor: pointer;
+    color: rgb(221, 103, 23);
+}
+.edit-icon:hover {
+    cursor: pointer;
+    color:rgb(221, 103, 23);
+}
+
+.modal-header {
+    height:100px;
+}
+
+
+.details-page {
+    padding: 2% 2%;
+    margin: 2% 15%;
+    /* box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2); */
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3)
+}
+
+
+
+.description-list {
+    height: 400px;
+    overflow: scroll;
+}
+
+.additionalinfo-btn {
+    color: white;
+    background-color: black;
+}
+
+.tab-div{
+    text-align:center;
+
+}
+
+.pagination-div {
+    height:25vh;
+    margin:0px auto;
+}
+
+ul#page-numbers li {
+    float:left;
+}
+
+#page-numbers {
+    list-style: none;
+    width:100%;
+    /* display: flex; */
+    font-size: 1.5em;
+  }
+  
+  #page-numbers > li {
+    justify-content:center;
+    padding:10px;
+    color: blue;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .inventory-div .browseTabber {
+    width: 50%;
 }

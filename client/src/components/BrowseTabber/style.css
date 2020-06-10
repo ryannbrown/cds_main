@@ -1,0 +1,18 @@
+.browseTabber {
+    box-shadow:0px 1px 4px 0px rgba(0,0,0,0.2);
+    height:auto;
+    padding:10px;
+    background-color: white;
+    border-radius: 15px;
+    /* width:50%; */
+    margin:0px auto;
+}
+
+.tab-div{
+    text-align:center;
+}
+
+.details .browseTabber {
+    width:50%;
+    margin:0px auto;
+}

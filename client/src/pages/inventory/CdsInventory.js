@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import Carousel from 'react-bootstrap/Carousel'
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from 'react-bootstrap';
 import App from "../../App"
 
 
@@ -9,8 +9,8 @@ class AdminPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: this.props.isLoggedIn,
-            editSession: false,
+            isLoading: true,
+            createSession: false,
             posts:[]
         };
     }
@@ -28,7 +28,8 @@ class AdminPanel extends Component {
         .then(json => {
           console.log("json", json)
           this.setState({
-              posts:json.data
+              posts:json.data,
+              isLoading: false
           })
         })
     }
@@ -42,26 +43,36 @@ componentDidMount () {
 
     render() {
         console.log(this.state.posts)
-        const { editSession } = this.state;
+        const { isLoading } = this.state;
         const items = this.state.posts.map((item, i) =>
-        <Card className= 'card'>
-            <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
+        <Card className= 'card inventory-card'>
+            <a href={`/cds/details/${item.uuid}`}>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
         />
-         <p className="text-center gun-desc">{item.product_description}</p>
+        <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
+         {/* <p className="text-center gun-desc">{item.product_description}</p> */}
          <h5 className="text-center retail-price">{item.msrp_price}</h5>
          <h4 className="text-center">{item.sale_price}</h4>
-         
+         {/* <h4 className="text-center">{item.quantity}</h4>
+         <h4 className="text-center">{item.caliber}</h4> */}
+         </a>
         </Card>
         );
 
         const placeholderText = <div>There are no items in inventory</div>
 
-
-        if (!editSession) {
-         
+        if (isLoading) {
+            return (
+              <div className="spinner-box">
+            <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+          </div> )
+          }
+      
+          else {
             return (
                 <div>
                     <a href="/">
@@ -79,15 +90,6 @@ componentDidMount () {
                 </div>
             )
         } 
-
-        if (this.state.posts.length === 0) {
-            return (
-                <div className="text-center m-5">
-                    {placeholderText}
-                        
-                </div>
-            )
-        }
     }
 }
 export default AdminPanel

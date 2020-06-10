@@ -45,10 +45,7 @@ a {
     text-decoration:none;
     color:inherit;
 }
-a:hover {
-    text-decoration:none;
-    color:inherit;
-}
+
 
 .secret-sauce:hover{
     cursor:text;
@@ -74,7 +71,7 @@ nav.navbar.navbar-expand-lg.navbar-light.sticky-top {
     color:white;
 }
 
-.nav-link { 
+.navbar .nav-link { 
     color:white !important;
 }
 
@@ -104,3 +101,37 @@ nav.navbar.navbar-expand-lg.navbar-light.sticky-top {
     border: 2px solid #28a745;
     background-color:#e0f1e4;
 }
+
+footer#footer {
+    height:100px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding-top:2%;
+}
+
+.spinner-box {
+    height:100vh;
+}
+.spinner-border {
+    width:5rem;
+    height:5rem;
+    position:fixed;
+    top:50%;
+    left:50%;
+}
+
+
+
+h1 {
+
+     margin: 0 0;
+}
+
+h2 {
+    font-size:1.5em;
+}
+
+html {
+    scroll-behavior: smooth;
+  }

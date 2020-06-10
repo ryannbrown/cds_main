@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import "../Home";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form } from 'react-bootstrap';
-
+import "../../pages/Home"
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form, Dropdown } from 'react-bootstrap';
+import './style.css'
 // const queryString = require('query-string');
 
 require("dotenv").config();
@@ -12,8 +12,7 @@ class Browse extends Component {
     this.state = {
       data: [],
       isLoaded: false,
-      catData: [],
-      param: ''
+      catData: []
     };
   }
 
@@ -39,18 +38,26 @@ class Browse extends Component {
 
   componentDidMount() {
 
-   console.log(this.props.match.params)
+    // console.log(this.props.param)
 
-   let param = Object.values(this.props.match.params);
-
-   this.setState({
+    let param = (this.props.param);
+    this.setState({
      param: param
    })
 
-    fetch(`/browse/${param}`)
+//    console.log(this.props.match.params)
+
+  //  let param = Object.values(this.props.match.params);
+  //  this.setState({
+  //   param: param
+  // })
+
+    // fetch(`/browse/${param}`)
+    // fetch(`/browse/manufacturer`)
+    fetch(this.props.link)
       .then(res => res.json())
       .then(json => {
-        console.log("json", json)
+        // console.log("json", json)
 
         var size = Object.keys(json.data).length;
         var criteriaVals = [];
@@ -58,7 +65,7 @@ class Browse extends Component {
           // console.log(Object.values(json.data[i]))
           criteriaVals.push(Object.values(json.data[i]))
         }
-        console.log(criteriaVals)
+        // console.log(criteriaVals)
         // var descriptionValues = Object.values(json.data)
         //  console.log(Object.keys(json.data[0]))
         // var descriptionKeys = Object.keys(json.data[0])
@@ -71,9 +78,9 @@ class Browse extends Component {
           data: criteriaVals,
           isLoaded: true
         })
-        console.log(this.state.data);
+        // console.log(this.state.data);
         var size = Object.keys(this.state.data).length;
-        console.log(size);
+        // console.log(size);
       });
   };
 
@@ -81,31 +88,31 @@ class Browse extends Component {
 
 
   render() {
-
     var { param } = this.state;
 // TO DO: Potentialy use Custom Dropdown Component from react bootstrap docs
     // var slug = "/api/inventory/" + {item.manuf};
  const formOptions = this.state.data.map((item, i) =>
- <option value={`/${param}/${item}`}>{item}</option>
+//  <div>{item}</div>
+ <Dropdown.Item key={i} href={`/${param}/${item}`}>{item}</Dropdown.Item>
  );
 
- const items = this.state.data.map((item, i) =><Card>
-   <a href={`/${param}/${item}`}>
-     <div className="text-center" key={i}>{item}</div></a></Card>
-);
+//  const items = this.state.data.map((item, i) =><Card>
+//    <a href={`/${param}/${item}`}>
+//      <div className="text-center" key={i}>{item}</div></a></Card>
+// );
     return (
       <div className="deck-wrapper">
-        <Form style={{width: '50%', margin: '0px auto'}} >
-  <Form.Group controlId="exampleForm.SelectCustom">
-    <Form.Label>Search by Manufacturer</Form.Label>
-    <Form.Control onChange={this.fileChanged.bind(this)} as="select" custom>
+        <Dropdown className="search-filter" style={{margin: '0px auto'}} >
+  {/* <Form.Group controlId="exampleForm.SelectCustom"> */}
+      <Dropdown.Toggle className="mt-3" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px', color: 
+    'white' }} variant = "basic" id="dropdown-basic"> Choose one</Dropdown.Toggle>
+     {/* {this.props.text} */}
+    <Dropdown.Menu className="dropdown-menu">
       {formOptions}
-    </Form.Control>
-  </Form.Group>
-</Form>
-      <CardDeck>
-      {items}
-      </CardDeck>
+    </Dropdown.Menu>
+    {/* <Form.Label>Search by Manufacturer</Form.Label> */}
+  {/* </Form.Group> */}
+</Dropdown>
     </div>
     );
   }

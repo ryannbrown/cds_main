@@ -1,0 +1,22 @@
+.search-filter {width: 100%;
+    margin: 0px auto;
+    text-align: center;
+    /* height: 100px; */
+    /* background-color: orange; */
+    font-size: 1.5em;
+}
+
+.search-filter > .form-group {
+    width:50%;
+    margin:0px auto;
+    padding-top:25px;
+}
+
+/* .dropdown-menu {
+    max-height:300px;
+    overflow: scroll;
+} */
+.search-filter .dropdown-menu {
+    max-height:300px;
+    overflow: scroll;
+}

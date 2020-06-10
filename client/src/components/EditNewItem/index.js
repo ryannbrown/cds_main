@@ -8,15 +8,16 @@ import axios from 'axios';
 
 require("dotenv").config();
 
-class AddItem extends Component {
+class EditNewItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
             isLoggedIn: false,
             catData: [],
-            itemPosted: false,
-            file: null
+            itemUpdated: false,
+            file: null,
+            gunData: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.fileChanged = this.fileChanged.bind(this);
@@ -41,6 +42,22 @@ class AddItem extends Component {
 
 
 
+    componentDidMount () {
+        console.log("id:", this.props.id)
+
+        fetch(`/api/posts/${this.props.id}`)
+        .then(res => res.json())
+        .then(json => {
+          console.log("inventory", json.data[0])
+          this.setState({
+            gunData: json.data[0],
+            isLoading: false,
+          })
+          var size = Object.keys(this.state.gunData).length;
+          console.log(size);
+        })
+    }
+
     fileChanged(event) {
         console.log(event)
         var f = event.target.files;
@@ -55,7 +72,7 @@ class AddItem extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        let img = this.img.current.value
+        // let img = this.img.current.value
         let category = this.category.current.value
         let name = this.name.current.value
         let description = this.description.current.value
@@ -72,33 +89,35 @@ class AddItem extends Component {
         let msrp = this.msrp.current.value
         let price = this.price.current.value
 
+       
+    //     const filename = this.state.file[0].name
+    //     if (filename) {
+    //     const thisFormData = new FormData();
+    //     thisFormData.append('element1', this.state.file[0]);
+    //     var requestOptions = {
+    //         method: 'POST',
+    //         body: thisFormData,
+    //         redirect: 'follow'
+    //     };
+    // }
 
-        const filename = this.state.file[0].name
 
-        const thisFormData = new FormData();
-        thisFormData.append('element1', this.state.file[0]);
-        var requestOptions = {
-            method: 'POST',
-            body: thisFormData,
-            redirect: 'follow'
-        };
-
-        fetch("/api/upload/", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+        // fetch("/api/upload/", requestOptions)
+        //     .then(response => response.text())
+        //     .then(result => console.log(result))
+        //     .catch(error => console.log('error', error));
 
         const postItem = () => {
-            console.log("posting to DB")
+            console.log("Updating DB")
             // POST TO DB
-            fetch('/api/post', {
+            fetch('/api/update', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    image: filename,
+                    // image: this.state.file[0].name,
                     product_name: name,
                     product_description: description,
                     category: category,
@@ -113,14 +132,15 @@ class AddItem extends Component {
                     sights: sights,
                     upcNumber: upcNumber,
                     msrp_price: msrp,
-                    sale_price: price
+                    sale_price: price,
+                    id: this.props.id
                 })
                 }).then(response => {
-                    console.log("hey i did it")
+                    console.log("Updated!")
                     console.log(response)
                     if (response.status == '200') {
                         this.setState({
-                            itemPosted: true
+                            itemUpdated: true
                         })
                     }
             })
@@ -132,78 +152,81 @@ class AddItem extends Component {
 
 
     render() {
-        const { itemPosted } = this.state;
-        if (!itemPosted) {
+        const { itemUpdated, gunData } = this.state;
+
+
+        if (!itemUpdated) {
             return (
                 <div className="m-5">
-                    <h1>Add Item</h1>
+                    <h1>Edit Item</h1>
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data" >
 
                         <Form.Label>Item Image</Form.Label>
-                        <input
+                        {/* <input
                             onChange={this.fileChanged.bind(this)}
                             ref={this.img}
-                            type="file" required placeholder="Upload File" />
+                            type="file" placeholder="Upload File" /> */}
 
 
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Product Category</Form.Label>
+                            <Form.Label>Product Name: {gunData.product_name}</Form.Label>
+                            <Form.Control ref={this.name} type="text" placeholder="Edit Name" />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Product Description: {gunData.product_description}</Form.Label>
+                            <Form.Control ref={this.description} as="textarea" rows="5" placeholder="Edit Description" />
+                        </Form.Group>
+                       
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Product Category: {gunData.category}</Form.Label>
                             <Form.Control ref={this.category} type="text"  />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Product Name</Form.Label>
-                            <Form.Control ref={this.name} type="text"  />
-                        </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Product Description</Form.Label>
-                            <Form.Control ref={this.description} type="textarea" rows="5"  />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Caliber</Form.Label>
+                            <Form.Label>Caliber: {gunData.caliber}</Form.Label>
                             <Form.Control ref={this.caliber} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Manufacturer</Form.Label>
+                            <Form.Label>Manufacturer: {gunData.manufacturer}</Form.Label>
                             <Form.Control ref={this.manufacturer} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Model</Form.Label>
+                            <Form.Label>Model: {gunData.model}</Form.Label>
                             <Form.Control ref={this.model} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Type</Form.Label>
+                            <Form.Label>Type: {gunData.type}</Form.Label>
                             <Form.Control ref={this.type} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Barrel Length</Form.Label>
+                            <Form.Label>Barrel Length: {gunData.barrelLength}</Form.Label>
                             <Form.Control ref={this.barrelLength} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Finish</Form.Label>
+                            <Form.Label>Finish: {gunData.finish}</Form.Label>
                             <Form.Control ref={this.finish} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Capacity</Form.Label>
+                            <Form.Label>Capacity: {gunData.capacity}</Form.Label>
                             <Form.Control ref={this.capacity} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Sights</Form.Label>
+                            <Form.Label>Sights: {gunData.sights}</Form.Label>
                             <Form.Control ref={this.sights} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>UPC #</Form.Label>
+                            <Form.Label>UPC #: {gunData.upcNumber}</Form.Label>
                             <Form.Control ref={this.upcNumber} type="text"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>MSRP Price</Form.Label>
-                            <Form.Control ref={this.msrp} type="number" step="0.01"/>
+                            <Form.Label>MSRP Price: {gunData.msrp_price}</Form.Label>
+                            <Form.Control ref={this.msrp} type="number" step="0.01" placeholder="Edit MSRP" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Listing Price</Form.Label>
-                            <Form.Control ref={this.price} type="number" step="0.01" />
+                            <Form.Label>Listing Price: {gunData.sale_price}</Form.Label>
+                            <Form.Control ref={this.price} type="number" step="0.01" placeholder="Edit Listing Price" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Quantity</Form.Label>
+                            <Form.Label>Quantity: {gunData.quantity}</Form.Label>
                             <Form.Control ref={this.quantity} type="number" />
                         </Form.Group>
                         <Button style={{ backgroundColor: '#dd6717' }} variant='dark' type="submit">
@@ -213,11 +236,11 @@ class AddItem extends Component {
                 </div>
 
             );
-        } if (itemPosted) {
+        } if (itemUpdated) {
             return (
                 <div>
-                    <p className="text-center">Item has been posted!</p>
-                    <AdminPanel itemPosted="true"></AdminPanel>
+                    <p className="text-center">Item updated!</p>
+                    <AdminPanel itemUpdated="true"></AdminPanel>
                     {/* <a href="/admin"><Button style={{ backgroundColor: '#dd6717', margin: '0px auto;' }} variant='dark'>Inventory List</Button></a> */}
                 </div>
             )
@@ -232,4 +255,4 @@ class AddItem extends Component {
 }
 
 
-export default AddItem;
+export default EditNewItem;

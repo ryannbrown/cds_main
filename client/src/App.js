@@ -17,12 +17,16 @@ import Nav from "./components/Navbar";
 // import xml2js from 'xml2js';
 // import axios from "axios";
 import Home from '../src/pages/Home';
+import About from '../src/pages/About';
 import Inventory from './pages/inventory/Inventory';
 import Browse from './pages/inventory/Browse';
 import Details from './pages/inventory/Details';
 import AdminPage from './pages/admin/admin';
 import CdsInventory from "./pages/inventory/CdsInventory";
+import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
+import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
+import LMT from "./pages/AeroPrecision/LMT.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
@@ -56,7 +60,9 @@ export default function App() {
 
           <Route path="/browse/:criteria" component={Browse} />
 
-          <Route path="/inventory/:brand_name" component={Inventory} />
+          <Route path="/gun_type/:gun_type" component={Inventory} />
+          <Route path="/manufacturer/:manufacturer" component={Inventory} />
+          <Route path="/caliber/:caliber" component={Inventory} />
 
           <Route path="/api/model/:item_no" component={Details} />
 
@@ -65,14 +71,21 @@ export default function App() {
           <Route path="/api/post" component={AdminPage} />
 
           <Route path="/cds/inventory" component={CdsInventory} />
+          <Route path="/cds/details/:id" component={CdsDetails} />
+
           <Route path="/cds/transfers" component={Transfers} />
+          <Route path="/cds/about" component={About} />
+
+
+          <Route path="/aeroprecision" component={AeroPrecision} />
+          <Route path="/lmt" component={LMT} />
           {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 
         </Switch>
-
-
-      </div>
+   
+</div>
+<footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
     </Router>
 
   );

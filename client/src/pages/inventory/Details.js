@@ -188,7 +188,7 @@ class Details extends Component {
                   {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
                   <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
                   {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
-                  <h2 className="retail-price">${gunData.retail_price}</h2>
+                  <h2 className="retail-price">${gunData["Retail Price"]}</h2>
                   {gunData.retailmap > 0 ? (
                     <h1 className="text-center">${gunSpecs.retailmap}</h1>
                   ) : (
@@ -197,11 +197,11 @@ class Details extends Component {
                   }
 
                   <h1>{gunData.model}</h1>
-                  <h1>{gunData.model_series}</h1>
-                  <h2>{gunData.gun_type}</h2>
+                  <h1>{gunData["Model Series"]}</h1>
+                  <h2>{gunData["Gun Type"]}</h2>
                   <h2>{gunData.manufacturer}</h2>
                   <h3>{gunData.caliber}</h3>
-                  <h3>{gunData.gun_action}</h3>
+                  <h3>{gunData["Gun Action"]}</h3>
                   <p>{gunData.features}</p>
                   <p>{gunData.finish}</p>
                   <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>

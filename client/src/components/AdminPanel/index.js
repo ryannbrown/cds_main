@@ -128,9 +128,10 @@ class AdminPanel extends Component {
                     src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
                     onError={this.usePlaceholderImg}
                 />
-                <p className="text-center">Item Description: {item.product_description}</p>
+                {/* <p className="text-center">Item Description: {item.product_description}</p> */}
                 <p className="text-center">MSRP Price: {item.msrp_price}</p>
                 <p className="text-center">Sale Price: {item.sale_price}</p>
+                <a target="_blank" href={`/cds/details/${item.uuid}`}><Button variant="dark">See Listing</Button></a>
                 
                 {/* Modal for confirming deletion */}
                 <Modal centered show={show} onHide={this.handleClose}>

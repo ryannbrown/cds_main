@@ -74,6 +74,16 @@ class CdsDetails extends Component {
             {/* <p className=" gun-desc">{gunData.product_description}</p> */}
             <h5 className="retail-price">{gunData.msrp_price}</h5>
             <h4>{gunData.sale_price}</h4>
+            <h4>{gunData.manufacturer}</h4>
+            <h4>{gunData.model}</h4>
+            <h4>{gunData.type}</h4>
+            <h4>{gunData.caliber}</h4>
+            <h4>{gunData.capacity}</h4>
+            <h4>{gunData.finish}</h4>
+            <h4>{gunData.sights}</h4>
+            <h4>{gunData.barrellength}</h4>
+            <h4>{gunData.sights}</h4>
+            <h4>{gunData.upcnumber}</h4>
             {/* <h4 className="">{gunData.quantity}</h4>
      <h4 className="">{gunData.caliber}</h4> */}
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>

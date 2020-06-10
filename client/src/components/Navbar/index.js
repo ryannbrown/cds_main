@@ -55,7 +55,7 @@ function Navigation(props) {
         <a className="title-container" alt="Coleman Defense Solutions" href="/"><div><p id="title-name">Coleman Defense Solutions</p></div></a>
 
 
-        <p id="title-sub">est 2018</p>
+        {/* <p id="title-sub">est 2018</p> */}
         <div className="letter-img">
           <img alt="colemandefense" src={logo}></img>
         </div>
@@ -66,44 +66,3 @@ function Navigation(props) {
 }
 
 export default Navigation;
-
-
-// import React from "react";
-// import { Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
-// import Navbar from 'react-bootstrap/Navbar';
-// import './style.css'
-// import letter from "../../../../content/assets/cds.jpg"
-// // import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
-// import Image from 'react-bootstrap/Image';
-
-
-// // import './style.css';
-// function Navigation (props) {
-//     return (
-// <div>
-//   <Navbar sticky="top" bg="light" expand="lg" style={{height: '150px'}}>
-//     <Navbar.Brand href="/" alt="Coleman Defense Solutions">
-//     {/* <Image src='https://firebasestorage.googleapis.com/v0/b/coleman-defense-solutions.appspot.com/o/69879143_2931071616907240_2275242282057728000_n.png?alt=media&token=a078a87e-2ec3-433e-9db7-f2b14d898edd' fluid></Image> */}
-
-//      <span><Image className="logo-img" src={letter}></Image></span>
-//     </Navbar.Brand>
-//     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//     <Navbar.Collapse id="basic-navbar-nav">
-//       <Nav className="mr-auto">
-//         <Nav.Link href="/">
-//         Home
-//         </Nav.Link>
-//         <Nav.Link href="/about">Transfer Services</Nav.Link>
-
-//       </Nav>
-//     </Navbar.Collapse>
-//   </Navbar>
-// </div>
-//     )
-// }
-
-// export default Navigation;
-
-
-/* <Image src='https://firebasestorage.googleapis.com/v0/b/coleman-defense-solutions.appspot.com/o/69879143_2931071616907240_2275242282057728000_n.png?alt=media&token=a078a87e-2ec3-433e-9db7-f2b14d898edd' fluid></Image> */

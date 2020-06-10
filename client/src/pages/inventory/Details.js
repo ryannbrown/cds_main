@@ -114,7 +114,23 @@ class Details extends Component {
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
-                <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
+                {
+            gunSpecs.image1 ? (
+              <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
+                // TODO: come up with better way to get images than this solution
+                src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
+                onError={this.usePlaceholderImg}
+              />
+            ) : (
+
+                <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
+                  // TODO: come up with better way to get images than this solution
+                  src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                  onError={this.usePlaceholderImg}
+                />
+              )
+          }
+                {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img> */}
                 {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
                 <h2 className="retail-price">${gunData["Retail Price"]}</h2>
                 {gunSpecs.retailmap > 0 ? (

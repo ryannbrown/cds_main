@@ -116,8 +116,8 @@
 
 
 .description-list {
-    height: 400px;
-    overflow: scroll;
+    height: auto;
+    /* overflow: scroll; */
 }
 
 .additionalinfo-btn {

@@ -62,8 +62,8 @@ export default class Home extends Component {
         </Nav>
         {/* HERO Section */}
         <div className="hero-pic">
-          <h1 className="heroTitle">Quality Gear &</h1>
-          <h2 className="heroSub">Quality Firearms</h2>
+          <h1 className="heroTitle">Quality Firearms &</h1>
+          <h2 className="heroSub">Tactical Gear</h2>
           <ScrollIntoView alignToTop selector="#car"><FontAwesomeIcon className="heroArrow" icon={faArrowDown} /></ScrollIntoView>
         </div>
         {/* Homepage inner parrent */}

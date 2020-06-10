@@ -47,7 +47,7 @@ class AdminPanel extends Component {
 
             <Carousel.Item key={i}>
                 <img
-                    className="gun-img-carousel d-block w-100" alt={`${item.product_name}`}
+                    className="gun-img-carousel d-block" alt={`${item.product_name}`}
                     src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
                     onError={this.usePlaceholderImg}
                 />

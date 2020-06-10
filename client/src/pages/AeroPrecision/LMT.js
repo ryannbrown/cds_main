@@ -35,7 +35,7 @@ class LMT extends Component {
     <header className="vh-100 dt w-100">
       <div 
         className="dtc v-mid cover ph3 ph4-m ph5-l custom-lmt">
-        <h1 className="f2 f-subheadline-l measure lh-title fw9">CDS is a proud dealer of Lewis Machine & Tool</h1>
+        <h1 className="f2 f-subheadline-l measure lh-title fw9">Coleman Defense is an authorized dealer for Lewis Machine & Tool</h1>
         {/* <h2 className="f6 fw6 nearwhite">Quality Matters</h2> */}
       </div>
     </header>

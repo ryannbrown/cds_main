@@ -64,7 +64,7 @@ export default function App() {
           <Route path="/manufacturer/:manufacturer" component={Inventory} />
           <Route path="/caliber/:caliber" component={Inventory} />
 
-          <Route path="/api/model/:item_no" component={Details} />
+          <Route exact path="/api/model/:item_no" component={Details} />
 
           <Route path="/admin" component={AdminPage} />
 

@@ -230,12 +230,16 @@
 }
 
 .custom-aero {
-   background: url(https://i.ibb.co/8402B2M/Complete-Rifles00110-compressor.jpg) no-repeat center right;background-size: cover;
+   background: url(https://i.ibb.co/8402B2M/Complete-Rifles00110-compressor.jpg);
+   background-size: cover;
+   background-position-x: 15%;
    color:#F4F4F4;
 }
 .custom-lmt {
-   background: url(https://lmtdefense.com/media/2019/05/LMT_WEB-RES_14-e1588100133687.jpg) no-repeat center right;background-size: cover;
+   background: url(https://lmtdefense.com/media/2019/05/LMT_WEB-RES_14-e1588100133687.jpg);
+   background-size: cover;
    color:#F4F4F4;
+   background-position-x: 45%;
 }
 
 

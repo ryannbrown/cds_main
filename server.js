@@ -345,20 +345,20 @@ app.post('/api/upload', function (req, res, next) {
 
 
 // INACTIVE DB
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: 'localhost',
-  database: 'postgres',
-  password: process.env.DB_PASS,
-  port: 5432,
-})
+// const Pool = require('pg').Pool
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: 'localhost',
+//   database: 'postgres',
+//   password: process.env.DB_PASS,
+//   port: 5432,
+// })
 
 app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
   console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
-  pool.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory_new
+  client.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory
   WHERE "${criteria}" IS NOT NULL
   ORDER BY "${criteria}" DESC`, (error, results) => {
     if (error) {
@@ -384,12 +384,12 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   var sort = req.params.sort;
   // var sortString;
 let query = `SELECT *
-  FROM davidsons_inventory_new
-  LEFT JOIN davidsons_attributes_new
-  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
-  LEFT JOIN davidsons_quantity_new
-  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
-  WHERE davidsons_inventory_new.manufacturer ILIKE '${manufacturer}'`;
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory.manufacturer ILIKE '${manufacturer}'`;
   // const values = [data.manufacturer];
 
 
@@ -410,7 +410,7 @@ let query = `SELECT *
   console.log("query", query)
   // console.log(manufacturer);
 console.log("sort:", sort)
-  pool.query(query,
+  client.query(query,
     //  values,
       (error, results) => {
     if (error) {
@@ -431,12 +431,12 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
   console.log(gun_type);
 
   let query = `SELECT *
-  FROM davidsons_inventory_new
-  LEFT JOIN davidsons_attributes_new
-  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
-  LEFT JOIN davidsons_quantity_new
-  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
-  WHERE davidsons_inventory_new."Gun Type" ILIKE '%${gun_type}%'`
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory."Gun Type" ILIKE '%${gun_type}%'`
 
 
   if (sort == 'priceUp') {
@@ -453,7 +453,7 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
     query += `AND total_quantity > 0 `
   }
 
-  pool.query(query, (error, results) => {
+  client.query(query, (error, results) => {
     if (error) {
       throw error
     }
@@ -471,12 +471,12 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
   console.log(caliber);
 
  let query = `SELECT *
-  FROM davidsons_inventory_new
-  LEFT JOIN davidsons_attributes_new
-  ON davidsons_attributes_new.itemno = davidsons_inventory_new."Item #"
-  LEFT JOIN davidsons_quantity_new
-  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
-  WHERE davidsons_inventory_new.caliber ILIKE '%${caliber}%'`
+  FROM davidsons_inventory
+  LEFT JOIN davidsons_attributes
+  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'`
 
   if (sort == 'priceUp') {
     query += `ORDER BY "Dealer Price" ASC`
@@ -492,7 +492,7 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
     query += `AND total_quantity > 0 `
   }
 
-  pool.query(query, (error, results) => {
+  client.query(query, (error, results) => {
     if (error) {
       throw error
     }
@@ -513,10 +513,10 @@ app.get('/api/model/:item_no', (req, response) => {
   // ON davidsons_attributes.itemno = davidsons_inventory.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  pool.query(` SELECT * FROM davidsons_inventory_new
-  LEFT JOIN davidsons_quantity_new
-  ON davidsons_inventory_new."Item #" = davidsons_quantity_new.item_number
-  WHERE davidsons_inventory_new."Item #" = '${item_no}'`, (error, results) => {
+  client.query(` SELECT * FROM davidsons_inventory
+  LEFT JOIN davidsons_quantity
+  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory."Item #" = '${item_no}'`, (error, results) => {
     if (error) {
       throw error
     }
@@ -532,8 +532,8 @@ app.get('/api/specs/:item_no', (req, response) => {
   var item_no = req.params.item_no;
   console.log(item_no);
 
-  // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  pool.query(` SELECT * FROM davidsons_attributes_new
+  // client.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+  client.query(` SELECT * FROM davidsons_attributes
  WHERE itemno = '${item_no}'`, (error, results) => {
     if (error) {
       throw error

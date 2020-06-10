@@ -73,17 +73,35 @@ class CdsDetails extends Component {
             <h3 style={{ padding: '15px' }} className="">{gunData.product_name}</h3>
             {/* <p className=" gun-desc">{gunData.product_description}</p> */}
             <h5 className="retail-price">{gunData.msrp_price}</h5>
-            <h4>{gunData.sale_price}</h4>
-            <h4>{gunData.manufacturer}</h4>
-            <h4>{gunData.model}</h4>
-            <h4>{gunData.type}</h4>
-            <h4>{gunData.caliber}</h4>
-            <h4>{gunData.capacity}</h4>
-            <h4>{gunData.finish}</h4>
-            <h4>{gunData.sights}</h4>
-            <h4>{gunData.barrellength}</h4>
-            <h4>{gunData.sights}</h4>
-            <h4>{gunData.upcnumber}</h4>
+                    <h4>{gunData.sale_price}</h4>
+
+                    {gunData.manufacturer || gunData.model || gunData.type || gunData.caliber || gunData.caliber || gunData.caliber || gunData.caliber || gunData.caliber || gunData.caliber || gunData.caliber ? (
+            <Accordion>
+              <Card>
+                <Accordion.Toggle className="additionalinfo-btn" as={Button} variant="button" eventKey="0" onClick={this.scrollPage}>
+                  <a>Click for Additional information</a>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <Card.Body className="description-list">
+                    <h4>{gunData.manufacturer}</h4>
+                    <h4>{gunData.model}</h4>
+                    <h4>{gunData.type}</h4>
+                    <h4>{gunData.caliber}</h4>
+                    <h4>{gunData.capacity}</h4>
+                    <h4>{gunData.finish}</h4>
+                    <h4>{gunData.sights}</h4>
+                    <h4>{gunData.barrellength}</h4>
+                    <h4>{gunData.sights}</h4>
+                    <h4>{gunData.upcnumber}</h4>
+                    <a name="scrolltobottom"></a>
+                  </Card.Body>
+                </Accordion.Collapse>
+              </Card>
+            </Accordion>
+                    ) : (
+                      <div></div>
+                    ) 
+                    }
             {/* <h4 className="">{gunData.quantity}</h4>
      <h4 className="">{gunData.caliber}</h4> */}
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>
@@ -94,6 +112,6 @@ class CdsDetails extends Component {
     }
   }
 }
-  export default CdsDetails;
+export default CdsDetails;
 
 

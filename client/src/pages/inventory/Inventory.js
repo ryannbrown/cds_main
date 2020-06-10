@@ -29,8 +29,8 @@ class Inventory extends Component {
 
   handleClick = event => {
     window.scrollTo(0, 0)
-    console.log("clicked")
-    console.log(event.target.id)
+    // console.log("clicked")
+    // console.log(event.target.id)
     this.setState({
       currentPage: Number(event.target.id)
     });
@@ -38,14 +38,14 @@ class Inventory extends Component {
 
   usePlaceholderImg(ev) {
     ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
-    console.log(ev);
+    // console.log(ev);
   }
 
 
   sortItem = (e, data) => {
     let sortVar = e.target.dataset.sort;
-console.log(e.target.dataset.sort)
-console.log("clicked")
+// console.log(e.target.dataset.sort)
+// console.log("clicked")
 this.setState({
   sort: sortVar
 })
@@ -53,7 +53,7 @@ this.setState({
 fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     .then(res => res.json())
     .then(json => {
-      console.log("json", json)
+      // console.log("json", json)
       this.setState({
         gunData: json.data,
         isLoading: false
@@ -77,15 +77,15 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     fetch(`/${keyParam}/${valParam}/${this.state.sort}`)
       .then(res => res.json())
       .then(json => {
-        console.log("json", json)
+        // console.log("json", json)
         this.setState({
           gunData: json.data,
           isLoading: false
         })
-        console.log(this.state.gunData);
+        // console.log(this.state.gunData);
         var size = Object.keys(this.state.gunData).length;
-        console.log(size);
-        console.log(this.state)
+        // console.log(size);
+        // console.log(this.state)
       });
 
   };
@@ -107,12 +107,13 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
      const pageNumbers = [];
      for (let i = 1; i <= Math.ceil(gunData.length / itemsPerPage); i++) {
        pageNumbers.push(i);
-       console.log(pageNumbers)
+      //  console.log(pageNumbers)
      }
 
     const renderPageNumbers = pageNumbers.map(number => {
       return (
       <li
+      className="pagination-item"
         key={number}
         id={number}
         onClick={this.handleClick}
@@ -170,7 +171,9 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     }
 
     else {
-      return (<div className="deck-wrapper">
+      return (
+      <div className="inventory-div">
+      <div className="deck-wrapper">
         <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort">
         <Dropdown.Header>Price</Dropdown.Header>
             <Dropdown.Item data-sort="priceUp" onClick={this.sortItem}>Low to High</Dropdown.Item>
@@ -194,11 +197,12 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
           {items}
         </CardDeck>
         <div className="pagination-div">
-        <ul className="center" id="page-numbers">
+        <ul className="pagination-list" id="page-numbers">
               {renderPageNumbers}
             </ul>
             </div>
             <BrowseTabber title="Refine Your Search" />
+      </div>
       </div>
       )
     }

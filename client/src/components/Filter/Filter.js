@@ -38,7 +38,7 @@ class Browse extends Component {
 
   componentDidMount() {
 
-    console.log(this.props.param)
+    // console.log(this.props.param)
 
     let param = (this.props.param);
     this.setState({
@@ -80,7 +80,7 @@ class Browse extends Component {
         })
         // console.log(this.state.data);
         var size = Object.keys(this.state.data).length;
-        console.log(size);
+        // console.log(size);
       });
   };
 

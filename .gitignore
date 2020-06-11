@@ -3,3 +3,5 @@ node_modules
 .env
 
 ./resources.txt
+zandersFetch.js
+zanders.csv

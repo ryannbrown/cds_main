@@ -1,3 +1,27 @@
+var cluster = require('cluster');
+
+if (cluster.isMaster) {
+
+  // Count the machine's CPUs
+  var cpuCount = require('os').cpus().length;
+
+  // Create a worker for each CPU
+  for (var i = 0; i < cpuCount; i += 1) {
+      cluster.fork();
+  }
+
+  cluster.on('exit', function (worker) {
+
+    // Replace the dead worker,
+    // we're not sentimental
+    console.log('Worker %d died :(', worker.id);
+    cluster.fork();
+
+});
+
+// Code to run if we're in a worker process
+} else {
+
 const express = require('express');
 const bodyParser = require('body-parser');
 var Client = require('ftp');
@@ -74,6 +98,7 @@ const values = [data.id]
   client.query(query, values, (error, results) => {
       if (error) {
         throw error
+        // results.status(500)
       }
       var data = results.rows
       response.send(JSON.stringify({ data }));
@@ -594,3 +619,5 @@ if (process.env.NODE_ENV === 'production') {
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+console.log('Application running!' + cluster.worker.id);
+}

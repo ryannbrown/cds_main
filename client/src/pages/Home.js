@@ -94,9 +94,9 @@ export default class Home extends Component {
           <Container>
           <a id="contact"></a>
             <Row className="social-row">
-              <Col><a target="_blank" href="https://www.instagram.com/colemandefense/"><img className="pulse" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png"></img></a></Col>
+              <Col><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/colemandefense/"><img className="pulse" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png"></img></a></Col>
 
-              <Col><a target="_blank" href="https://www.facebook.com/colemandefense/">
+              <Col><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/colemandefense/">
 
                 <img className="pulse" src={fbLogo}></img></a></Col>
             </Row>

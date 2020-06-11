@@ -125,7 +125,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        <a target="_blank" href={`/inventory/model/${item["Item #"]}`}>
+        <a target="_blank" rel="noopener noreferrer" href={`/inventory/model/${item["Item #"]}`}>
           {
             item.image1 ? (
               <img className="gun-img" alt={`${item.itemdesc1}`}

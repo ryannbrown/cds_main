@@ -45,7 +45,7 @@ class Transfers extends Component {
                 <p>Send a copy of your transfering FFL to:
       <a style={{ color: 'blue' }} href="mailto: ffl@colemandefense.com"> FFL@colemandefense.com</a></p>
                 <p>Use the
-      <a style={{ color: 'blue' }} target="_blank" href="https://fflezcheck.atf.gov/fflezcheck/"> ATF EZ Check</a> to verify my license:</p>
+      <a style={{ color: 'blue' }} target="_blank" rel="noopener noreferrer" href="https://fflezcheck.atf.gov/fflezcheck/"> ATF EZ Check</a> to verify my license:</p>
                 <p className="ba b--dotted bw2">1-56-XXX-XX-XX-13252</p>
                 <p>Payment can be made at time of transfer with cash, check, or credit card.</p>
                 <p>All major credit cards are accepted with an additional 3.99% processing fee added to the total.</p>

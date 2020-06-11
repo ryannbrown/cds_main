@@ -749,13 +749,13 @@ margin-top:-5% !important;
 
 
 /* TEMP CSS */
-div.homepage-narrow > div.carousel-div > div.carousel-contents > div > div > div:nth-child(2) > img {
+div.homepage-narrow > div.carousel-div > div.carousel-contents > div > div > div:first-child > img {
   height: auto;
   margin-top: -14%;
   width: 75%;
   margin: 0px auto;
 }
-div.homepage-narrow > div.carousel-div > div.carousel-contents > div > div > div:nth-child(6) > img {
+div.homepage-narrow > div.carousel-div > div.carousel-contents > div > div > div:nth-child(5) > img {
   height: auto;
   margin-top: -14%;
   width: 65%;

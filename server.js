@@ -64,9 +64,14 @@ app.get('/api/posts', cors(), function (req, response) {
 })
 
 app.get('/api/posts/:id', cors(), function (req, response) {
-  var gun_id = req.params.id;
-  client.query(
-    `SELECT * from cds_inventory WHERE uuid = '${gun_id}'`, (error, results) => {
+  // var gun_id = req.params.id;
+  const data = {
+    id: req.params.id
+  }
+
+const query = `SELECT * from cds_inventory WHERE uuid = $1`
+const values = [data.id]
+  client.query(query, values, (error, results) => {
       if (error) {
         throw error
       }
@@ -261,16 +266,18 @@ app.post('/api/update', function (req, res) {
 
 
   const query = `UPDATE cds_inventory SET ${criteria}
-  WHERE uuid = '${data.uuid}';`
+  WHERE uuid = $1;`
 console.log(query)
 
-  client.query(query, (error, results) => {
+const values = [data.uuid]
+
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
     res.send('POST request to the homepage')
   }
-  );
+  ); 
 })
 
 //    DELETE CUSTOM INVENTORY
@@ -377,10 +384,9 @@ app.get('/browse/:criteria', (req, response) => {
 // MANUFACTURER
 app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
 
-  // const data = {
-  //   manufacturer: req.params.manufacturer
-  // }
-  var manufacturer = req.params.manufacturer;
+  const data = {
+    manufacturer: req.params.manufacturer
+  }
   var sort = req.params.sort;
   // var sortString;
 let query = `SELECT *
@@ -389,8 +395,8 @@ let query = `SELECT *
   ON davidsons_attributes.itemno = davidsons_inventory."Item #"
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory.manufacturer ILIKE '${manufacturer}'`;
-  // const values = [data.manufacturer];
+  WHERE davidsons_inventory.manufacturer ILIKE $1`;
+
 
 
   //#region query logic
@@ -407,11 +413,14 @@ let query = `SELECT *
   } else if (sort == 'onlyInStock') {
     query += `AND total_quantity > 0 `
   }
+
+
+    const values = [data.manufacturer];
   console.log("query", query)
   // console.log(manufacturer);
 console.log("sort:", sort)
   client.query(query,
-    //  values,
+     values,
       (error, results) => {
     if (error) {
       throw error
@@ -425,10 +434,11 @@ console.log("sort:", sort)
 
 })
 app.get('/gun_type/:gun_type/:sort', (req, response) => {
-  var gun_type = req.params.gun_type;
+  const data =  {
+    gun_type : req.params.gun_type
+  }
   var sort = req.params.sort;
   console.log("these are the params")
-  console.log(gun_type);
 
   let query = `SELECT *
   FROM davidsons_inventory
@@ -436,7 +446,7 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
   ON davidsons_attributes.itemno = davidsons_inventory."Item #"
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory."Gun Type" ILIKE '%${gun_type}%'`
+  WHERE davidsons_inventory."Gun Type" ILIKE  $1`
 
 
   if (sort == 'priceUp') {
@@ -453,7 +463,9 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
     query += `AND total_quantity > 0 `
   }
 
-  client.query(query, (error, results) => {
+  const values = [data.gun_type]
+
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -466,9 +478,13 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
 
 })
 app.get('/caliber/:caliber/:sort', (req, response) => {
-  var caliber = req.params.caliber;
+
+  const data = {
+    caliber: req.params.caliber
+  }
+
   var sort = req.params.sort;
-  console.log(caliber);
+  // console.log(caliber);
 
  let query = `SELECT *
   FROM davidsons_inventory
@@ -476,7 +492,7 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
   ON davidsons_attributes.itemno = davidsons_inventory."Item #"
   LEFT JOIN davidsons_quantity
   ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory.caliber ILIKE '%${caliber}%'`
+  WHERE davidsons_inventory.caliber ILIKE $1 `
 
   if (sort == 'priceUp') {
     query += `ORDER BY "Dealer Price" ASC`
@@ -492,7 +508,9 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
     query += `AND total_quantity > 0 `
   }
 
-  client.query(query, (error, results) => {
+  const values = [data.caliber]
+
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -505,18 +523,24 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
 
 })
 app.get('/api/model/:item_no', (req, response) => {
-  var item_no = req.params.item_no;
-  console.log(item_no);
+
+  const data = {
+    item_no: req.params.item_no
+  }
 
 // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
   // ON davidsons_attributes.itemno = davidsons_inventory.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  client.query(` SELECT * FROM davidsons_inventory
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory."Item #" = '${item_no}'`, (error, results) => {
+
+    const query= ` SELECT * FROM davidsons_inventory
+    LEFT JOIN davidsons_quantity
+    ON davidsons_inventory."Item #" = davidsons_quantity.item_number
+    WHERE davidsons_inventory."Item #" = $1`
+
+    const values = [data.item_no]
+  client.query( query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -529,12 +553,18 @@ app.get('/api/model/:item_no', (req, response) => {
 
 })
 app.get('/api/specs/:item_no', (req, response) => {
-  var item_no = req.params.item_no;
-  console.log(item_no);
+  const data = {
+    item_no: req.params.item_no
+  } 
+
+
+  const query= ` SELECT * FROM davidsons_attributes
+  WHERE itemno = $1`
+
+  const values = [data.item_no]
 
   // client.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
-  client.query(` SELECT * FROM davidsons_attributes
- WHERE itemno = '${item_no}'`, (error, results) => {
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }

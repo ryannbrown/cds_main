@@ -53,7 +53,7 @@ class LMT extends Component {
               LMT continues to serve the US military, law enforcement and government agencies, and has expanded to include foreign military services as well as commercial retailers. LMTs engineers design and fabricate complete weapon systems, grenade launchers, and Monolithic Rail Platform (MRP®) systems specifically for the demanding environments that the military and law enforcement face on a day-to-day basis whether in urban environments or in desert combat situations. LMT produces a full line of accessories and components for the commercial market complementing any M16 or AR15 type weapon.
 </span>
             </p>
-            <a className="f6 link dim ba ph3 pv2 mb2 dib black" target="_blank" href="https://lmtdefense.com/cms/wp-content/uploads/2020/04/2020-Catalog-Digital.pdf">Click Here for Product Brochure</a>
+            <a className="f6 link dim ba ph3 pv2 mb2 dib black" target="_blank" rel="noopener noreferrer" href="https://lmtdefense.com/cms/wp-content/uploads/2020/04/2020-Catalog-Digital.pdf">Click Here for Product Brochure</a>
           </div>
         </div>
         <div className="cf dn">

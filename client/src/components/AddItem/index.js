@@ -37,6 +37,7 @@ class AddItem extends Component {
         this.upcNumber = React.createRef();
         this.msrp = React.createRef();
         this.price = React.createRef();
+        this.location = React.createRef();
     }
 
 
@@ -71,6 +72,7 @@ class AddItem extends Component {
         let upcNumber = this.upcNumber.current.value
         let msrp = this.msrp.current.value
         let price = this.price.current.value
+        let location = this.location.current.value
 
 
         const filename = this.state.file[0].name
@@ -113,7 +115,8 @@ class AddItem extends Component {
                     sights: sights,
                     upcNumber: upcNumber,
                     msrp_price: msrp,
-                    sale_price: price
+                    sale_price: price,
+                    location: location
                 })
                 }).then(response => {
                     console.log("hey i did it")
@@ -148,7 +151,11 @@ class AddItem extends Component {
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category</Form.Label>
-                            <Form.Control ref={this.category} type="text"  />
+                            <Form.Control ref={this.category} type="text" placeholder="What kind of product is this?.. suppressors, long guns, optics etc"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Location on site:</Form.Label>
+                            <Form.Control ref={this.location} type="text" placeholder = "eg. featured, aeroprecision, or lmt"  />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Product Name</Form.Label>

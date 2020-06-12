@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "../../pages/Home"
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form, Dropdown } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Form, Dropdown, customMenu, customToggle, FormControl } from 'react-bootstrap';
 import './style.css'
 // const queryString = require('query-string');
 
@@ -12,7 +12,9 @@ class Browse extends Component {
     this.state = {
       data: [],
       isLoaded: false,
-      catData: []
+      catData: [],
+      value: '',
+      setValue: ''
     };
   }
 
@@ -84,17 +86,72 @@ class Browse extends Component {
       });
   };
 
+  componentDidUpdate() {
+    console.log(this.state.value)
+  }
 
 
 
   render() {
     var { param } = this.state;
+
+    const items = this.state.data.map((item, i) =><Card>
+<a href={`/inventory/${item}`}>
+  <div className="text-center" key={i}>{item}</div></a></Card>
+);
+
+
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <a
+    href=""
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+    &#x25bc;
+  </a>
+));
+
+// forwardRef again here!
+// Dropdown needs access to the DOM of the Menu to measure it
+const CustomMenu = React.forwardRef(
+  ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+    const [value, setValue] = useState('');
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <FormControl
+          autoFocus
+          className="mx-3 my-2 w-auto"
+          placeholder="Type to filter..."
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+        <ul className="list-unstyled">
+          {React.Children.toArray(children).filter(
+            (child) =>
+              !value || child.props.children.toString().toLowerCase().includes(value),
+          )}
+        </ul>
+      </div>
+    );
+  },
+);
 // TO DO: Potentialy use Custom Dropdown Component from react bootstrap docs
     // var slug = "/api/inventory/" + {item.manuf};
  const formOptions = this.state.data.map((item, i) =>
 //  <div>{item}</div>
- <Dropdown.Item key={i} href={`/${param}/${item}`}>{item}</Dropdown.Item>
+ <Dropdown.Item eventKey={i} href={`/${param}/${item}`}>{item}</Dropdown.Item>
  );
+
 
 //  const items = this.state.data.map((item, i) =><Card>
 //    <a href={`/${param}/${item}`}>
@@ -102,12 +159,12 @@ class Browse extends Component {
 // );
     return (
       <div className="deck-wrapper">
-        <Dropdown className="search-filter" style={{margin: '0px auto'}} >
+        <Dropdown className="search-filter mt-4" style={{margin: '0px auto'}} >
   {/* <Form.Group controlId="exampleForm.SelectCustom"> */}
-      <Dropdown.Toggle className="mt-3" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px', color: 
-    'white' }} variant = "basic" id="dropdown-basic"> Choose one</Dropdown.Toggle>
+      <Dropdown.Toggle as={CustomToggle} className="mt-5" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px', color: 
+    'white' }} variant = "basic" id="dropdown-custom-components"> Choose one</Dropdown.Toggle>
      {/* {this.props.text} */}
-    <Dropdown.Menu className="dropdown-menu">
+    <Dropdown.Menu as={CustomMenu} className="dropdown-menu">
       {formOptions}
     </Dropdown.Menu>
     {/* <Form.Label>Search by Manufacturer</Form.Label> */}
@@ -119,9 +176,3 @@ class Browse extends Component {
 }
 
 export default Browse;
-
-
-// const items = this.state.data.map((item, i) =><Card>
-// <a href={`/inventory/${item}`}>
-//   <div className="text-center" key={i}>{item}</div></a></Card>
-// );

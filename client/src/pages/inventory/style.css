@@ -157,3 +157,7 @@ ul#page-numbers li {
   .inventory-div .browseTabber {
     width: 50%;
 }
+
+.inventory-div .browseTabber .search-filter {
+    width: 100%;
+}

@@ -1,26 +1,26 @@
-var cluster = require('cluster');
+// var cluster = require('cluster');
 
-if (cluster.isMaster) {
+// if (cluster.isMaster) {
 
-  // Count the machine's CPUs
-  var cpuCount = require('os').cpus().length;
+//   // Count the machine's CPUs
+//   var cpuCount = require('os').cpus().length;
 
-  // Create a worker for each CPU
-  for (var i = 0; i < cpuCount; i += 1) {
-      cluster.fork();
-  }
+//   // Create a worker for each CPU
+//   for (var i = 0; i < cpuCount; i += 1) {
+//       cluster.fork();
+//   }
 
-  cluster.on('exit', function (worker) {
+//   cluster.on('exit', function (worker) {
 
-    // Replace the dead worker,
-    // we're not sentimental
-    console.log('Worker %d died :(', worker.id);
-    cluster.fork();
+//     // Replace the dead worker,
+//     // we're not sentimental
+//     console.log('Worker %d died :(', worker.id);
+//     cluster.fork();
 
-});
+// });
 
-// Code to run if we're in a worker process
-} else {
+// // Code to run if we're in a worker process
+// } else {
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -620,4 +620,4 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 console.log('Application running!' + cluster.worker.id);
-}
+// }

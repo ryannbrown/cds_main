@@ -619,5 +619,5 @@ if (process.env.NODE_ENV === 'production') {
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
-console.log('Application running!' + cluster.worker.id);
+// console.log('Application running!' + cluster.worker.id);
 // }

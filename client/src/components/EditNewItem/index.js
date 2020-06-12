@@ -38,6 +38,7 @@ class EditNewItem extends Component {
         this.upcNumber = React.createRef();
         this.msrp = React.createRef();
         this.price = React.createRef();
+        this.location = React.createRef();
     }
 
 
@@ -88,6 +89,7 @@ class EditNewItem extends Component {
         let upcNumber = this.upcNumber.current.value
         let msrp = this.msrp.current.value
         let price = this.price.current.value
+        let location = this.location.current.value.toLowerCase()
 
        
     //     const filename = this.state.file[0].name
@@ -133,6 +135,7 @@ class EditNewItem extends Component {
                     upcNumber: upcNumber,
                     msrp_price: msrp,
                     sale_price: price,
+                    location: location,
                     id: this.props.id
                 })
                 }).then(response => {
@@ -180,6 +183,10 @@ class EditNewItem extends Component {
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category: {gunData.category}</Form.Label>
                             <Form.Control ref={this.category} type="text"  />
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Label>Location on site: {gunData.location}</Form.Label>
+                            <Form.Control ref={this.location} type="text" placeholder = "eg. featured, aeroprecision, or lmt"  />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Caliber: {gunData.caliber}</Form.Label>

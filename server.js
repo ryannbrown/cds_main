@@ -127,14 +127,15 @@ app.post('/api/post', function (req, res) {
     quantity: req.body.quantity,
     capacity: req.body.capacity,
     sights: req.body.sights,
-    upcNumber: req.body.upcNumber
+    upcNumber: req.body.upcNumber,
+    location: req.body.location,
   };
 
   posts.push(data)
 
-  const query = `INSERT INTO cds_inventory( uuid, image, product_name, Product_description, msrp_price, sale_price, category, caliber, manufacturer, model, type, barrelLength, finish, quantity, capacity, sights, upcNumber )
-     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`
-  const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price, data.category, data.caliber, data.manufacturer, data.model, data.type, data.barrelLength, data.finish, data.quantity, data.capacity, data.sights, data.upcNumber];
+  const query = `INSERT INTO cds_inventory( uuid, image, product_name, Product_description, msrp_price, sale_price, category, caliber, manufacturer, model, type, barrelLength, finish, quantity, capacity, sights, upcNumber, location )
+     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`
+  const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price, data.category, data.caliber, data.manufacturer, data.model, data.type, data.barrelLength, data.finish, data.quantity, data.capacity, data.sights, data.upcNumber, data.location];
   //  FOR DEV
    console.log(query)
   //  console.log(values)
@@ -171,7 +172,8 @@ app.post('/api/update', function (req, res) {
     quantity: req.body.quantity,
     capacity: req.body.capacity,
     sights: req.body.sights,
-    upcNumber: req.body.upcNumber
+    upcNumber: req.body.upcNumber,
+    location: req.body.location
   };
 
   // TODO: Potential way to cleanup below code 
@@ -281,10 +283,17 @@ app.post('/api/update', function (req, res) {
     }
   }
   if (data.sale_price) {
-    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity | data.sights) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity || data.sights) {
       criteria += `, sale_price = '${data.sale_price}'`
     } else {
       criteria += `sale_price = '${data.sale_price}'`
+    }
+  }
+  if (data.location) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity || data.sights || data.sale_price) {
+      criteria += `, location = '${data.location}'`
+    } else {
+      criteria += `location = '${data.location}'`
     }
   }
 //#endregion

@@ -556,6 +556,31 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
 
 
 })
+app.get('/api/thermal', (req, response) => {
+
+  // const data = {
+  //   caliber: req.params.caliber
+  // }
+
+  // var sort = req.params.sort;
+  // // console.log(caliber);
+
+ let query = `SELECT * from zanders_inventory LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
+WHERE category ILIKE 'night vision' `
+
+
+  client.query(query, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
 app.get('/api/model/:item_no', (req, response) => {
 
   const data = {

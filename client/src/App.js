@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, Redirect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +26,7 @@ import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
 import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
+import Thermal from "./pages/inventory/zanders/Thermal.js"
 import LMT from "./pages/AeroPrecision/LMT.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
@@ -78,7 +79,9 @@ export default function App() {
 
 
           <Route path="/aeroprecision" component={AeroPrecision} />
+          <Route path="/thermal" component={Thermal} />
           <Route path="/lmt" component={LMT} />
+          <Redirect to="/" />
           {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 

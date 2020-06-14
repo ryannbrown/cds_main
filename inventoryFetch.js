@@ -10,59 +10,59 @@ var Client = require('ftp');
 
 
 var c = new Client();
-// c.on('ready', function () {
+c.on('ready', function () {
 
-//   var finishedCalls = 0;
-//   // c.get('davidsons_inventory.csv', function (err, stream) {
-//   //   // console.log(stream)
-//   //   if (err) throw err;
-//   //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
-//   //   stream.on('finish', function () {
-//   //     finishedCalls++
-//   //     console.log("number of calls", finishedCalls)
-//   //     // fixInventoryFile();
-//   //     console.log("inventory downloaded")
-//   //     if (finishedCalls == 3) {
-//   //       console.log("all calls finished")
-//   //     c.end()
-//   //     }
-//   //   });
-//   // });
-//   // c.get('davidsons_quantity.csv', function (err, stream) {
+  var finishedCalls = 0;
+  // c.get('davidsons_inventory.csv', function (err, stream) {
+  //   // console.log(stream)
+  //   if (err) throw err;
+  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
+  //   stream.on('finish', function () {
+  //     finishedCalls++
+  //     console.log("number of calls", finishedCalls)
+  //     // fixInventoryFile();
+  //     console.log("inventory downloaded")
+  //     if (finishedCalls == 3) {
+  //       console.log("all calls finished")
+  //     c.end()
+  //     }
+  //   });
+  // });
+  c.get('davidsons_quantity.csv', function (err, stream) {
 
-//   //   if (err) throw err;
-//   //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv'));
-//   //   stream.on('finish', function () {
-//   //     finishedCalls++
-//   //     console.log("number of calls", finishedCalls)
-//   //     // fixQuantityFile();
-//   //     console.log("quantity downloaded")
-//   //     if (finishedCalls == 3) {
-//   //       console.log("all calls finished")
-//   //     c.end()
-//   //     }
-//   //   });
-//   // });
+    if (err) throw err;
+    stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_quantity_today.csv'));
+    stream.on('finish', function () {
+      finishedCalls++
+      console.log("number of calls", finishedCalls)
+      fixQuantityFile();
+      console.log("quantity downloaded")
+      if (finishedCalls == 3) {
+        console.log("all calls finished")
+      c.end()
+      }
+    });
+  });
 
-//   c.get('davidsons_firearm_attributes.csv', function (err, stream) {
-//     // if (err) throw err;
-//     stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_attributes_local.csv', 'utf8'));
-//     stream.on('finish', function () {
-//       finishedCalls++
-//       console.log("number of calls", finishedCalls)
-//       fixAttributeFile();
-//       console.log("attributes downloaded")
-//       if (finishedCalls == 3) {
-//         console.log("all calls finished")
-//       c.end()
-//       }
-//     });
-//   });
-
-
+  // c.get('davidsons_firearm_attributes.csv', function (err, stream) {
+  //   // if (err) throw err;
+  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_attributes_local.csv', 'utf8'));
+  //   stream.on('finish', function () {
+  //     finishedCalls++
+  //     console.log("number of calls", finishedCalls)
+  //     fixAttributeFile();
+  //     console.log("attributes downloaded")
+  //     if (finishedCalls == 3) {
+  //       console.log("all calls finished")
+  //     c.end()
+  //     }
+  //   });
+  // });
 
 
-//   });
+
+
+  });
 
 
 
@@ -301,6 +301,23 @@ var c = new Client();
           // console.log("res", res)
           if (res) {
             console.log("ran fourth!!")
+            iFive();
+          }
+        })
+
+    }
+    function iFive() {
+      pool.query(`ALTER TABLE davidsons_inventory_new
+      ADD COLUMN distributor VARCHAR(250);
+      UPDATE davidsons_inventory_new SET "distributor" = 'davidsons'
+      `
+        , (err, res) => {
+          if (err) {
+            throw (err);
+          }
+          // console.log("res", res)
+          if (res) {
+            console.log("ran fifth!!")
             // qThree();
           }
         })

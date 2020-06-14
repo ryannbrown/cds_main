@@ -22,6 +22,7 @@ import image from "../media/field22.jpg"
 import "./Home.css"
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import ScrollIntoView from 'react-scroll-into-view'
+import logo from '../media/cds.jpg'
 require("dotenv").config();
 
 export default class Home extends Component {
@@ -68,6 +69,12 @@ export default class Home extends Component {
         </div>
         {/* Homepage inner parrent */}
         <div className="homepage-narrow">
+
+
+        
+
+
+
           <a name="my-ref" id="car">
           </a>
 
@@ -92,6 +99,15 @@ export default class Home extends Component {
             {/* Social Section */}
             <div className="contact-div">
           <Container>
+          <div className="text-center pt4">
+           {/* <img
+        src={logo}
+        width="250"
+        height="250"
+        className="d-inline-block align-top"
+        alt="React Bootstrap logo"
+      /> */}
+      </div>
           <a id="contact"></a>
             <Row className="social-row">
               <Col><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/colemandefense/"><img className="pulse" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/132px-Instagram_logo_2016.svg.png"></img></a></Col>
@@ -104,6 +120,7 @@ export default class Home extends Component {
           </Container>
           </div>
         </div>
+       
           <div className="insta-div">
           <iframe className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: 'auto' }}></iframe>
           </div>

@@ -74,7 +74,7 @@ this.setState({
       valParam: valParam
     })
 
-    fetch(`/thermal`)
+    fetch(`/zanders/thermal`)
       .then(res => res.json())
       .then(json => {
         console.log("json", json)

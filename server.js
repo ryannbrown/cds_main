@@ -282,7 +282,7 @@ app.post('/api/update', function (req, res) {
       criteria += `sights = '${data.sights}'`
     }
   }
-  if (data.sale_price) {
+  if (data.upcNumber) {
     if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity || data.sights) {
       criteria += `, sale_price = '${data.sale_price}'`
     } else {
@@ -290,7 +290,7 @@ app.post('/api/update', function (req, res) {
     }
   }
   if (data.location) {
-    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity || data.sights || data.sale_price) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish || data.quantity || data.capacity || data.sights || data.upcNumber) {
       criteria += `, location = '${data.location}'`
     } else {
       criteria += `location = '${data.location}'`

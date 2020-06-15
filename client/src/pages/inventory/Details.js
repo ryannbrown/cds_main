@@ -60,9 +60,10 @@ class Details extends Component {
       param: param
     })
 
-    fetch(`/api/model/${param}`)
+    fetch(`/davidsons/model/${param}`)
       .then(res => res.json())
       .then(json => {
+        console.log(json);
         console.log("inventory", json.data[0])
         this.setState({
           gunData: json.data[0],

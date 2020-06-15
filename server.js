@@ -588,7 +588,7 @@ app.get('/davidsons/model/:item_no', (req, response) => {
 
 })
 
-app.get('/thermal', (req, response) => {
+app.get('/zanders/thermal', (req, response) => {
 
   // const data = {
   //   caliber: req.params.caliber

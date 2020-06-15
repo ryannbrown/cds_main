@@ -4,7 +4,7 @@ import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner, Dropd
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../../Home";
-// import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
+import BrowseTabber from '../../../components/BrowseTabber/BrowseTabber'
 // const queryString = require('query-string');
 
 
@@ -29,8 +29,8 @@ class Inventory extends Component {
 
   handleClick = event => {
     window.scrollTo(0, 0)
-    // console.log("clicked")
-    // console.log(event.target.id)
+    console.log("clicked")
+    event.target.classList += ' active';
     this.setState({
       currentPage: Number(event.target.id)
     });
@@ -74,7 +74,7 @@ this.setState({
       valParam: valParam
     })
 
-    fetch(`/api/thermal`)
+    fetch(`/thermal`)
       .then(res => res.json())
       .then(json => {
         console.log("json", json)
@@ -110,10 +110,12 @@ this.setState({
       //  console.log(pageNumbers)
      }
 
+
     const renderPageNumbers = pageNumbers.map(number => {
+      
       return (
       <li
-      className="pagination-item"
+      className='pagination-item'
         key={number}
         id={number}
         onClick={this.handleClick}
@@ -125,7 +127,7 @@ this.setState({
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        {/* <a target="_blank" rel="noopener noreferrer" href={`/inventory/model/${item["Item #"]}`}> */}
+        <a target="_blank" rel="noopener noreferrer" href={`/inventory/2/model/${item.itemnumber}`}>
               <img className="gun-img" alt={item.imagelink}
                 // TODO: come up with better way to get images than this solution
                 src={item.imagelink}
@@ -133,19 +135,24 @@ this.setState({
               />
           <p className="text-center">{item.manufacturer}</p>
           <p className="text-center">{item.desc1}</p>
-          <h5 className="retail-price text-center">${item.msrp}</h5>
-          {/* {item.retailmap > 0 ? (
-            <h4 className="text-center">${item.retailmap}</h4>
+          { item.msrp > item.mapprice ? (
+            <h5 className="retail-price text-center">${item.msrp}</h5>
           ) : (
-              <h4 className="text-center">${(item["Dealer Price"] * profitMargin).toFixed(2)}</h4>
+            <div></div>
+          )}
+          
+           {item.mapprice > 0 ? (
+            <h4 className="text-center">${item.mapprice}</h4>
+          ) : (
+              <h4 className="text-center">Email for Price</h4>
             )
           }
-          {item.total_quantity > 0 ? (
-            <h5 className="text-center">{item.total_quantity} Left</h5>
+          {item.available > 0 ? (
+               <h5 className="text-center">{item.available} Left</h5>
           ) : (
               <h5 className="text-center">Out of Stock</h5>
-            )} */}
-        {/* </a> */}
+            )}  
+        </a>
       </Card>
       )}
     );
@@ -186,11 +193,13 @@ this.setState({
           {items}
         </CardDeck>
         <div className="pagination-div">
+        <div className="ml3"><p>current page: {currentPage}</p></div>
         <ul className="pagination-list" id="page-numbers">
               {renderPageNumbers}
             </ul>
             </div>
-            {/* <BrowseTabber title="Refine Your Search" /> */}
+            
+            <BrowseTabber title="Refine Your Search" />
       </div>
       </div>
       )

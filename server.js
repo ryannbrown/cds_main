@@ -556,32 +556,8 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
 
 
 })
-app.get('/api/thermal', (req, response) => {
 
-  // const data = {
-  //   caliber: req.params.caliber
-  // }
-
-  // var sort = req.params.sort;
-  // // console.log(caliber);
-
- let query = `SELECT * from zanders_inventory LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
-WHERE category ILIKE 'night vision' `
-
-
-  client.query(query, (error, results) => {
-    if (error) {
-      throw error
-    }
-
-    var data = results.rows
-    response.send(JSON.stringify({ data }));
-
-  });
-
-
-})
-app.get('/api/model/:item_no', (req, response) => {
+app.get('/davidsons/model/:item_no', (req, response) => {
 
   const data = {
     item_no: req.params.item_no
@@ -611,7 +587,66 @@ app.get('/api/model/:item_no', (req, response) => {
 
 
 })
-app.get('/api/specs/:item_no', (req, response) => {
+
+app.get('/thermal', (req, response) => {
+
+  // const data = {
+  //   caliber: req.params.caliber
+  // }
+
+  // var sort = req.params.sort;
+  // // console.log(caliber);
+
+ let query = `SELECT DISTINCT ON (zanders_inventory.itemnumber) * from zanders_inventory
+ LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
+ WHERE category ILIKE 'night vision' `
+
+
+  client.query(query, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+
+app.get('/zanders/model/:item_no', (req, response) => {
+
+  const data = {
+    item_no: req.params.item_no
+  }
+
+  console.log("item no", data.item_no)
+
+// Took this away from below query because additional spec call comes later
+  // LEFT JOIN davidsons_attributes
+  // ON davidsons_attributes.itemno = davidsons_inventory.item_no
+
+  // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+
+    const query= `SELECT * from zanders_inventory 
+    LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
+    WHERE zanders_inventory.itemnumber = $1`
+
+    const values = [data.item_no]
+  client.query( query, values, (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+
+  });
+
+
+})
+app.get('/api/:specs/:item_no', (req, response) => {
   const data = {
     item_no: req.params.item_no
   } 

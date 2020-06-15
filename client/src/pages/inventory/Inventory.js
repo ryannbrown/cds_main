@@ -31,6 +31,7 @@ class Inventory extends Component {
     window.scrollTo(0, 0)
     // console.log("clicked")
     // console.log(event.target.id)
+    event.target.classList += ' active';
     this.setState({
       currentPage: Number(event.target.id)
     });
@@ -197,6 +198,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
           {items}
         </CardDeck>
         <div className="pagination-div">
+        <div className="ml3"><p>current page: {currentPage}</p></div>
         <ul className="pagination-list" id="page-numbers">
               {renderPageNumbers}
             </ul>

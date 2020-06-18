@@ -59,7 +59,7 @@ class AeroPrecision extends Component {
               </div>
             </div>
             <div className="inventory-container">
-              <CdsInventory/>
+              <CdsInventory selection='aeroprecision' />
 
             </div>
             {/* <div className="cf dn">

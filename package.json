@@ -25,6 +25,7 @@
     "ftp": "^0.3.10",
     "morgan": "^1.10.0",
     "pg": "^8.2.1",
+    "pg-copy-streams": "^5.1.0",
     "query-string": "^6.12.1",
     "react-ga": "^2.7.0",
     "react-router-hash-link": "^1.2.2",

@@ -26,7 +26,7 @@ import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
 import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
-import Thermal from "./pages/inventory/zanders/Thermal.js"
+import zandersInventory from "./pages/inventory/zanders/zandersInventory.js"
 import zandersDetails from "./pages/inventory/zanders/zandersDetails.js"
 import LMT from "./pages/AeroPrecision/LMT.js"
 import { createBrowserHistory } from 'history'
@@ -67,7 +67,10 @@ export default function App() {
           <Route path="/caliber/:caliber" component={Inventory} />
 
           <Route path="/inventory/model/:item_no" component={Details} />
+
+
           <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
+          <Route path="/inventory/2/category/:category" component={zandersInventory} />
 
           <Route path="/admin" component={AdminPage} />
 
@@ -81,7 +84,7 @@ export default function App() {
 
 
           <Route path="/aeroprecision" component={AeroPrecision} />
-          <Route path="/thermal" component={Thermal} />
+  
           <Route path="/lmt" component={LMT} />
           <Redirect to="/" />
           {/* <Route path="/cds/transfers" component={transfers}/> */}

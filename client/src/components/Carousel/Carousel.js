@@ -23,7 +23,7 @@ class AdminPanel extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts`)
+        fetch(`/api/posts/featured`)
             .then(res => res.json())
             .then(json => {
                 console.log("json", json)

@@ -5,6 +5,7 @@ import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from
 import App from "../../App"
 
 
+
 class CdsInventory extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +24,7 @@ class CdsInventory extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts`)
+        fetch(`/api/posts/${this.props.selection}`)
         .then(res => res.json())
         .then(json => {
           console.log("json", json)

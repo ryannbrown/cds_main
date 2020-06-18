@@ -26,7 +26,7 @@ console.log(this.props.title);
                 <h1 className="text-center mt-4">{this.props.title}</h1>
                 <Tabs style={{ marginTop: '10px' }} defaultActiveKey="featured" id="uncontrolled-tab-example">
                     <Tab eventKey="featured" title="Featured">
-                        <a href="/cds/inventory"><div className="text-center mt-2"><button type="button" className=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Browse Featured</button></div></a>
+                        <a href="/cd/details"><div className="text-center mt-2"><button type="button" className=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Browse Featured</button></div></a>
                     </Tab>
                     <Tab eventKey="home" title="Manufacturer">
                         <Filter param="manufacturer" link="/browse/manufacturer" />

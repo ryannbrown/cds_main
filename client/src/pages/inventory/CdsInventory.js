@@ -22,8 +22,8 @@ class AdminPanel extends Component {
 
 
 
-    fetchPosts() {
-        fetch(`/api/posts`)
+    fetchPosts(param) {
+        fetch(`/api/posts/${param}`)
         .then(res => res.json())
         .then(json => {
           console.log("json", json)
@@ -36,7 +36,10 @@ class AdminPanel extends Component {
 
 componentDidMount () {
 
-    this.fetchPosts();
+let valParam = Object.values(this.props.match.params);
+let param = valParam.toString();
+
+    this.fetchPosts(param);
     
     }
 

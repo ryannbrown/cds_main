@@ -86,8 +86,27 @@ app.get('/api/posts', cors(), function (req, response) {
     }
   );
 })
+app.get('/api/posts/:selection', cors(), function (req, response) {
 
-app.get('/api/posts/:id', cors(), function (req, response) {
+  const data = {
+    selection: req.params.selection
+  }
+
+  const values = [data.selection]
+  
+  const query = `SELECT * FROM cds_inventory WHERE location = $1`
+  console.log(query);
+  client.query( query, values, (error, results) => {
+      if (error) {
+        throw error
+      }
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
+    }
+  );
+})
+
+app.get('/api/details/:id', cors(), function (req, response) {
   // var gun_id = req.params.id;
   const data = {
     id: req.params.id

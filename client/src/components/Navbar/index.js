@@ -55,7 +55,7 @@ function Navigation(props) {
            <Nav.Link href="/cds/about">About</Nav.Link>
            {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
            <NavDropdown title="Browse" id="basic-nav-dropdown">
-             <NavDropdown.Item href="/cds/inventory">Featured Inventory</NavDropdown.Item>
+             <NavDropdown.Item href="/cds/inventory/featured">Featured Inventory</NavDropdown.Item>
              <NavDropdown.Item href="/lmt"> Lewis Machine & Tool</NavDropdown.Item>
              <NavDropdown.Item href="/aeroprecision">Aero Precision</NavDropdown.Item>
              <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item>

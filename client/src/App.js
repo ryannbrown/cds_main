@@ -76,7 +76,7 @@ export default function App() {
 
           <Route path="/api/post" component={AdminPage} />
 
-          <Route path="/cds/inventory" component={CdsInventory} />
+          <Route path="/cds/inventory/:selection" component={CdsInventory} />
           <Route path="/cds/details/:id" component={CdsDetails} />
 
           <Route path="/cds/transfers" component={Transfers} />

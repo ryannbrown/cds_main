@@ -70,6 +70,13 @@ class LMT extends Component {
             </p>
           </div>
         </div>
+
+
+        <div className="inventory-container">
+              <CdsInventory selection='lmt' />
+
+            </div>
+
         <div className="cf">
           {/* <div className="fl w-100 w-50-l pr2-l pb3">
             <img className="db w-100" src="http://mrmrs.github.io/photos/010.jpg" alt="Photo of a dusk skyline above a grassy rockface covered in trees." />

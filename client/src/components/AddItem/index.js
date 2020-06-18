@@ -118,19 +118,19 @@ class AddItem extends Component {
                     sale_price: price,
                     location: location
                 })
-                }).then(response => {
-                    console.log("hey i did it")
-                    console.log(response)
-                    if (response.status == '200') {
-                        this.setState({
-                            itemPosted: true
-                        })
-                    }
+            }).then(response => {
+                console.log("hey i did it")
+                console.log(response)
+                if (response.status == '200') {
+                    this.setState({
+                        itemPosted: true
+                    })
+                }
             })
 
         }
         postItem()
-     
+
     }
 
 
@@ -151,27 +151,31 @@ class AddItem extends Component {
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category</Form.Label>
-                            <Form.Control ref={this.category} type="text" placeholder="What kind of product is this?.. suppressors, long guns, optics etc"  />
+                            <Form.Control ref={this.category} type="text" placeholder="What kind of product is this?.. suppressors, long guns, optics etc" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Location on site:</Form.Label>
-                            <Form.Control ref={this.location} type="text" placeholder = "eg. featured, aeroprecision, or lmt"  />
+                            <Form.Control ref={this.location} as="select">
+                                <option>featured</option>
+                                <option>aeroprecision</option>
+                                <option>lmt</option>
+                            </Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Product Name</Form.Label>
-                            <Form.Control ref={this.name} type="text"  />
+                            <Form.Control ref={this.name} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Description</Form.Label>
-                            <Form.Control ref={this.description} type="textarea" rows="5"  />
+                            <Form.Control ref={this.description} type="textarea" rows="5" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Caliber</Form.Label>
-                            <Form.Control ref={this.caliber} type="text"  />
+                            <Form.Control ref={this.caliber} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Manufacturer</Form.Label>
-                            <Form.Control ref={this.manufacturer} type="text"  />
+                            <Form.Control ref={this.manufacturer} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Model</Form.Label>
@@ -183,7 +187,7 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Barrel Length</Form.Label>
-                            <Form.Control ref={this.barrelLength} type="text"  />
+                            <Form.Control ref={this.barrelLength} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Finish</Form.Label>
@@ -191,7 +195,7 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Capacity</Form.Label>
-                            <Form.Control ref={this.capacity} type="text"  />
+                            <Form.Control ref={this.capacity} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Sights</Form.Label>
@@ -199,11 +203,11 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>UPC #</Form.Label>
-                            <Form.Control ref={this.upcNumber} type="text"  />
+                            <Form.Control ref={this.upcNumber} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>MSRP Price</Form.Label>
-                            <Form.Control ref={this.msrp} type="number" step="0.01"/>
+                            <Form.Control ref={this.msrp} type="number" step="0.01" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Listing Price</Form.Label>

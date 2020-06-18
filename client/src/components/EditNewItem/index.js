@@ -186,7 +186,13 @@ class EditNewItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Location on site: {gunData.location}</Form.Label>
-                            <Form.Control ref={this.location} type="text" placeholder = "eg. featured, aeroprecision, or lmt"  />
+                            <Form.Control ref={this.location} as="select">
+                                <option selected>{gunData.location}</option>
+                                <hr></hr>
+                                <option>aeroprecision</option>
+                                <option>lmt</option>
+                                <option>featured</option>
+                            </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Caliber: {gunData.caliber}</Form.Label>

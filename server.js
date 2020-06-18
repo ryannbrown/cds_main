@@ -86,8 +86,27 @@ app.get('/api/posts', cors(), function (req, response) {
     }
   );
 })
+app.get('/api/posts/:selection', cors(), function (req, response) {
 
-app.get('/api/posts/:id', cors(), function (req, response) {
+  const data = {
+    selection: req.params.selection
+  }
+
+  const values = [data.selection]
+  
+  const query = `SELECT * FROM cds_inventory WHERE location = $1`
+  console.log(query);
+  client.query( query, values, (error, results) => {
+      if (error) {
+        throw error
+      }
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
+    }
+  );
+})
+
+app.get('/api/details/:id', cors(), function (req, response) {
   // var gun_id = req.params.id;
   const data = {
     id: req.params.id
@@ -588,21 +607,32 @@ app.get('/davidsons/model/:item_no', (req, response) => {
 
 })
 
-app.get('/zanders/thermal', (req, response) => {
+app.get('/zanders/category/:category/:sort', (req, response) => {
 
-  // const data = {
-  //   caliber: req.params.caliber
-  // }
+  const data = {
+    category: req.params.category,
+    sort: req.params.sort
+  }
 
   // var sort = req.params.sort;
+
+  console.log(data.sort);
   // // console.log(caliber);
 
+  const values = [data.category]
+
+
+
  let query = `SELECT DISTINCT ON (zanders_inventory.itemnumber) * from zanders_inventory
+ LEFT JOIN zanders_quantity ON zanders_inventory.itemnumber = zanders_quantity.itemnumber
  LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
- WHERE category ILIKE 'night vision' `
+ WHERE category ILIKE $1 `
 
-
-  client.query(query, (error, results) => {
+ if (data.sort == 'onlyInStock') {
+  query += `AND zanders_quantity.available > '0' `
+}
+console.log(query);
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -630,6 +660,7 @@ app.get('/zanders/model/:item_no', (req, response) => {
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
     const query= `SELECT * from zanders_inventory 
+    LEFT JOIN zanders_quantity ON zanders_inventory.itemnumber = zanders_quantity.itemnumber
     LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
     WHERE zanders_inventory.itemnumber = $1`
 

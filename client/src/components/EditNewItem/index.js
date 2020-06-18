@@ -46,7 +46,7 @@ class EditNewItem extends Component {
     componentDidMount () {
         console.log("id:", this.props.id)
 
-        fetch(`/api/posts/${this.props.id}`)
+        fetch(`/api/details/${this.props.id}`)
         .then(res => res.json())
         .then(json => {
           console.log("inventory", json.data[0])

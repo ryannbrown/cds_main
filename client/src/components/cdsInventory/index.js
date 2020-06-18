@@ -5,7 +5,8 @@ import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from
 import App from "../../App"
 
 
-class AdminPanel extends Component {
+
+class CdsInventory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,8 +23,8 @@ class AdminPanel extends Component {
 
 
 
-    fetchPosts(param) {
-        fetch(`/api/posts/${param}`)
+    fetchPosts() {
+        fetch(`/api/posts/${this.props.selection}`)
         .then(res => res.json())
         .then(json => {
           console.log("json", json)
@@ -36,10 +37,7 @@ class AdminPanel extends Component {
 
 componentDidMount () {
 
-let valParam = Object.values(this.props.match.params);
-let param = valParam.toString();
-
-    this.fetchPosts(param);
+    this.fetchPosts();
     
     }
 
@@ -95,7 +93,7 @@ let param = valParam.toString();
         } 
     }
 }
-export default AdminPanel
+export default CdsInventory
 
 
 

@@ -5,7 +5,7 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
-
+import CdsInventory from "../../components/cdsInventory/index"
 // const queryString = require('query-string');
 
 
@@ -56,19 +56,17 @@ class LMT extends Component {
             <a className="f6 link dim ba ph3 pv2 mb2 dib black" target="_blank" rel="noopener noreferrer" href="https://lmtdefense.com/cms/wp-content/uploads/2020/04/2020-Catalog-Digital.pdf">Click Here for Product Brochure</a>
           </div>
         </div>
+
+        <CdsInventory/>
         <div className="cf dn">
           <div className="fl w-100 w-50-l">
             <p className="f5 pv4">
-              During high tides, water would flow directly into the pools from the
-              nearby ocean, recycling the <span className="db f4 f3-m f1-l fw6 measure lh-title">two million US gallons of water in about an hour. </span>
+           
             </p>
           </div>
           <div className="fl w-100 w-50-l">
             <p className="f5">
-              During low tides, a powerful turbine water pump,
-              built inside a cave at sea level, could be switched on from a control
-              room and could fill the tanks at a rate of 6,000 US gallons a minute,
-              recycling all the water in five hours.
+         
             </p>
           </div>
         </div>

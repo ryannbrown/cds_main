@@ -10,7 +10,7 @@ import BrowseTabber from '../../../components/BrowseTabber/BrowseTabber'
 
 require("dotenv").config();
 
-class Inventory extends Component {
+class zandersInventory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,28 +44,29 @@ class Inventory extends Component {
 
   sortItem = (e, data) => {
     let sortVar = e.target.dataset.sort;
-// console.log(e.target.dataset.sort)
-// console.log("clicked")
+console.log(e.target.dataset.sort)
+console.log("clicked")
 this.setState({
   sort: sortVar
 })
 
-// fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
-//     .then(res => res.json())
-//     .then(json => {
-//       // console.log("json", json)
-//       this.setState({
-//         gunData: json.data,
-//         isLoading: false
-//       })
-//   })
+fetch(`/zanders/category/${this.state.valParam}/${sortVar}`)
+    .then(res => res.json())
+    .then(json => {
+      // console.log("json", json)
+      this.setState({
+        gunData: json.data,
+        isLoading: false
+      })
+  })
 }
 
   componentDidMount() {
     
   let sort = "sort";
-    console.log(this.props.match.params)
-    // console.log(window.location.search)
+
+let param = Object.values(this.props.match.params)
+console.log(param)
 
     let keyParam = Object.keys(this.props.match.params);
     let valParam = Object.values(this.props.match.params);
@@ -74,7 +75,7 @@ this.setState({
       valParam: valParam
     })
 
-    fetch(`/zanders/thermal`)
+    fetch(`/zanders/category/${param}/${this.state.sort}`)
       .then(res => res.json())
       .then(json => {
         console.log("json", json)
@@ -170,21 +171,21 @@ this.setState({
       return (
       <div className="inventory-div">
       <div className="deck-wrapper">
-        {/* <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort">
-        <Dropdown.Header>Price</Dropdown.Header>
+        <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort">
+        {/* <Dropdown.Header>Price</Dropdown.Header>
             <Dropdown.Item data-sort="priceUp" onClick={this.sortItem}>Low to High</Dropdown.Item>
             <Dropdown.Item data-sort="priceUpInStock" onClick={this.sortItem}>Low to High | Hide out of Stock Items</Dropdown.Item>
             <Dropdown.Item data-sort="priceDown" onClick={this.sortItem}>High to Low</Dropdown.Item>
             <Dropdown.Item data-sort="priceDownInStock" onClick={this.sortItem}>High to Low | Hide Out Stock Items</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Header>Other</Dropdown.Header>
+            <Dropdown.Header>Other</Dropdown.Header> */}
             <Dropdown.Item data-sort="onlyInStock" onClick={this.sortItem}>Hide out of Stock Items</Dropdown.Item>
-          </DropdownButton> */}
+          </DropdownButton> 
           {/* OPTIONAL */}
           {/* <div className="tc mt-2 dropdown">
             <Button data-sort="onlyInStock" onClick={this.sortItem} sz="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Dropdown button">
       Show Only In Stock
-          </Button></div> */}
+          </Button></div>
         
         {/* TODO: make dynamic for others besides manufacturer */}
         <a href="/"><Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button></a>
@@ -207,6 +208,6 @@ this.setState({
 
   }
 }
-export default Inventory;
+export default zandersInventory;
 
 

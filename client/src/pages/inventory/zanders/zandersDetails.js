@@ -140,7 +140,7 @@ class zandersDetails extends Component {
 
 
                         {gunData.qty1 > 0 ? (
-                            <h5 className="text-center">{gunData.qty1} Left</h5>
+                            <h5 className="text-center">{gunData.available} Left</h5>
                         ) : (
                                 <h5 className="text-center">Out of Stock</h5>
                             )}

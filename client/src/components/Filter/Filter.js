@@ -46,16 +46,6 @@ class Browse extends Component {
     this.setState({
      param: param
    })
-
-//    console.log(this.props.match.params)
-
-  //  let param = Object.values(this.props.match.params);
-  //  this.setState({
-  //   param: param
-  // })
-
-    // fetch(`/browse/${param}`)
-    // fetch(`/browse/manufacturer`)
     fetch(this.props.link)
       .then(res => res.json())
       .then(json => {
@@ -67,15 +57,6 @@ class Browse extends Component {
           // console.log(Object.values(json.data[i]))
           criteriaVals.push(Object.values(json.data[i]))
         }
-        // console.log(criteriaVals)
-        // var descriptionValues = Object.values(json.data)
-        //  console.log(Object.keys(json.data[0]))
-        // var descriptionKeys = Object.keys(json.data[0])
-        // var descriptionValues = Object.values(json.data[0])
-        // console.log(Array.prototype.push.apply(descriptionKeys,descriptionValues))
-        // console.log(descriptionKeys)
-        // console.log(descriptionValues)
-        // console.log(Object.values(json.data[0]))
         this.setState({
           data: criteriaVals,
           isLoaded: true
@@ -87,7 +68,7 @@ class Browse extends Component {
   };
 
   componentDidUpdate() {
-    console.log(this.state.value)
+    // console.log(this.state.value)
   }
 
 

@@ -18,6 +18,7 @@ import fbLogo from "../media/fb.jpg"
 import Filter from "../components/Filter/Filter"
 import BrowseTabber from "../components/BrowseTabber/BrowseTabber"
 import Carousel from "../components/Carousel/Carousel"
+import Cards from "../components/Cards/index"
 import image from "../media/field22.jpg"
 import "./Home.css"
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -94,6 +95,8 @@ export default class Home extends Component {
             <ScrollIntoView selector="#contact"> <FontAwesomeIcon className="browseArrow" icon={faArrowDown} /></ScrollIntoView></div>
 </div>
 </div>
+
+<Cards></Cards>
           
 
             {/* Social Section */}

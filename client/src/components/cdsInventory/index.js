@@ -44,7 +44,7 @@ componentDidMount () {
 
     render() {
         console.log(this.state.posts)
-        const { isLoading } = this.state;
+        const { isLoading, posts } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>
             <a href={`/cds/details/${item.uuid}`}>
@@ -72,8 +72,10 @@ componentDidMount () {
           </Spinner>
           </div> )
           }
+
+
       
-          else {
+          if (posts.length > 0) {
             return (
                 <div>
                     <a href="/">
@@ -81,16 +83,23 @@ componentDidMount () {
                 </a>
                 <div className="text-center mt-5">
                     
-                    <h1 style={{textTransform: 'uppercase'}} className="mt-5">Current Inventory</h1>
+                    <h1 style={{textTransform: 'uppercase'}} className="mt-5">Available for Order</h1>
                     <CardDeck className="mb-5">
                      {items}
                     </CardDeck>
-                    <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a>
+                    {/* <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a> */}
 
                 </div>
                 </div>
             )
-        } 
+        } else {
+            return (
+                <div>
+                    {/* <h1 style={{textTransform: 'uppercase'}} className="mv4 tc"> {placeholderText}</h1> */}
+                 </div>
+            )
+           
+        }
     }
 }
 export default CdsInventory

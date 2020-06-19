@@ -80,3 +80,19 @@ span.brand-text.navbar-brand {
     font-size: 36px;
     margin-left: 35rem;
 }
+
+
+.gov-id {
+    font-size:1.5em;
+}
+
+@media(max-width:997px) {
+    .gov-id {
+        font-size:1em;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+  

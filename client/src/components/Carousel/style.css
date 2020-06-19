@@ -1,5 +1,5 @@
 .carousel-caption {
-    color:white;
+    color:#000;
     text-shadow: 1px 1px black;
 font-size:1em;
 }
@@ -10,7 +10,7 @@ font-size:1em;
 
 .gun-img-carousel {
 max-height:650px;
-filter: brightness(.75);
+/* filter: brightness(.75); */
 }
 
 .carousel-title {

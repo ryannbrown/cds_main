@@ -16,7 +16,7 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gunData: [] || 'hello',
+      gunData: [] || '',
       isLoading: true,
       errorPage: false,
       catData: [],
@@ -37,26 +37,22 @@ class Details extends Component {
     fetch(`/api/specs/${param}`)
       .then(res => res.json())
       .then(json => {
-        if (json.data.length > 0 ) {
 
-       
-        console.log("specs", json.data[0])
         this.setState({
           gunSpecs: json.data[0],
           isLoading: false
         }, console.log(this.state.gunSpecs))
-      } else {
-        
-      }}
+
+      }
       )
   }
 
   // TODO: implement scrolling to bottom on click
 
-    scrollPage = () => {
-     
-      setTimeout(function(){  window.scrollTo(0, 300); }, 250);
-    }
+  scrollPage = () => {
+
+    setTimeout(function () { window.scrollTo(0, 300); }, 250);
+  }
 
   componentDidMount() {
 
@@ -71,19 +67,20 @@ class Details extends Component {
       .then(res => res.json())
       .then(json => {
         if (json.data[0]) {
-        console.log("inventory", json.data[0])
-        this.setState({
-          gunData: json.data[0],
-          isLoading: false,
-        })
-        var size = Object.keys(this.state.gunData).length;
-        console.log(size);
-      } else {
-        this.setState({
-          errorPage: true,
-          isLoading: false
-        })
-      }}).then(this.fetchAdditionalData(param))
+          console.log("inventory", json.data[0])
+          this.setState({
+            gunData: json.data[0],
+            isLoading: false,
+          })
+          var size = Object.keys(this.state.gunData).length;
+          console.log(size);
+        } else {
+          this.setState({
+            errorPage: true,
+            isLoading: false
+          })
+        }
+      }).then(this.fetchAdditionalData(param))
   };
 
 
@@ -97,7 +94,7 @@ class Details extends Component {
 
 
     console.log(errorPage)
-    
+
 
     console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
@@ -118,14 +115,15 @@ class Details extends Component {
           </Spinner>
         </div>
       )
-    } else if (errorPage) {
+    }
+    else if (errorPage) {
       return (
-      <div className="w-50 tc center error-page "><h1 className="mt6">We are sorry but we cannot find what you are looking for.</h1> 
-      <h2>Please ensure you typed it in correctly, otherwise it may have sold. </h2>
-      <SearchTool searchText="Try again"></SearchTool>
-      <h1 className="mv5">Additionally, you can use the below tool.</h1>
-      <BrowseTabber></BrowseTabber>
-      </div>
+        <div className="w-50 tc center error-page "><h1 className="mt6">We are sorry but we cannot find what you are looking for.</h1>
+          <h2>Please ensure you typed it in correctly, otherwise it may have sold. </h2>
+          <SearchTool searchText="Try again"></SearchTool>
+          <h1 className="mv5">Additionally, you can use the below tool.</h1>
+          <BrowseTabber></BrowseTabber>
+        </div>
       )
     }
     else {
@@ -141,21 +139,21 @@ class Details extends Component {
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
                 {
-            gunSpecs.image1 ? (
-              <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
-                // TODO: come up with better way to get images than this solution
-                src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
-                onError={this.usePlaceholderImg}
-              />
-            ) : (
+                  gunSpecs.image1 ? (
+                    <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
+                      // TODO: come up with better way to get images than this solution
+                      src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
+                      onError={this.usePlaceholderImg}
+                    />
+                  ) : (
 
-                <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
-                  // TODO: come up with better way to get images than this solution
-                  src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
-                  onError={this.usePlaceholderImg}
-                />
-              )
-          }
+                      <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
+                        // TODO: come up with better way to get images than this solution
+                        src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                        onError={this.usePlaceholderImg}
+                      />
+                    )
+                }
                 {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img> */}
                 {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
                 <h2 className="retail-price">${gunData["Retail Price"]}</h2>
@@ -173,7 +171,7 @@ class Details extends Component {
                 <h3>{gunData["Gun Action"]}</h3>
                 <p>{gunData.features}</p>
                 <p>Finish: {gunData.finish}</p>
-                <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
+                <h2 style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
 
                 <Accordion>
                   <Card>
@@ -219,7 +217,7 @@ class Details extends Component {
                     </Accordion.Collapse>
                   </Card>
                 </Accordion>
-              
+
               </Card>
               <BrowseTabber title="Revise Search" />
             </div>
@@ -246,7 +244,7 @@ class Details extends Component {
                   <h3>{gunData["Gun Action"]}</h3>
                   <p>{gunData.features}</p>
                   <p>{gunData.finish}</p>
-                  <h2 style={{color: 'rgb(221, 103, 23)'}}>Order with Item # : {gunData["Item #"]}</h2>
+                  <h2 style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
                 </Card>
                 <BrowseTabber title="Revise Search" />
               </div>

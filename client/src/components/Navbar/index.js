@@ -5,6 +5,7 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Home from "../../pages/Home"
 import About from "../../pages/About"
+import SearchTool from "../../components/searchTool/index"
 import App from "../../App"
 // import Logo from '../../media/Logo.png';
 import Image from 'react-bootstrap/Image';
@@ -13,13 +14,13 @@ import logo from '../../media/cds.jpg'
 // import './style.css';
 function Navigation(props) {
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    console.log(name)
-    window.location.href =`/inventory/model/${name}`;
-}
+//   const handleSubmit = (evt) => {
+//     evt.preventDefault();
+//     console.log(name)
+//     window.location.href =`/inventory/model/${name}`;
+// }
   
 
 
@@ -74,8 +75,9 @@ function Navigation(props) {
        <FormControl type="text"  value={name} onChange={e => setName(e.target.value)}   placeholder="Search Inventory" className="mr-sm-2" />
        <Button onSubmit={handleSubmit} type="submit" className="search-btn" variant="outline-success">Search</Button>
        </Form> */}
+       <SearchTool searchText="Search by Item #"></SearchTool>
       </Navbar.Collapse>
-      <p className="gov-id">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
+      <p className="gov-id mt2">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
       </Navbar>
     </Router>
 

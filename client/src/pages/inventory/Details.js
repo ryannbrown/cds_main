@@ -5,6 +5,7 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
+import SearchTool from "../../components/searchTool/index"
 
 // const queryString = require('query-string');
 
@@ -15,8 +16,9 @@ class Details extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gunData: [] || '',
+      gunData: [] || 'hello',
       isLoading: true,
+      errorPage: false,
       catData: [],
       gunSpecs: [],
       param: '',
@@ -35,12 +37,17 @@ class Details extends Component {
     fetch(`/api/specs/${param}`)
       .then(res => res.json())
       .then(json => {
+        if (json.data.length > 0 ) {
+
+       
         console.log("specs", json.data[0])
         this.setState({
           gunSpecs: json.data[0],
           isLoading: false
         }, console.log(this.state.gunSpecs))
-      }
+      } else {
+        
+      }}
       )
   }
 
@@ -63,15 +70,20 @@ class Details extends Component {
     fetch(`/davidsons/model/${param}`)
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        if (json.data[0]) {
         console.log("inventory", json.data[0])
         this.setState({
           gunData: json.data[0],
-          // isLoading: false,
+          isLoading: false,
         })
         var size = Object.keys(this.state.gunData).length;
         console.log(size);
-      }).then(this.fetchAdditionalData(param))
+      } else {
+        this.setState({
+          errorPage: true,
+          isLoading: false
+        })
+      }}).then(this.fetchAdditionalData(param))
   };
 
 
@@ -81,9 +93,13 @@ class Details extends Component {
 
     const profitMargin = 1.15
 
-    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading } = this.state;
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage } = this.state;
 
 
+    console.log(errorPage)
+    
+
+    console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
@@ -101,6 +117,15 @@ class Details extends Component {
             <span className="sr-only">Loading...</span>
           </Spinner>
         </div>
+      )
+    } else if (errorPage) {
+      return (
+      <div className="w-50 tc center error-page "><h1 className="mt7">We are sorry but we cannot find what you are looking for.</h1> 
+      <h2>Please ensure you typed it in correctly, otherwise it may have sold. </h2>
+      <SearchTool searchText="Search again"></SearchTool>
+      <h1 className="mv5">Additionally, you can use the below tool.</h1>
+      <BrowseTabber></BrowseTabber>
+      </div>
       )
     }
     else {

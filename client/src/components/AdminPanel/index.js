@@ -69,7 +69,7 @@ class AdminPanel extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts`)
+        fetch(`/api/posts/`)
             .then(res => res.json())
             .then(json => {
                 console.log("json", json)
@@ -123,7 +123,7 @@ class AdminPanel extends Component {
             <Card key={i} className='card'>
                 <span onClick={() => this.handleShow(item.product_name, item.id)}  className="delete-icon"><FontAwesomeIcon icon={faTrash} /></span>
                 <span onClick={() => this.editItem(item.product_name, item.uuid)}  className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
-                <p className="text-center">Product Name: {item.product_name}</p>
+                <p className="text-center w-75 center">Product Name: {item.product_name}</p>
                 <img className="gun-img" alt={`${item.itemdesc1}`}
                     src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
                     onError={this.usePlaceholderImg}

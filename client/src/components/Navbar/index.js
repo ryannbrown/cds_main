@@ -68,12 +68,14 @@ function Navigation(props) {
       </NavDropdown>
       {/* <Navbar.Brand className="brand-text" style={{color: 'white'}}>Coleman Defense Solutions</Navbar.Brand> */}
   </Nav>
+
+ 
   {/* <Form onSubmit={handleSubmit} inline>
        <FormControl type="text"  value={name} onChange={e => setName(e.target.value)}   placeholder="Search Inventory" className="mr-sm-2" />
        <Button onSubmit={handleSubmit} type="submit" className="search-btn" variant="outline-success">Search</Button>
        </Form> */}
       </Navbar.Collapse>
-      
+      <p className="gov-id">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
       </Navbar>
     </Router>
 

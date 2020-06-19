@@ -165,8 +165,3 @@ ul#page-numbers li {
 .pagination-item.active {
     opacity:.5;
        }
-
-
-.error-page {
-    height:100vh;
-}

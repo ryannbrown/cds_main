@@ -122,7 +122,7 @@ class Details extends Component {
       return (
       <div className="w-50 tc center error-page "><h1 className="mt7">We are sorry but we cannot find what you are looking for.</h1> 
       <h2>Please ensure you typed it in correctly, otherwise it may have sold. </h2>
-      <SearchTool searchText="Search again"></SearchTool>
+      <SearchTool searchText="Try again"></SearchTool>
       <h1 className="mv5">Additionally, you can use the below tool.</h1>
       <BrowseTabber></BrowseTabber>
       </div>

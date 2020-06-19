@@ -95,4 +95,6 @@ span.brand-text.navbar-brand {
     }
 }
 
-  
+.error-page {
+    min-height: 100vh;
+}

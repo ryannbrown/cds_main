@@ -72,6 +72,8 @@ export default function App() {
           <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
           <Route path="/inventory/2/category/:category" component={zandersInventory} />
 
+          {/* <Route path="/inventory" component={About} /> */}
+
           <Route path="/admin" component={AdminPage} />
 
           <Route path="/api/post" component={AdminPage} />

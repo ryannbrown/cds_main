@@ -1,4 +1,4 @@
-import React, { Component, useEffect, Redirect } from "react";
+import React, { Component, useEffect, Redirect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +18,13 @@ import Nav from "./components/Navbar";
 // import axios from "axios";
 import Home from '../src/pages/Home';
 import About from '../src/pages/About';
+import Profile from '../src/pages/profile';
 import Inventory from './pages/inventory/Inventory';
 import Browse from './pages/inventory/Browse';
 import Details from './pages/inventory/Details';
 import AdminPage from './pages/admin/admin';
+import loginModal from '../src/components/loginModal/index.js';
+import Registration from '../src/pages/registration/index.js';
 import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
@@ -48,18 +51,27 @@ export default function App() {
   }, [])
 
 
+  // const [isLoggedIn, setLoggedIn] = useState(false);
+
+
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+
 
   return (
     <Router>
       <div>
-        <Nav></Nav>
+        <Nav loggedInUser="user" isLoggedIn="false">
+          {/* <loginModal></loginModal> */}
+        </Nav>
         
 
         <Switch>
           <Route exact path="/" component={() =>
             <Home
             />} />
-
+          <Route path="/cds/registration" component={Registration} />
           <Route path="/browse/:criteria" component={Browse} />
 
           <Route path="/gun_type/:gun_type" component={Inventory} />
@@ -83,6 +95,8 @@ export default function App() {
 
           <Route path="/cds/transfers" component={Transfers} />
           <Route path="/cds/about" component={About} />
+          <Route path="/profile" component={Profile} />
+       
 
 
           <Route path="/aeroprecision" component={AeroPrecision} />

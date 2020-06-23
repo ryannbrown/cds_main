@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom";
 // import './style.css'
-import image from "../../media/field.jpg"
+import image from "../../media/field.JPG"
 /**
  * Change the content to add your own bio
  */

@@ -781,6 +781,7 @@ const submittedPass = data.password
 
   client.query(query, values, (error, results) => {
 
+
     let data = results.rows;
     // console.log("password", data[0].password)
     
@@ -799,6 +800,52 @@ const submittedPass = data.password
     }
   }
   res.send(200);
+  const createSession =() => {
+    let email = data[0].email
+    id = Math.floor(Math.random() * 10000 + 1);
+    console.log(id);
+    const query = `CREATE TABLE session_${id} (
+      email     varchar(250)
+  );`
+    console.log(data[0].email)
+    // console.log(name)
+
+    client.query(query, (error, results) => {
+
+     if (!error) {
+      // sayHi(email, id)
+     }
+      
+      // if (error)  {
+      //   return res.status(400).send({
+      //     message: 'This is an error!'
+      //   });
+      // }
+      // res.send(200);
+    })
+    const sayHi = (email, id) => {
+     
+      const query = `INSERT INTO session_${id} VALUES  (
+        '${email}'
+    );`
+      client.query(query, (error, results) => {
+
+        if (!error) {
+        console.log("I think it worked")
+        }
+         
+         // if (error)  {
+         //   return res.status(400).send({
+         //     message: 'This is an error!'
+         //   });
+         // }
+         // res.send(200);
+       })
+
+
+    }
+  }
+  // createSession();
   })
 })
 

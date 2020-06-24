@@ -43,81 +43,97 @@ browserHistory.listen((location, action) => {
   ReactGA.pageview(location.pathname + location.search)
 })
 
-export default function App() {
+class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    };
+    this.handler = this.handler.bind(this);
+  }
 
+  handler(user) {
+    console.log("handler has actually handled!")
+    this.setState({
+      loggedIn: true,
+      user: user
+    })
+  }
 
-  useEffect(() => {
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+
+  componentDidMount() {
     ReactGA.pageview(window.location.pathname + window.location.search)
-  }, [])
+  }
+
+  render() {
+    console.log(this.state)
 
 
-  // const [isLoggedIn, setLoggedIn] = useState(false);
+    return (
+      <Router>
+        <div>
+          <Nav action={this.handler} loggedIn={this.state.loggedIn} user={this.state.user}>
+            {/* <loginModal></loginModal> */}
+          </Nav>
+
+
+          <Switch>
+            <Route exact path="/" component={() =>
+              <Home
+              />} />
+            <Route path="/cds/registration" component={Registration} />
+            <Route path="/browse/:criteria" component={Browse} />
+
+            <Route path="/gun_type/:gun_type" component={Inventory} />
+            <Route path="/manufacturer/:manufacturer" component={Inventory} />
+            <Route path="/caliber/:caliber" component={Inventory} />
+
+            <Route path="/inventory/model/:item_no" component={Details} />
+
+
+            <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
+            <Route path="/inventory/2/category/:category" component={zandersInventory} />
+
+            {/* <Route path="/inventory" component={About} /> */}
+
+            <Route path="/admin" component={AdminPage} />
+
+            <Route path="/api/post" component={AdminPage} />
+
+            <Route path="/cds/inventory/:selection" component={CdsInventory} />
+            <Route path="/cds/details/:id" component={CdsDetails} />
+
+            <Route path="/cds/transfers" component={Transfers} />
+            <Route path="/cds/about" component={About} />
+            <Route path="/profile" component={Profile} />
 
 
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+            <Route path="/aeroprecision" component={AeroPrecision} />
+
+            <Route path="/lmt" component={LMT} />
+            <Redirect to="/" />
+            {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 
-  return (
-    <Router>
-      <div>
-        <Nav loggedInUser="user" isLoggedIn="false">
-          {/* <loginModal></loginModal> */}
-        </Nav>
-        
+          </Switch>
 
-        <Switch>
-          <Route exact path="/" component={() =>
-            <Home
-            />} />
-          <Route path="/cds/registration" component={Registration} />
-          <Route path="/browse/:criteria" component={Browse} />
+        </div>
+        <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
+      </Router>
 
-          <Route path="/gun_type/:gun_type" component={Inventory} />
-          <Route path="/manufacturer/:manufacturer" component={Inventory} />
-          <Route path="/caliber/:caliber" component={Inventory} />
-
-          <Route path="/inventory/model/:item_no" component={Details} />
+    );
 
 
-          <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
-          <Route path="/inventory/2/category/:category" component={zandersInventory} />
+    // function Child() {
+    //   let { brand_name } = useParams();
+    // }
 
-          {/* <Route path="/inventory" component={About} /> */}
-
-          <Route path="/admin" component={AdminPage} />
-
-          <Route path="/api/post" component={AdminPage} />
-
-          <Route path="/cds/inventory/:selection" component={CdsInventory} />
-          <Route path="/cds/details/:id" component={CdsDetails} />
-
-          <Route path="/cds/transfers" component={Transfers} />
-          <Route path="/cds/about" component={About} />
-          <Route path="/profile" component={Profile} />
-       
-
-
-          <Route path="/aeroprecision" component={AeroPrecision} />
-  
-          <Route path="/lmt" component={LMT} />
-          <Redirect to="/" />
-          {/* <Route path="/cds/transfers" component={transfers}/> */}
-
-
-        </Switch>
-   
-</div>
-<footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
-    </Router>
-
-  );
-
-
-  // function Child() {
-  //   let { brand_name } = useParams();
-  // }
+  }
 
 }
+
+export default App
 

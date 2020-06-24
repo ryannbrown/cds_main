@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, browserHistory, setShow } from "react";
+import React, { Component, useState, useEffect, useRef, browserHistory, setShow, setState, updatedValues } from "react";
 import { Nav, Form, FormControl, Button, NavDropdown, Modal } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import './style.css'
@@ -12,175 +12,222 @@ import Image from 'react-bootstrap/Image';
 import logo from '../../media/cds.jpg'
 
 // import './style.css';
-function Navigation(props) {
+class Navigation extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      show: false,
+      setShow: false,
+      loggedIn: props.loggedIn,
 
-  const refContainer = useRef(1)
-
-  const emailRef = useRef();
-  const passwordRef = useRef();
-
-  // const [modalShow, setModalShow] = useState(false);
-  const [show, setShow] = useState(false);
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  const [loggedInState, setLoggedInState] = useState(props);
-  const [loggedInUser, setLoggedInUser] = useState('');
-  // const signedIn = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleSubmit = (e) => {
-
-  let email = emailRef.current.value
-  let password = passwordRef.current.value
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.fileChanged = this.fileChanged.bind(this);
+    this.emailRef = React.createRef();
+    this.passwordRef = React.createRef();
+  }
 
 
-console.log(email, password)
+  handleClose = () => {
+    console.log("clicked")
+    this.setState({
+      show: false,
+      setShow: false
+    });
+  }
 
-const userPassword = []
+
+
+
+  handleShow = () => {
+    this.setState({
+      show: true,
+      setShow: true
+    });
+  }
+
+
+  handleSubmit = (e) => {
+
+    let email = this.emailRef.current.value
+    let password = this.passwordRef.current.value
+
+
+    console.log(email, password)
+
+    const userPassword = []
 
     e.preventDefault();
     console.log("handled it")
 
 
 
-    const signIn= () => {
+    const signIn = () => {
       console.log("posting to DB")
       // POST TO DB
       fetch('/api/signin', {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              // first_name: first_name,
-              // last_name: last_name,
-              email:email,
-              password: password,
-          })
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // first_name: first_name,
+          // last_name: last_name,
+          email: email,
+          password: password,
+        })
       }).then(response => {
-          console.log("hey i did it")
-          console.log(response)
-          if (response.status == '200') {
-            console.log(email);
-            setLoggedInState(true);
-            // TODO: Make it users name instead of email
-           setLoggedInUser(email);
-            setShow(false);
-            // alert("success")
-          } else if (response.status == '400') {
-             alert("incorrect email/password")
-          }
+        console.log("hey i did it")
+        console.log(response)
+        if (response.status == '200') {
+          console.log(email);
+          this.setState({
+            loggedIn: true,
+            user: email,
+            show: false
+          })
+          // sessionStorage.setItem("name", postData.name);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("loggedIn", true)
+          this.props.action(email)
+          // alert("success")
+        } else if (response.status == '400') {
+          alert("incorrect email/password")
+        }
       })
 
-  }
-signIn();
+    }
+    signIn();
 
 
   }
 
 
-  const logOut = () =>{
-    setLoggedInState(false)
+  logOut = () => {
+    this.setState({
+      loggedIn: false
+    })
+    sessionStorage.removeItem("loggedIn")
+    sessionStorage.removeItem("email")
   }
 
-  useEffect(() => {
-      setLoggedInState(props);
-  }, [props])
+  componentDidMount() {
+    this.setState({
+      loggedIn: sessionStorage.getItem("loggedIn"),
+      user: sessionStorage.getItem("email")
+    })
+  }
+  componentDidUpdate() {
+    console.log("updated nav state:", this.state)
+  }
+
+  // useEffect(() => {
+  //     setLoggedInState(props);
+  //     setUser(props.user);
+
+  //     // setUser(props);
+  // }, [props])
 
 
-  return (
-    <Router>
+  render() {
+const {show} = this.state;
 
-      <Navbar sticky="top" bg="dark" expand="lg">
-        <Navbar.Brand
-          className='mr4' style={{ color: 'white' }} href="/">
-          <img
-            src={logo}
-            width="125"
-            height="125"
-            className="d-inline-block align-top"
-            alt="React Bootstrap logo"
-          />
-          {/* Coleman Defense Solutions */}
-        </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/">
+    return (
+      <Router>
 
-              Home
+        <Navbar sticky="top" bg="dark" expand="lg">
+          <Navbar.Brand
+            className='mr4' style={{ color: 'white' }} href="/">
+            <img
+              src={logo}
+              width="125"
+              height="125"
+              className="d-inline-block align-top"
+              alt="React Bootstrap logo"
+            />
+            {/* Coleman Defense Solutions */}
+          </Navbar.Brand>
+
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="/">
+
+                Home
        </Nav.Link>
-            <Nav.Link href="/cds/transfers">Transfers</Nav.Link>
-            <Nav.Link href="/cds/about">About</Nav.Link>
-            {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
-            <NavDropdown title="Browse" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/cds/inventory/featured">Featured Inventory</NavDropdown.Item>
-              <NavDropdown.Item href="/lmt"> Lewis Machine & Tool</NavDropdown.Item>
-              <NavDropdown.Item href="/aeroprecision">Aero Precision</NavDropdown.Item>
-              <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item>
-            </NavDropdown>
+              <Nav.Link href="/cds/transfers">Transfers</Nav.Link>
+              <Nav.Link href="/cds/about">About</Nav.Link>
+              {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
+              <NavDropdown title="Browse" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/cds/inventory/featured">Featured Inventory</NavDropdown.Item>
+                <NavDropdown.Item href="/lmt"> Lewis Machine & Tool</NavDropdown.Item>
+                <NavDropdown.Item href="/aeroprecision">Aero Precision</NavDropdown.Item>
+                <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item>
+              </NavDropdown>
 
-          </Nav>
-      
-      {!loggedInState ? (
-  <Button variant="primary" onClick={handleShow}>
-  Login/Register
-</Button>
-      ) : (
-        <div>
-          {/* <div>hello, {loggedInUser}</div> */}
-          <a href="/profile"><Button>View Profile</Button></a>
-         <Button onClick={logOut}>LOGOUT</Button>
-        </div>
-        
-      )}
-        
+            </Nav>
 
-          <Modal
-            show={show}
-            onHide={handleClose}
-            // backdrop="static"
-            keyboard={false}
-            centered
-            size="lg"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Login/Register</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                Returning Customer? Login Below
+
+            {!this.state.loggedIn ? (
+              <Button variant="primary" onClick={this.handleShow}>
+                Login/Register
+              </Button>
+            ) : (
+                <div>
+                  <div>hello, {this.state.user} </div>
+                  <a href="/profile"><Button>View Profile</Button></a>
+                  <Button onClick={this.logOut}>LOGOUT</Button>
+                </div>
+
+              )}
+
+
+            <Modal
+              show={show}
+              onHide={this.handleClose}
+              // backdrop="static"
+              keyboard={false}
+              centered
+              size="lg"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Login/Register</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  Returning Customer? Login Below
          </div>
 
-              <form onSubmit={handleSubmit} encType="multipart/form-data" >
+                <form onSubmit={this.handleSubmit} encType="multipart/form-data" >
 
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Control type="text" ref={emailRef} placeholder="email" />
-                </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Control type="text" ref={passwordRef} placeholder="password" />
-                </Form.Group>
-              </form>
-              <h2>New Customer?</h2>
-              <a href="/cds/registration"><Button>Register Here</Button></a>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Control type="text" ref={this.emailRef} placeholder="email" />
+                  </Form.Group>
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Control type="text" ref={this.passwordRef} placeholder="password" />
+                  </Form.Group>
+                </form>
+                <h2>New Customer?</h2>
+                <a href="/cds/registration"><Button>Register Here</Button></a>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Close
           </Button>
-              <Button variant="primary" onClick={handleSubmit}>Login</Button>
-            </Modal.Footer>
-          </Modal>
+                <Button variant="primary" onClick={this.handleSubmit}>Login</Button>
+              </Modal.Footer>
+            </Modal>
 
-          <SearchTool searchText="Search by Item #"></SearchTool>
-        </Navbar.Collapse>
-        <p className="gov-id mt2">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
-      </Navbar>
-    </Router>
+            <SearchTool searchText="Search by Item #"></SearchTool>
+          </Navbar.Collapse>
+          <p className="gov-id mt2">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
+        </Navbar>
+      </Router>
 
-  )
+    )
+  }
 }
 
 export default Navigation;

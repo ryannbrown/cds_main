@@ -10,7 +10,7 @@ class About extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     state: "hello I am Home's state"
+     state: "hello I am Home's state",
     };
   }
 

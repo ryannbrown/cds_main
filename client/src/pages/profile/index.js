@@ -11,12 +11,15 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     state: "hello I am Home's state"
+     state: "hello I am Home's state",
     };
   }
 
   componentDidMount() {
-  
+    this.setState({
+      loggedIn: sessionStorage.getItem("loggedIn"),
+      user: sessionStorage.getItem("email")
+    })
   }
 
 
@@ -24,7 +27,7 @@ class Profile extends Component {
   render() {
     return (
       <Fragment>
-      <div className="profile-page">Profile page</div>
+      <div className="profile-page">Profile page {this.state.user} </div>
 
     </Fragment>
     )

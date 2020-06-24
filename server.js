@@ -864,6 +864,31 @@ const submittedPass = data.password
   })
 
 
+  app.get('/profile/:email', function (req, response) {
+    
+
+    const data = {
+      email: req.params.email
+    }
+    console.log(data);
+    const values = [data.email]
+
+   const query = `SELECT * from cds_users WHERE email = $1`;
+
+    console.log(values);
+
+    client.query(
+      query, values, (error, results) => {
+        if (error) {
+          throw error
+        }
+        var data = results.rows
+        response.send(JSON.stringify({ data }));
+      }
+    );
+  })
+
+
 
 
 

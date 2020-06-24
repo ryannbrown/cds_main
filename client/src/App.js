@@ -107,7 +107,7 @@ class App extends Component {
 
             <Route path="/cds/transfers" component={Transfers} />
             <Route path="/cds/about" component={About} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile" component={ () => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
 
 
 

@@ -110,6 +110,7 @@ class Navigation extends Component {
     })
     sessionStorage.removeItem("loggedIn")
     sessionStorage.removeItem("email")
+    window.location.reload();
   }
 
   componentDidMount() {

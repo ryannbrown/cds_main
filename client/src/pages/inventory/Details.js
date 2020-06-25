@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 // const queryString = require('query-string');
 
@@ -19,6 +21,7 @@ class Details extends Component {
       gunData: [] || '',
       isLoading: true,
       errorPage: false,
+      saveImage:false,
       catData: [],
       gunSpecs: [],
       param: '',
@@ -103,7 +106,9 @@ class Details extends Component {
       console.log("hey i did it")
       console.log(response)
       if (response.status == '200') {
-          console.log("saved")
+          this.setState({
+            saveImage: true
+          })
 
       } else if (response.status == '400') {
           console.log("failed")
@@ -175,8 +180,10 @@ class Details extends Component {
 
     const profitMargin = 1.15
 
-    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData } = this.state;
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage } = this.state;
 
+
+console.log(saveImage)
 
     // console.log(errorPage)
 
@@ -220,7 +227,15 @@ class Details extends Component {
           {gunSpecs ? (
             <div className="details">
               <Card className="text-center details-page">
-                <Button onClick={this.saveItem} className="w-25">Save</Button>
+                {saveImage ? (
+                   <FontAwesomeIcon icon={faCheck}
+                   //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
+                    className="w-25"></FontAwesomeIcon>
+    
+                ): (
+                  <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25"></FontAwesomeIcon>
+                )}
+          
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}

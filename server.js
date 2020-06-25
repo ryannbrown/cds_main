@@ -915,6 +915,34 @@ const submittedPass = data.password
     }
     );
   })
+  
+  app.post('/deletesavedgun', function (req, res) {
+    console.log("keys")
+    const data = {
+      // id: req.body.id,
+      itemId: req.body.id,
+      email: req.body.email,
+    };
+  
+    posts.push(data)
+  
+    const query = `update cds_users set saved = array_remove(saved, '${data.itemId}') WHERE email = $1`
+    const values = [data.email];
+    //  FOR DEV
+    console.log(query)
+    //  console.log(values)
+    // console.log(res);
+    console.log(data)
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: 'This is an error!'
+        });
+      }
+      res.send('POST request to the homepage')
+    }
+    );
+  })
 
 
 

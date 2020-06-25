@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from "react";
-import { Col, Row, Container, Card, CardDeck } from "react-bootstrap";
+import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger } from "react-bootstrap";
 // import Bio from "../components/bio/bio"
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
 // import fbLogo from "../media/fb.jpg"
 import "./style.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 require("dotenv").config();
 
 class Profile extends Component {
@@ -14,9 +16,50 @@ class Profile extends Component {
       loggedIn: props.loggedIn,
       isLoading: true,
       // userData: []
-      mapIt: []
+      mapIt: [],
+      itemDeleted: false
     };
   }
+
+
+
+
+  handleDelete = id => {
+
+    if (window.confirm("Are you sure you want to delete this saved item?")) {
+      let item_id = id
+      console.log("deleting", item_id)
+
+      const deleteItem = () => {
+        console.log("posting to DB")
+        // POST TO DB
+        fetch('/deletesavedgun', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: item_id,
+            email: this.state.userData.email
+          })
+        })
+        this.setState({
+          itemDeleted: true,
+          // show: false
+        })
+      }
+      deleteItem();
+      if (this.state.itemDeleted) {
+        window.location.reload();
+      }
+      // this.fetchPosts()
+    }
+  }
+
+
+
+
 
   componentDidMount() {
     console.log(this.state)
@@ -57,7 +100,7 @@ class Profile extends Component {
             userData: json.data[0],
             isLoading: false,
             isLoggedIn: true,
-            mapIt:json.data[0].saved
+            mapIt: json.data[0].saved
           })
         }
       })
@@ -67,19 +110,25 @@ class Profile extends Component {
 
     const { loggedIn, userData, isLoading, mapIt } = this.state;
 
-    const items = this.state.mapIt.map((item, i) => {
 
-    return (
-      <Card key={i} className="saved-card">
-      <a href={`/inventory/model/${item}`}><img className="saved-img" src={`https://www.davidsonsinc.com/Prod_images/${item}.jpg`}/></a>
-      <p>{item}</p>
-      </Card>
-      );
-    })
+    if (this.state.mapIt) {
+      var items = this.state.mapIt.map((item, i) => {
 
-    
+        return (
+          <Card key={i} className="saved-card">
+            <span onClick={() => this.handleDelete(item)} className="delete-icon"><FontAwesomeIcon icon={faTrash} /></span>
+            <a href={`/inventory/model/${item}`}><img className="saved-img" src={`https://www.davidsonsinc.com/Prod_images/${item}.jpg`} /></a>
+            <p>Item#: {item}</p>
+          </Card>
+        );
+      })
+    }
+
+
+
+
     console.log(mapIt)
- 
+
 
     // console.log(userData.length)
 
@@ -98,26 +147,47 @@ class Profile extends Component {
 
       return (
         <div className="profile-page">
-          <Card className="card details-page">
-            <h1 className="tc">{userData.first_name} {userData.last_name}'s profile</h1>
+          <Card className="card details-page tc">
+            <h1>{userData.first_name} {userData.last_name}'s profile</h1>
             <h3>{userData.email}</h3>
             <h3></h3>
 
 
           </Card>
           <Card className="card details-page">
+
+
+
+
+            <OverlayTrigger
+              overlay={
+                <Tooltip id={`tooltip`}>
+                  Save items to your wish list by browsing through our inventory and clicking on the heart on the top left.
+        </Tooltip>
+              }
+            >
+                <span><FontAwesomeIcon icon={faInfoCircle} /></span>
+            </OverlayTrigger>
             <h1 className="tc">Saved Items</h1>
-           <CardDeck>
-           {items}
-           </CardDeck>
            
-      
+            {mapIt ? (
+              <CardDeck>
+                {items}
+              </CardDeck>) : (
+                <div><h2>No items saved yet</h2></div>
+
+              )
+            }
+
+
+
 
 
           </Card>
           <Card className="card details-page">
             <h1 className="tc">My Cart</h1>
-           
+            <h2 className="tc">Coming Soon!</h2>
+
 
 
           </Card>

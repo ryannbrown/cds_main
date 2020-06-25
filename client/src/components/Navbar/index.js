@@ -174,13 +174,13 @@ const {show} = this.state;
 
 
             {!this.state.loggedIn ? (
-              <Button variant="primary" onClick={this.handleShow}>
+              <Button className="btn-initial-signin" variant="primary" onClick={this.handleShow}>
                 Login/Register
               </Button>
             ) : (
-                <div>
-                  <div>hello, {this.state.user} </div>
-                  <a href="/profile"><Button>View Profile</Button></a>
+                <div className="nav-login-container">
+                  <p className="nav-login-greeting">hello, {this.state.user}</p>
+                  <a href="/profile"><Button className="prof-btn">View Profile</Button></a>
                   <Button onClick={this.logOut}>LOGOUT</Button>
                 </div>
 

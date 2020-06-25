@@ -29,12 +29,13 @@ class Navigation extends Component {
 
 
   handleClose = () => {
-    console.log("clicked")
+    // console.log("clicked")
     this.setState({
       show: false,
       setShow: false
     });
   }
+
 
 
 
@@ -53,7 +54,7 @@ class Navigation extends Component {
     let password = this.passwordRef.current.value
 
 
-    console.log(email, password)
+    // console.log(email, password)
 
     const userPassword = []
 
@@ -78,10 +79,10 @@ class Navigation extends Component {
           password: password,
         })
       }).then(response => {
-        console.log("hey i did it")
-        console.log(response)
+        // console.log("hey i did it")
+        // console.log(response)
         if (response.status == '200') {
-          console.log(email);
+          // console.log(email);
           this.setState({
             loggedIn: true,
             user: email,
@@ -120,7 +121,7 @@ class Navigation extends Component {
     })
   }
   componentDidUpdate() {
-    console.log("updated nav state:", this.state)
+    // console.log("updated nav state:", this.state)
   }
 
   // useEffect(() => {
@@ -207,7 +208,7 @@ const {show} = this.state;
                     <Form.Control type="text" ref={this.emailRef} placeholder="email" />
                   </Form.Group>
                   <Form.Group controlId="formBasicPassword">
-                    <Form.Control type="text" ref={this.passwordRef} placeholder="password" />
+                    <Form.Control type="password" ref={this.passwordRef} placeholder="password" />
                   </Form.Group>
                 </form>
                 <h2>New Customer?</h2>

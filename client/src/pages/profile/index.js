@@ -64,6 +64,11 @@ class Profile extends Component {
 
     const { loggedIn, userData, isLoading } = this.state;
 
+
+  //   const items = this.state.userData.map((item, i) =>
+  // <img src={item.saved}></img>
+  //   );
+
     console.log(userData)
 
     if (loggedIn && isLoading) {
@@ -77,10 +82,22 @@ class Profile extends Component {
       return (
         <div className="profile-page">
           <Card className="card details-page">
-            <h1 className="tc">My Profile</h1>
-            <h3>Email: {userData.email}</h3>
-            <h3>First Name:  {userData.first_name}</h3>
-            <h3>Last Name:  {userData.last_name}</h3>
+            <h1 className="tc">{userData.first_name} {userData.last_name}'s profile</h1>
+            <h3>{userData.email}</h3>
+            <h3></h3>
+
+
+          </Card>
+          <Card className="card details-page">
+            <h1 className="tc">Saved Items</h1>
+            <a href={`/inventory/model/${userData.saved[3]}`}><img className="w-25" src={userData.saved[3]} className="center"/></a>
+      
+
+
+          </Card>
+          <Card className="card details-page">
+            <h1 className="tc">My Cart</h1>
+           
 
 
           </Card>

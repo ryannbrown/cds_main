@@ -870,7 +870,7 @@ const submittedPass = data.password
     const data = {
       email: req.params.email
     }
-    console.log(data);
+    console.log("the data is", data);
     const values = [data.email]
 
    const query = `SELECT * from cds_users WHERE email = $1`;
@@ -885,6 +885,34 @@ const submittedPass = data.password
         var data = results.rows
         response.send(JSON.stringify({ data }));
       }
+    );
+  })
+
+  app.post('/savegun', function (req, res) {
+    console.log("keys")
+    const data = {
+      // id: req.body.id,
+      itemId: req.body.itemId,
+      email: req.body.email,
+    };
+  
+    posts.push(data)
+  
+    const query = `UPDATE cds_users SET saved = saved || '{${data.itemId}}' WHERE email = $1`
+    const values = [data.email];
+    //  FOR DEV
+    console.log(query)
+    //  console.log(values)
+    // console.log(res);
+    console.log(data)
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: 'This is an error!'
+        });
+      }
+      res.send('POST request to the homepage')
+    }
     );
   })
 

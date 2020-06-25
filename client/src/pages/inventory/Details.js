@@ -23,7 +23,8 @@ class Details extends Component {
       gunSpecs: [],
       param: '',
       descriptionKeys: [],
-      descriptionValues: []
+      descriptionValues: [],
+      user: this.props.user
     };
   }
 
@@ -54,9 +55,68 @@ class Details extends Component {
     setTimeout(function () { window.scrollTo(0, 300); }, 250);
   }
 
-  componentDidMount() {
 
-    console.log(this.props.match.params)
+  getUserInfo = () => {
+    console.log("fetching user info")
+
+    console.log(sessionStorage.getItem("email"))
+
+    // console.log(this.state)
+    this.setState({
+      loggedIn: sessionStorage.getItem("loggedIn"),
+      user: sessionStorage.getItem("email")
+    })
+
+
+    // console.log("what we want for profile")
+
+    fetch(`/profile/${this.state.user}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("doing the action 1")
+        console.log("users", json.data)
+        this.setState({
+          userData: json.data[0],
+          // isLoading: false,
+        })
+        // var size = Object.keys(this.state.gunData).length;
+        // console.log(size);
+      })
+
+
+  }
+
+  saveItem = () => {
+    let email = this.state.user
+    console.log(email)
+    fetch('/savegun', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        itemId: `https://www.davidsonsinc.com/Prod_images/${this.state.gunSpecs.image1}`,
+        email: email,
+      })
+  }).then(response => {
+      console.log("hey i did it")
+      console.log(response)
+      if (response.status == '200') {
+          console.log("saved")
+
+      } else if (response.status == '400') {
+          console.log("failed")
+      }
+  })
+  }
+
+
+
+  componentDidMount() {
+    this.getUserInfo();
+
+    // console.log(this.props.match.params)
 
     let param = Object.values(this.props.match.params);
     this.setState({
@@ -67,13 +127,13 @@ class Details extends Component {
       .then(res => res.json())
       .then(json => {
         if (json.data[0]) {
-          console.log("inventory", json.data[0])
+          // console.log("inventory", json.data[0])
           this.setState({
             gunData: json.data[0],
             isLoading: false,
           })
           var size = Object.keys(this.state.gunData).length;
-          console.log(size);
+          // console.log(size);
         } else {
           this.setState({
             errorPage: true,
@@ -84,19 +144,44 @@ class Details extends Component {
   };
 
 
+  componentDidUpdate(previousState) {
+
+    // console.log(this.state.user)
+    // console.log("what we want for profile")
+
+
+        if (previousState.userData == this.state.userData && this.state.loggedIn && this.state.userLoaded) {
+          fetch(`/profile/${this.state.user}`)
+          .then(res => res.json())
+          .then(json => {
+            console.log("users", json.data)
+          //  console.log("oh well hello there")
+          this.setState({
+            userData: json.data[0],
+            userLoaded:true
+            // isLoading: false,
+            // isLoggedIn: true,
+          })
+        })
+      }
+  }
+
 
 
   render() {
 
+
+    console.log(this.state.user)
+
     const profitMargin = 1.15
 
-    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage } = this.state;
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData } = this.state;
 
 
-    console.log(errorPage)
+    // console.log(errorPage)
 
 
-    console.log(gunData);
+    // console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
@@ -135,6 +220,7 @@ class Details extends Component {
           {gunSpecs ? (
             <div className="details">
               <Card className="text-center details-page">
+                <Button onClick={this.saveItem} className="w-25">Save</Button>
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}

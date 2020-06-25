@@ -27,7 +27,8 @@ class Details extends Component {
       param: '',
       descriptionKeys: [],
       descriptionValues: [],
-      user: this.props.user
+      user: this.props.user,
+      userLoaded: false
     };
   }
 
@@ -92,28 +93,34 @@ class Details extends Component {
   saveItem = () => {
     let email = this.state.user
     console.log(email)
-    fetch('/savegun', {
-      method: 'POST',
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        itemId: `https://www.davidsonsinc.com/Prod_images/${this.state.gunSpecs.image1}`,
-        email: email,
-      })
-  }).then(response => {
-      console.log("hey i did it")
-      console.log(response)
-      if (response.status == '200') {
-          this.setState({
-            saveImage: true
-          })
 
-      } else if (response.status == '400') {
-          console.log("failed")
-      }
-  })
+    if (email) {
+      fetch('/savegun', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          itemId: this.state.gunData["Item #"],
+          email: email,
+        })
+    }).then(response => {
+        console.log("hey i did it")
+        console.log(response)
+        if (response.status == '200') {
+            this.setState({
+              saveImage: true
+            })
+  
+        } else if (response.status == '400') {
+            console.log("failed")
+        }
+    })
+    } else {
+      alert("please login to save items")
+    }
+   
   }
 
 
@@ -183,9 +190,9 @@ class Details extends Component {
     var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage } = this.state;
 
 
-console.log(saveImage)
+// console.log(saveImage)
 
-    // console.log(errorPage)
+    console.log("user loaded?" , this.state.userLoaded)
 
 
     // console.log(gunData);

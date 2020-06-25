@@ -1,3 +1,9 @@
 .profile-page {
-    height:95vh;
+    min-height:95vh;
+}
+
+.saved-card.card {
+    width: 25%;
+    display:inline-flex;
+    /* margin: 0px auto; */
 }

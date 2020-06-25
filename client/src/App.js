@@ -60,7 +60,9 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state)
+    //TODO: assess if this is best or if it affects other functionality-- current purpose is to give state chance to catch up
+    // after user logs in
+    window.location.reload();
   }
 
   componentDidMount() {

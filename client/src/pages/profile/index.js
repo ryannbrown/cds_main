@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Col, Row, Container, Card } from "react-bootstrap";
+import { Col, Row, Container, Card, CardDeck } from "react-bootstrap";
 // import Bio from "../components/bio/bio"
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
@@ -12,7 +12,9 @@ class Profile extends Component {
     super(props);
     this.state = {
       loggedIn: props.loggedIn,
-      isLoading: true
+      isLoading: true,
+      // userData: []
+      mapIt: []
     };
   }
 
@@ -24,7 +26,7 @@ class Profile extends Component {
     })
 
 
-    console.log("what we want for profile")
+    console.log("mount")
     fetch(`/profile/${this.state.user}`)
       .then(res => res.json())
       .then(json => {
@@ -44,7 +46,7 @@ class Profile extends Component {
 
 
     console.log(this.state.user)
-    console.log("what we want for profile")
+    console.log("did update")
     fetch(`/profile/${this.state.user}`)
       .then(res => res.json())
       .then(json => {
@@ -55,6 +57,7 @@ class Profile extends Component {
             userData: json.data[0],
             isLoading: false,
             isLoggedIn: true,
+            mapIt:json.data[0].saved
           })
         }
       })
@@ -62,14 +65,23 @@ class Profile extends Component {
 
   render() {
 
-    const { loggedIn, userData, isLoading } = this.state;
+    const { loggedIn, userData, isLoading, mapIt } = this.state;
 
+    const items = this.state.mapIt.map((item, i) => {
 
-  //   const items = this.state.userData.map((item, i) =>
-  // <img src={item.saved}></img>
-  //   );
+    return (
+      <Card key={i} className="saved-card">
+      <a href={`/inventory/model/${item}`}><img className="saved-img" src={`https://www.davidsonsinc.com/Prod_images/${item}.jpg`}/></a>
+      <p>{item}</p>
+      </Card>
+      );
+    })
 
-    console.log(userData)
+    
+    console.log(mapIt)
+ 
+
+    // console.log(userData.length)
 
     if (loggedIn && isLoading) {
       return (
@@ -79,6 +91,11 @@ class Profile extends Component {
     }
 
     else if (loggedIn) {
+
+
+
+
+
       return (
         <div className="profile-page">
           <Card className="card details-page">
@@ -90,7 +107,10 @@ class Profile extends Component {
           </Card>
           <Card className="card details-page">
             <h1 className="tc">Saved Items</h1>
-            <a href={`/inventory/model/${userData.saved[3]}`}><img className="w-25" src={userData.saved[3]} className="center"/></a>
+           <CardDeck>
+           {items}
+           </CardDeck>
+           
       
 
 

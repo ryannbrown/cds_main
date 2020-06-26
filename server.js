@@ -93,16 +93,16 @@ app.get('/api/posts/:selection', cors(), function (req, response) {
   }
 
   const values = [data.selection]
-  
+
   const query = `SELECT * FROM cds_inventory WHERE location = $1`
   console.log(query);
-  client.query( query, values, (error, results) => {
-      if (error) {
-        throw error
-      }
-      var data = results.rows
-      response.send(JSON.stringify({ data }));
+  client.query(query, values, (error, results) => {
+    if (error) {
+      throw error
     }
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+  }
   );
 })
 
@@ -112,16 +112,16 @@ app.get('/api/details/:id', cors(), function (req, response) {
     id: req.params.id
   }
 
-const query = `SELECT * from cds_inventory WHERE uuid = $1`
-const values = [data.id]
+  const query = `SELECT * from cds_inventory WHERE uuid = $1`
+  const values = [data.id]
   client.query(query, values, (error, results) => {
-      if (error) {
-        throw error
-        // results.status(500)
-      }
-      var data = results.rows
-      response.send(JSON.stringify({ data }));
+    if (error) {
+      throw error
+      // results.status(500)
     }
+    var data = results.rows
+    response.send(JSON.stringify({ data }));
+  }
   );
 })
 
@@ -156,9 +156,9 @@ app.post('/api/post', function (req, res) {
      VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`
   const values = [data.image, data.product_name, data.product_description, data.msrp_price, data.sale_price, data.category, data.caliber, data.manufacturer, data.model, data.type, data.barrelLength, data.finish, data.quantity, data.capacity, data.sights, data.upcNumber, data.location];
   //  FOR DEV
-   console.log(query)
+  console.log(query)
   //  console.log(values)
-console.log(data)
+  console.log(data)
   client.query(query, values, (error, results) => {
     if (error) {
       throw error
@@ -253,7 +253,7 @@ app.post('/api/update', function (req, res) {
     }
   }
   if (data.model) {
-    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber  ) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber) {
       criteria += `, model = '${data.model}'`
     } else {
       criteria += `model = '${data.model}'`
@@ -281,7 +281,7 @@ app.post('/api/update', function (req, res) {
     }
   }
   if (data.quantity) {
-    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish ) {
+    if (data.product_name || data.product_description || data.msrp_price || data.sale_price || data.category || data.manufacturer || data.caliber || data.model || data.barrelLength || data.finish) {
       criteria += `, quantity = '${data.quantity}'`
     } else {
       criteria += `quantity = '${data.quantity}'`
@@ -315,14 +315,14 @@ app.post('/api/update', function (req, res) {
       criteria += `location = '${data.location}'`
     }
   }
-//#endregion
+  //#endregion
 
 
   const query = `UPDATE cds_inventory SET ${criteria}
   WHERE uuid = $1;`
-console.log(query)
+  console.log(query)
 
-const values = [data.uuid]
+  const values = [data.uuid]
 
   client.query(query, values, (error, results) => {
     if (error) {
@@ -330,7 +330,7 @@ const values = [data.uuid]
     }
     res.send('POST request to the homepage')
   }
-  ); 
+  );
 })
 
 //    DELETE CUSTOM INVENTORY
@@ -442,7 +442,7 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   }
   var sort = req.params.sort;
   // var sortString;
-let query = `SELECT *
+  let query = `SELECT *
   FROM davidsons_inventory
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = davidsons_inventory."Item #"
@@ -468,27 +468,27 @@ let query = `SELECT *
   }
 
 
-    const values = [data.manufacturer];
+  const values = [data.manufacturer];
   console.log("query", query)
   // console.log(manufacturer);
-console.log("sort:", sort)
+  console.log("sort:", sort)
   client.query(query,
-     values,
-      (error, results) => {
-    if (error) {
-      throw error
-    }
+    values,
+    (error, results) => {
+      if (error) {
+        throw error
+      }
 
-    var data = results.rows
-    response.send(JSON.stringify({ data }));
+      var data = results.rows
+      response.send(JSON.stringify({ data }));
 
-  });
-//#endregion
+    });
+  //#endregion
 
 })
 app.get('/gun_type/:gun_type/:sort', (req, response) => {
-  const data =  {
-    gun_type : req.params.gun_type
+  const data = {
+    gun_type: req.params.gun_type
   }
   var sort = req.params.sort;
   console.log("these are the params")
@@ -539,7 +539,7 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
   var sort = req.params.sort;
   // console.log(caliber);
 
- let query = `SELECT *
+  let query = `SELECT *
   FROM davidsons_inventory
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = davidsons_inventory."Item #"
@@ -582,19 +582,19 @@ app.get('/davidsons/model/:item_no', (req, response) => {
     item_no: req.params.item_no
   }
 
-// Took this away from below query because additional spec call comes later
+  // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
   // ON davidsons_attributes.itemno = davidsons_inventory.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
-    const query= ` SELECT * FROM davidsons_inventory
+  const query = ` SELECT * FROM davidsons_inventory
     LEFT JOIN davidsons_quantity
     ON davidsons_inventory."Item #" = davidsons_quantity.item_number
     WHERE davidsons_inventory."Item #" = $1`
 
-    const values = [data.item_no]
-  client.query( query, values, (error, results) => {
+  const values = [data.item_no]
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -623,15 +623,15 @@ app.get('/zanders/category/:category/:sort', (req, response) => {
 
 
 
- let query = `SELECT DISTINCT ON (zanders_inventory.itemnumber) * from zanders_inventory
+  let query = `SELECT DISTINCT ON (zanders_inventory.itemnumber) * from zanders_inventory
  LEFT JOIN zanders_quantity ON zanders_inventory.itemnumber = zanders_quantity.itemnumber
  LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
  WHERE category ILIKE $1 `
 
- if (data.sort == 'onlyInStock') {
-  query += `AND zanders_quantity.available > '0' `
-}
-console.log(query);
+  if (data.sort == 'onlyInStock') {
+    query += `AND zanders_quantity.available > '0' `
+  }
+  console.log(query);
   client.query(query, values, (error, results) => {
     if (error) {
       throw error
@@ -653,19 +653,19 @@ app.get('/zanders/model/:item_no', (req, response) => {
 
   console.log("item no", data.item_no)
 
-// Took this away from below query because additional spec call comes later
+  // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
   // ON davidsons_attributes.itemno = davidsons_inventory.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
-    const query= `SELECT * from zanders_inventory 
+  const query = `SELECT * from zanders_inventory 
     LEFT JOIN zanders_quantity ON zanders_inventory.itemnumber = zanders_quantity.itemnumber
     LEFT JOIN zanders_images ON zanders_inventory.itemnumber = zanders_images.ItemNumber
     WHERE zanders_inventory.itemnumber = $1`
 
-    const values = [data.item_no]
-  client.query( query, values, (error, results) => {
+  const values = [data.item_no]
+  client.query(query, values, (error, results) => {
     if (error) {
       throw error
     }
@@ -680,10 +680,10 @@ app.get('/zanders/model/:item_no', (req, response) => {
 app.get('/api/:specs/:item_no', (req, response) => {
   const data = {
     item_no: req.params.item_no
-  } 
+  }
 
 
-  const query= ` SELECT * FROM davidsons_attributes
+  const query = ` SELECT * FROM davidsons_attributes
   WHERE itemno = $1`
 
   const values = [data.item_no]
@@ -705,19 +705,262 @@ app.get('/api/:specs/:item_no', (req, response) => {
 
 
 
+app.post('/api/register', function (req, res) {
+  console.log("keys")
+  const data = {
+    // id: req.body.id,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    password: req.body.password,
+    // category: req.body.category,
+    // caliber: req.body.caliber,
+    // manufacturer: req.body.manufacturer,
+    // model: req.body.model,
+    // type: req.body.type,
+    // barrelLength: req.body.barrelLength,
+    // finish: req.body.finish,
+    // quantity: req.body.quantity,
+    // capacity: req.body.capacity,
+    // sights: req.body.sights,
+    // upcNumber: req.body.upcNumber,
+    // location: req.body.location,
+  };
+
+  posts.push(data)
+
+  const query = `INSERT INTO cds_users(first_name, last_name, email, password )
+     VALUES($1,$2,$3,$4)`
+  const values = [data.first_name, data.last_name, data.email, data.password];
+  //  FOR DEV
+  console.log(query)
+  //  console.log(values)
+  // console.log(res);
+  console.log(data)
+  client.query(query, values, (error, results) => {
+    if (error) {
+      return res.status(400).send({
+        message: 'This is an error!'
+      });
+    }
+    res.send('POST request to the homepage')
+  }
+  );
+})
+app.post('/api/signin', function (req, res) {
+  console.log("keys")
+  const data = {
+    // id: req.body.id,
+    // first_name: req.body.first_name,
+    // last_name: req.body.last_name,
+    email: req.body.email,
+    password: req.body.password,
+    // category: req.body.category,
+    // caliber: req.body.caliber,
+    // manufacturer: req.body.manufacturer,
+    // model: req.body.model,
+    // type: req.body.type,
+    // barrelLength: req.body.barrelLength,
+    // finish: req.body.finish,
+    // quantity: req.body.quantity,
+    // capacity: req.body.capacity,
+    // sights: req.body.sights,
+    // upcNumber: req.body.upcNumber,
+    // location: req.body.location,
+  };
+
+  // posts.push(data)
+const submittedPass = data.password
+  const query = `SELECT * from cds_users WHERE email = $1`
+  const values = [data.email];
+  //  FOR DEV
+  console.log(query)
+  //  console.log(values)
+  // console.log(res);
+  console.log(data)
+
+  client.query(query, values, (error, results) => {
 
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
+    let data = results.rows;
+    // console.log("password", data[0].password)
+    
+    console.log(data.length)
+    if (data.length == 0) {
+      return res.status(400).send({
+        message: 'This is an error!'
+      });
+    } else {
+      const password = [data[0].password];
+      if (submittedPass != password) {
+        console.log(submittedPass, password);
+      return res.status(400).send({
+        message: 'This is an error!'
+      });
+    }
+  }
+  res.send(200);
+  const createSession =() => {
+    let email = data[0].email
+    id = Math.floor(Math.random() * 10000 + 1);
+    console.log(id);
+    const query = `CREATE TABLE session_${id} (
+      email     varchar(250)
+  );`
+    console.log(data[0].email)
+    // console.log(name)
 
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-}
+    client.query(query, (error, results) => {
+
+     if (!error) {
+      // sayHi(email, id)
+     }
+      
+      // if (error)  {
+      //   return res.status(400).send({
+      //     message: 'This is an error!'
+      //   });
+      // }
+      // res.send(200);
+    })
+    const sayHi = (email, id) => {
+     
+      const query = `INSERT INTO session_${id} VALUES  (
+        '${email}'
+    );`
+      client.query(query, (error, results) => {
+
+        if (!error) {
+        console.log("I think it worked")
+        }
+         
+         // if (error)  {
+         //   return res.status(400).send({
+         //     message: 'This is an error!'
+         //   });
+         // }
+         // res.send(200);
+       })
 
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+    }
+  }
+  // createSession();
+  })
+})
+
+
+  app.get('/api/users', function (req, response) {
+
+    client.query(
+      "SELECT * from cds_users", (error, results) => {
+        if (error) {
+          throw error
+        }
+        var data = results.rows
+        response.send(JSON.stringify({ data }));
+      }
+    );
+  })
+
+
+  app.get('/profile/:email', function (req, response) {
+    
+
+    const data = {
+      email: req.params.email
+    }
+    console.log("the data is", data);
+    const values = [data.email]
+
+   const query = `SELECT DISTINCT ON (saved) *  from cds_users WHERE email = $1`;
+
+    console.log(values);
+
+    client.query(
+      query, values, (error, results) => {
+        if (error) {
+          throw error
+        }
+        var data = results.rows
+        response.send(JSON.stringify({ data }));
+      }
+    );
+  })
+
+  app.post('/savegun', function (req, res) {
+    console.log("keys")
+    const data = {
+      // id: req.body.id,
+      itemId: req.body.itemId,
+      email: req.body.email,
+    };
+  
+    posts.push(data)
+  
+    const query = `UPDATE cds_users SET saved = saved || '{${data.itemId}}' WHERE email = $1`
+    const values = [data.email];
+    //  FOR DEV
+    console.log(query)
+    //  console.log(values)
+    // console.log(res);
+    console.log(data)
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: 'This is an error!'
+        });
+      }
+      res.send('POST request to the homepage')
+    }
+    );
+  })
+  
+  app.post('/deletesavedgun', function (req, res) {
+    console.log("keys")
+    const data = {
+      // id: req.body.id,
+      itemId: req.body.id,
+      email: req.body.email,
+    };
+  
+    posts.push(data)
+  
+    const query = `update cds_users set saved = array_remove(saved, '${data.itemId}') WHERE email = $1`
+    const values = [data.email];
+    //  FOR DEV
+    console.log(query)
+    //  console.log(values)
+    // console.log(res);
+    console.log(data)
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: 'This is an error!'
+        });
+      }
+      res.send('POST request to the homepage')
+    }
+    );
+  })
+
+
+
+
+
+
+
+  if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+
+    // Handle React routing, return all requests to React app
+    app.get('*', function (req, res) {
+      res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+  }
+
+
+  app.listen(port, () => console.log(`Listening on port ${port}`));
 // console.log('Application running!' + cluster.worker.id);
 // }

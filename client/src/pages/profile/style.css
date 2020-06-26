@@ -1,0 +1,22 @@
+.profile-page {
+    min-height:95vh;
+}
+
+.saved-card.card {
+    display:inline-flex;
+    flex: 1 0 33%;
+}
+
+
+img:hover {
+    opacity:1 !important;
+}
+
+a:hover{
+    opacity:1 !important;
+}
+
+
+#tooltip{
+    font-size:18px;
+}

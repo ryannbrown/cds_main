@@ -93,6 +93,24 @@ span.brand-text.navbar-brand {
         width: 100%;
         text-align: center;
     }
+    .btn-initial-signin {
+        text-align:center;
+        width:100%;
+    }
 }
 
+.nav-login-container {
+    display: block;
+    /* width: 100%; */
+    margin: 0px auto;
+    text-align: center;
+}
+
+.prof-btn {
+    margin-right:5px;
+}
+
+.btn-initial-signin {
+    margin-right:10px;
+}
   

@@ -86,7 +86,7 @@ class Browse extends Component {
 // TO DO: Potentialy use Custom Dropdown Component from react bootstrap docs
     // var slug = "/api/inventory/" + {item.manuf};
  const formOptions = this.state.data.map((item, i) =>
- <option value={`/${param}/${item}`}>{item}</option>
+ <option key={i} value={`/${param}/${item}`}>{item}</option>
  );
 
  const items = this.state.data.map((item, i) =><Card>

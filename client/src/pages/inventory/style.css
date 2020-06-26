@@ -165,3 +165,7 @@ ul#page-numbers li {
 .pagination-item.active {
     opacity:.5;
        }
+
+       svg:hover {
+           cursor: pointer;
+       }

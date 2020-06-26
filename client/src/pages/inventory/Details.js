@@ -1,11 +1,13 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 // const queryString = require('query-string');
 
@@ -19,11 +21,15 @@ class Details extends Component {
       gunData: [] || '',
       isLoading: true,
       errorPage: false,
+      saveImage:false,
       catData: [],
       gunSpecs: [],
       param: '',
       descriptionKeys: [],
-      descriptionValues: []
+      descriptionValues: [],
+      user: this.props.user,
+      userLoaded: false,
+      loginAlert: false
     };
   }
 
@@ -54,9 +60,78 @@ class Details extends Component {
     setTimeout(function () { window.scrollTo(0, 300); }, 250);
   }
 
-  componentDidMount() {
 
-    console.log(this.props.match.params)
+  getUserInfo = () => {
+    console.log("fetching user info")
+
+    console.log(sessionStorage.getItem("email"))
+
+    // console.log(this.state)
+    this.setState({
+      loggedIn: sessionStorage.getItem("loggedIn"),
+      user: sessionStorage.getItem("email")
+    })
+
+
+    // console.log("what we want for profile")
+
+    fetch(`/profile/${this.state.user}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("doing the action 1")
+        console.log("users", json.data)
+        this.setState({
+          userData: json.data[0],
+          // isLoading: false,
+        })
+        // var size = Object.keys(this.state.gunData).length;
+        // console.log(size);
+      })
+
+
+  }
+
+  saveItem = () => {
+    let email = this.state.user
+    console.log(email)
+
+    if (email) {
+      fetch('/savegun', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          itemId: this.state.gunData["Item #"],
+          email: email,
+        })
+    }).then(response => {
+        console.log("hey i did it")
+        console.log(response)
+        if (response.status == '200') {
+            this.setState({
+              saveImage: true
+            })
+  
+        } else if (response.status == '400') {
+            console.log("failed")
+        }
+    })
+    } else {
+      this.setState({
+        loginAlert:true
+      })
+    }
+   
+  }
+
+
+
+  componentDidMount() {
+    this.getUserInfo();
+
+    // console.log(this.props.match.params)
 
     let param = Object.values(this.props.match.params);
     this.setState({
@@ -67,13 +142,13 @@ class Details extends Component {
       .then(res => res.json())
       .then(json => {
         if (json.data[0]) {
-          console.log("inventory", json.data[0])
+          // console.log("inventory", json.data[0])
           this.setState({
             gunData: json.data[0],
             isLoading: false,
           })
           var size = Object.keys(this.state.gunData).length;
-          console.log(size);
+          // console.log(size);
         } else {
           this.setState({
             errorPage: true,
@@ -84,19 +159,46 @@ class Details extends Component {
   };
 
 
+  componentDidUpdate(previousState) {
+
+    // console.log(this.state.user)
+    // console.log("what we want for profile")
+
+
+        if (previousState.userData == this.state.userData && this.state.loggedIn && this.state.userLoaded) {
+          fetch(`/profile/${this.state.user}`)
+          .then(res => res.json())
+          .then(json => {
+            console.log("users", json.data)
+          //  console.log("oh well hello there")
+          this.setState({
+            userData: json.data[0],
+            userLoaded:true
+            // isLoading: false,
+            // isLoggedIn: true,
+          })
+        })
+      }
+  }
+
 
 
   render() {
 
+
+    console.log(this.state.user)
+
     const profitMargin = 1.15
 
-    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage } = this.state;
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage, loginAlert } = this.state;
 
 
-    console.log(errorPage)
+// console.log(saveImage)
+
+    console.log("user loaded?" , this.state.userLoaded)
 
 
-    console.log(gunData);
+    // console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
@@ -106,6 +208,15 @@ class Details extends Component {
     // console.log(Number(dealerPrice));
     // gunDat.replace(/[$,]+/g,"");
     // var result = parseFloat(currency) + .05;
+
+    // if (loginAlert) {
+    //   return(
+    //     <Alert variant="warning">
+    //     This is an alert—check it out!
+    //   </Alert>
+    //   )
+  
+    // }
 
     if (isLoading) {
       return (
@@ -135,6 +246,21 @@ class Details extends Component {
           {gunSpecs ? (
             <div className="details">
               <Card className="text-center details-page">
+                {saveImage ? (
+                   <FontAwesomeIcon icon={faCheck}
+                   //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
+                    className="w-25"></FontAwesomeIcon>
+    
+                ): (
+                  <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25"></FontAwesomeIcon>
+                )}
+                {loginAlert ? (
+                  <Alert variant="warning">
+                  Please login to save items to your profile
+                </Alert>
+                ): (
+                  <div></div>
+                )}
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}

@@ -1,6 +1,9 @@
 {
   "name": "cds_store",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.16.3"
+  },
   "scripts": {
     "client": "cd client && npm run start",
     "server": "nodemon server.js",

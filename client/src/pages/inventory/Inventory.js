@@ -5,6 +5,10 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
 const queryString = require('query-string');
 
 
@@ -28,7 +32,7 @@ class Inventory extends Component {
   }
 
   handleClick = event => {
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
     // console.log("clicked")
     // console.log(event.target.id)
     event.target.classList += ' active';
@@ -39,6 +43,23 @@ class Inventory extends Component {
 
   usePlaceholderImg(ev) {
     ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
+    // console.log(ev);
+  }
+  increment = () => {
+
+    console.log(Number(this.state.currentPage++))
+    this.setState({
+      currentPage: Number(this.state.currentPage++)
+    })
+    // console.log(ev);
+  }
+  decrement = () => {
+
+    console.log(Number(this.state.currentPage--))
+      this.setState({
+        currentPage: Number(this.state.currentPage--)
+      })
+   
     // console.log(ev);
   }
 
@@ -100,8 +121,11 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
    
 // TODO: scroll to top when they use the pagination feature
  // Logic for displaying current items
+
+
  const indexOfLastTodo = currentPage * itemsPerPage;
  const indexOfFirstTodo = indexOfLastTodo - itemsPerPage;
+//  console.log(indexOfLastTodo)
  const currentItems = gunData.slice(indexOfFirstTodo, indexOfLastTodo);
 
      // Logic for displaying page numbers
@@ -111,6 +135,8 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
       //  console.log(pageNumbers)
      }
 
+     const numOfPages = pageNumbers.length;
+console.log(pageNumbers.length)
     const renderPageNumbers = pageNumbers.map(number => {
       return (
       <li
@@ -198,7 +224,19 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
           {items}
         </CardDeck>
         <div className="pagination-div">
-        <div className="ml3"><p>current page: {currentPage}</p></div>
+        <div className="arrow-div">
+          {currentPage > 1 ? (
+            <FontAwesomeIcon className="" icon={faArrowLeft} onClick={this.decrement} />
+          ): (
+            <div></div>
+          )}
+          {currentPage == numOfPages ? (
+            <div></div>
+          ): (
+            <FontAwesomeIcon className="" icon={faArrowRight} onClick={this.increment} />
+          )} </div>
+        
+        <div className="tc mt3"><p>current page: {currentPage}</p></div>
         <ul className="pagination-list" id="page-numbers">
               {renderPageNumbers}
             </ul>

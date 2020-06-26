@@ -256,7 +256,8 @@ class Details extends Component {
                 )}
                 {loginAlert ? (
                   <Alert variant="warning">
-                  Please login to save items to your profile
+                  {/* Please login to save items to your profile */}
+                  Feature Coming Soon!
                 </Alert>
                 ): (
                   <div></div>

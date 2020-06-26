@@ -13,36 +13,36 @@ var c = new Client();
 c.on('ready', function () {
 
   var finishedCalls = 0;
-  // c.get('davidsons_inventory.csv', function (err, stream) {
-  //   // console.log(stream)
-  //   if (err) throw err;
-  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
-  //   stream.on('finish', function () {
-  //     finishedCalls++
-  //     console.log("number of calls", finishedCalls)
-  //     // fixInventoryFile();
-  //     console.log("inventory downloaded")
-  //     if (finishedCalls == 3) {
-  //       console.log("all calls finished")
-  //     c.end()
-  //     }
-  //   });
-  // });
-  c.get('davidsons_quantity.csv', function (err, stream) {
-
+  c.get('davidsons_inventory.csv', function (err, stream) {
+    // console.log(stream)
     if (err) throw err;
-    stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_quantity_today.csv'));
+    stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
     stream.on('finish', function () {
       finishedCalls++
       console.log("number of calls", finishedCalls)
-      fixQuantityFile();
-      console.log("quantity downloaded")
-      if (finishedCalls == 3) {
+      fixInventoryFile();
+      console.log("inventory downloaded")
+      if (finishedCalls == 1) {
         console.log("all calls finished")
       c.end()
       }
     });
   });
+  // c.get('davidsons_quantity.csv', function (err, stream) {
+
+  //   if (err) throw err;
+  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_quantity_today.csv'));
+  //   stream.on('finish', function () {
+  //     finishedCalls++
+  //     console.log("number of calls", finishedCalls)
+  //     fixQuantityFile();
+  //     console.log("quantity downloaded")
+  //     if (finishedCalls == 1) {
+  //       console.log("all calls finished")
+  //     c.end()
+  //     }
+  //   });
+  // });
 
   // c.get('davidsons_firearm_attributes.csv', function (err, stream) {
   //   // if (err) throw err;
@@ -80,7 +80,7 @@ c.on('ready', function () {
 
   function fixQuantityFile() {
 
-    fs.readFile("C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv", 'utf8', j = (err, data) => {
+    fs.readFile("C:/Users/Kathryn/Downloads/davidsons_quantity_today.csv", 'utf8', j = (err, data) => {
       var rows = data.split(/\r\n|\n/);
       for (var i = rows.length - 1; i >= 0; i--) {
         if (rows[i].length == 0) {
@@ -120,7 +120,7 @@ c.on('ready', function () {
           return console.log(err);
         }
         console.log("The inv file was saved!");
-        runInventoryQueries()
+        // runInventoryQueries()
       });
 
     })
@@ -347,6 +347,8 @@ c.on('ready', function () {
         });
 
     }
+
+    // \COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER
 
     function qTwo() {
       pool.query("COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER"

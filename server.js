@@ -873,7 +873,7 @@ const submittedPass = data.password
     console.log("the data is", data);
     const values = [data.email]
 
-   const query = `SELECT * from cds_users WHERE email = $1`;
+   const query = `SELECT DISTINCT ON (saved) *  from cds_users WHERE email = $1`;
 
     console.log(values);
 

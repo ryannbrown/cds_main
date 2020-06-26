@@ -1,5 +1,5 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -28,7 +28,8 @@ class Details extends Component {
       descriptionKeys: [],
       descriptionValues: [],
       user: this.props.user,
-      userLoaded: false
+      userLoaded: false,
+      loginAlert: false
     };
   }
 
@@ -118,7 +119,9 @@ class Details extends Component {
         }
     })
     } else {
-      alert("please login to save items")
+      this.setState({
+        loginAlert:true
+      })
     }
    
   }
@@ -187,7 +190,7 @@ class Details extends Component {
 
     const profitMargin = 1.15
 
-    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage } = this.state;
+    var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage, loginAlert } = this.state;
 
 
 // console.log(saveImage)
@@ -205,6 +208,15 @@ class Details extends Component {
     // console.log(Number(dealerPrice));
     // gunDat.replace(/[$,]+/g,"");
     // var result = parseFloat(currency) + .05;
+
+    // if (loginAlert) {
+    //   return(
+    //     <Alert variant="warning">
+    //     This is an alert—check it out!
+    //   </Alert>
+    //   )
+  
+    // }
 
     if (isLoading) {
       return (
@@ -242,7 +254,13 @@ class Details extends Component {
                 ): (
                   <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25"></FontAwesomeIcon>
                 )}
-          
+                {loginAlert ? (
+                  <Alert variant="warning">
+                  Please login to save items to your profile
+                </Alert>
+                ): (
+                  <div></div>
+                )}
                 <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
                 <h1 className="pt4">{gunData["Item Description"]}</h1>
                 {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}

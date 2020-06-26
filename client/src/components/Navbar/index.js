@@ -59,12 +59,12 @@ class Navigation extends Component {
     const userPassword = []
 
     e.preventDefault();
-    console.log("handled it")
+    // console.log("handled it")
 
 
 
     const signIn = () => {
-      console.log("posting to DB")
+      // console.log("posting to DB")
       // POST TO DB
       fetch('/api/signin', {
         method: 'POST',
@@ -173,7 +173,7 @@ const {show} = this.state;
             </Nav>
 
 
-            {!this.state.loggedIn ? (
+            {/* {!this.state.loggedIn ? (
               <Button className="btn-initial-signin" variant="primary" onClick={this.handleShow}>
                 Login/Register
               </Button>
@@ -184,7 +184,7 @@ const {show} = this.state;
                   <Button onClick={this.logOut}>LOGOUT</Button>
                 </div>
 
-              )}
+              )} */}
 
 
             <Modal

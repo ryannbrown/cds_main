@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   handler(user) {
-    console.log("handler has actually handled!")
+    // console.log("handler has actually handled!")
     this.setState({
       loggedIn: true,
       user: user
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
 
 
     return (

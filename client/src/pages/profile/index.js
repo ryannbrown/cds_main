@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
 // import Bio from "../components/bio/bio"
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
@@ -28,10 +28,10 @@ class Profile extends Component {
 
     if (window.confirm("Are you sure you want to delete this saved item?")) {
       let item_id = id
-      console.log("deleting", item_id)
+
 
       const deleteItem = () => {
-        console.log("posting to DB")
+
         // POST TO DB
         fetch('/deletesavedgun', {
           method: 'POST',
@@ -62,40 +62,29 @@ class Profile extends Component {
 
 
   componentDidMount() {
-    console.log(this.state)
     this.setState({
       loggedIn: sessionStorage.getItem("loggedIn"),
       user: sessionStorage.getItem("email")
     })
 
-
-    console.log("mount")
     fetch(`/profile/${this.state.user}`)
       .then(res => res.json())
       .then(json => {
-        console.log("doing the action 1")
-        console.log("users", json.data)
         this.setState({
           userData: json.data[0],
-          // isLoading: false,
+          isLoading: true,
         })
-        // var size = Object.keys(this.state.gunData).length;
-        // console.log(size);
+
       })
 
 
   }
   componentDidUpdate(previousProps, previousState) {
 
-
-    console.log(this.state.user)
-    console.log("did update")
     fetch(`/profile/${this.state.user}`)
       .then(res => res.json())
       .then(json => {
-        console.log("users", json.data)
         if (previousState.userData == this.state.userData && this.state.loggedIn) {
-          //  console.log("oh well hello there")
           this.setState({
             userData: json.data[0],
             isLoading: false,
@@ -125,18 +114,13 @@ class Profile extends Component {
     }
 
 
-
-
-    console.log(mapIt)
-
-
-    // console.log(userData.length)
-
     if (loggedIn && isLoading) {
       return (
-
-        <div>Loading</div>
-      )
+<div className="spinner-box">
+            <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+          </div> )
     }
 
     else if (loggedIn) {
@@ -196,7 +180,7 @@ class Profile extends Component {
 
     } else {
       return (
-        <div className="profile-page tc f1 mt4">Please login to access profile</div>
+        <div className="profile-page tc f1 mt7">Please login to access profile</div>
       )
     }
 

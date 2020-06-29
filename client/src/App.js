@@ -124,7 +124,7 @@ class App extends Component {
           </Switch>
 
         </div>
-        <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
+        <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC </footer>
       </Router>
 
     );

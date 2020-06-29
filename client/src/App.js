@@ -32,6 +32,7 @@ import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
 import zandersInventory from "./pages/inventory/zanders/zandersInventory.js"
 import zandersDetails from "./pages/inventory/zanders/zandersDetails.js"
 import LMT from "./pages/AeroPrecision/LMT.js"
+import NotFoundPage from "./pages/NotFoundPage/index.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
@@ -104,7 +105,7 @@ class App extends Component {
 
             <Route path="/api/post" component={AdminPage} />
 
-            <Route path="/cds/inventory/:selection" component={CdsInventory} />
+            <Route exact path="/cds/inventory/:selection" component={CdsInventory} />
             <Route path="/cds/details/:id" component={CdsDetails} />
 
             <Route path="/cds/transfers" component={Transfers} />
@@ -116,14 +117,14 @@ class App extends Component {
             <Route path="/aeroprecision" component={AeroPrecision} />
 
             <Route path="/lmt" component={LMT} />
-            <Redirect to="/" />
+            <Route path="*" component={NotFoundPage} />
             {/* <Route path="/cds/transfers" component={transfers}/> */}
 
 
           </Switch>
 
         </div>
-        <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC | </footer>
+        <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC </footer>
       </Router>
 
     );

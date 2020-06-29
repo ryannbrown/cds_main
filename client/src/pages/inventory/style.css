@@ -176,3 +176,8 @@ ul#page-numbers li {
         justify-content: space-around;
         font-size:24px;
     }
+
+    a.back-link {
+        width: 50%;
+        margin: 0px auto;
+    }

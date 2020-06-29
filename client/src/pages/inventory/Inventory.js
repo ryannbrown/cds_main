@@ -211,6 +211,19 @@ console.log(pageNumbers.length)
             <Dropdown.Header>Other</Dropdown.Header>
             <Dropdown.Item data-sort="onlyInStock" onClick={this.sortItem}>Hide out of Stock Items</Dropdown.Item>
           </DropdownButton>
+          <div className="arrow-div">
+          {currentPage > 1 ? (
+            <FontAwesomeIcon className="" icon={faArrowLeft} onClick={this.decrement} />
+          ): (
+            <div></div>
+          )}
+          {currentPage == numOfPages ? (
+            <div></div>
+          ): (
+            <FontAwesomeIcon className="" icon={faArrowRight} onClick={this.increment} />
+          )} 
+          </div>
+          <div className="tc mt3"><p>current page: {currentPage} / {numOfPages}</p></div>
           {/* OPTIONAL */}
           {/* <div className="tc mt-2 dropdown">
             <Button data-sort="onlyInStock" onClick={this.sortItem} sz="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Dropdown button">
@@ -234,9 +247,10 @@ console.log(pageNumbers.length)
             <div></div>
           ): (
             <FontAwesomeIcon className="" icon={faArrowRight} onClick={this.increment} />
-          )} </div>
+          )} 
+          </div>
         
-        <div className="tc mt3"><p>current page: {currentPage}</p></div>
+          <div className="tc mt3"><p>current page: {currentPage} / {numOfPages}</p></div>
         <ul className="pagination-list" id="page-numbers">
               {renderPageNumbers}
             </ul>

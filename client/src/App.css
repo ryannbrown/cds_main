@@ -112,13 +112,13 @@ footer#footer {
 
 .spinner-box {
     height:100vh;
+    text-align:center
 }
 .spinner-border {
     width:5rem;
     height:5rem;
-    position:fixed;
-    top:50%;
-    left:50%;
+    margin-top:25vh;
+    /* left:50%; */
 }
 
 

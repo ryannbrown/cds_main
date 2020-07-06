@@ -18,8 +18,8 @@
 }
 
 .gun-img {
-    max-width: 90%;
-    max-height: 300px;
+    /* max-width: 90%;
+    max-height: 300px; */
     margin: 0px auto;
 }
 
@@ -110,7 +110,8 @@
     padding: 2% 2%;
     margin: 2% 15%;
     /* box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.2); */
-    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3)
+    /* box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3) */
+    border:none;
 }
 
 

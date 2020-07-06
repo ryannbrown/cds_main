@@ -2,6 +2,6 @@ node_modules
 
 .env
 inventoryFetch.js
-./resources.txt
+resources.txt
 zandersFetch.js
 zanders.csv

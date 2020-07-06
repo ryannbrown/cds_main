@@ -418,7 +418,7 @@ app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
   console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
-  client.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory
+  client.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory_selected
   WHERE "${criteria}" IS NOT NULL
   ORDER BY "${criteria}" DESC`, (error, results) => {
     if (error) {
@@ -432,7 +432,7 @@ app.get('/browse/:criteria', (req, response) => {
 
 })
 
-// TODO: Change inventory to davidsons_inventory
+// TODO: Change inventory to davidsons_inventory_selected
 // TO DO : SLIM ALL THIS DOWN 
 // MANUFACTURER
 app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
@@ -443,12 +443,12 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   var sort = req.params.sort;
   // var sortString;
   let query = `SELECT *
-  FROM davidsons_inventory
+  FROM davidsons_inventory_selected
   LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  ON davidsons_attributes.itemno = davidsons_inventory_selected."Item #"
   LEFT JOIN davidsons_quantity
-  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory.manufacturer ILIKE $1`;
+  ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory_selected.manufacturer ILIKE $1`;
 
 
 
@@ -494,12 +494,12 @@ app.get('/gun_type/:gun_type/:sort', (req, response) => {
   console.log("these are the params")
 
   let query = `SELECT *
-  FROM davidsons_inventory
+  FROM davidsons_inventory_selected
   LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  ON davidsons_attributes.itemno = davidsons_inventory_selected."Item #"
   LEFT JOIN davidsons_quantity
-  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory."Gun Type" ILIKE  $1`
+  ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory_selected."Gun Type" ILIKE  $1`
 
 
   if (sort == 'priceUp') {
@@ -540,12 +540,12 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
   // console.log(caliber);
 
   let query = `SELECT *
-  FROM davidsons_inventory
+  FROM davidsons_inventory_selected
   LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory."Item #"
+  ON davidsons_attributes.itemno = davidsons_inventory_selected."Item #"
   LEFT JOIN davidsons_quantity
-  ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory.caliber ILIKE $1 `
+  ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+  WHERE davidsons_inventory_selected.caliber ILIKE $1 `
 
   if (sort == 'priceUp') {
     query += `ORDER BY "Dealer Price" ASC`
@@ -584,14 +584,14 @@ app.get('/davidsons/model/:item_no', (req, response) => {
 
   // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
-  // ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  // ON davidsons_attributes.itemno = davidsons_inventory_selected.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
-  const query = ` SELECT * FROM davidsons_inventory
+  const query = ` SELECT * FROM davidsons_inventory_selected
     LEFT JOIN davidsons_quantity
-    ON davidsons_inventory."Item #" = davidsons_quantity.item_number
-    WHERE davidsons_inventory."Item #" = $1`
+    ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+    WHERE davidsons_inventory_selected."Item #" = $1`
 
   const values = [data.item_no]
   client.query(query, values, (error, results) => {
@@ -655,7 +655,7 @@ app.get('/zanders/model/:item_no', (req, response) => {
 
   // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
-  // ON davidsons_attributes.itemno = davidsons_inventory.item_no
+  // ON davidsons_attributes.itemno = davidsons_inventory_selected.item_no
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 

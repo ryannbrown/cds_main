@@ -197,6 +197,16 @@ console.log(pageNumbers.length)
         </div>)
     }
 
+    else if (pageNumbers.length < 1) {
+        return (
+          <div className="w-50 tc center error-page "><h1 className="mt6">We are sorry but we cannot find what you are looking for.</h1>
+            <h1 className="mv5">Try to use the tool below</h1>
+            <BrowseTabber></BrowseTabber>
+          </div>
+        )
+      }
+    
+
     else {
       return (
       <div className="inventory-div">

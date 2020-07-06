@@ -1,5 +1,5 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert, Row, Col } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -21,7 +21,7 @@ class Details extends Component {
       gunData: [] || '',
       isLoading: true,
       errorPage: false,
-      saveImage:false,
+      saveImage: false,
       catData: [],
       gunSpecs: [],
       param: '',
@@ -99,31 +99,31 @@ class Details extends Component {
       fetch('/savegun', {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           itemId: this.state.gunData["Item #"],
           email: email,
         })
-    }).then(response => {
+      }).then(response => {
         console.log("hey i did it")
         console.log(response)
         if (response.status == '200') {
-            this.setState({
-              saveImage: true
-            })
-  
+          this.setState({
+            saveImage: true
+          })
+
         } else if (response.status == '400') {
-            console.log("failed")
+          console.log("failed")
         }
-    })
+      })
     } else {
       this.setState({
-        loginAlert:true
+        loginAlert: true
       })
     }
-   
+
   }
 
 
@@ -165,20 +165,20 @@ class Details extends Component {
     // console.log("what we want for profile")
 
 
-        if (previousState.userData == this.state.userData && this.state.loggedIn && this.state.userLoaded) {
-          fetch(`/profile/${this.state.user}`)
-          .then(res => res.json())
-          .then(json => {
-            console.log("users", json.data)
+    if (previousState.userData == this.state.userData && this.state.loggedIn && this.state.userLoaded) {
+      fetch(`/profile/${this.state.user}`)
+        .then(res => res.json())
+        .then(json => {
+          console.log("users", json.data)
           //  console.log("oh well hello there")
           this.setState({
             userData: json.data[0],
-            userLoaded:true
+            userLoaded: true
             // isLoading: false,
             // isLoggedIn: true,
           })
         })
-      }
+    }
   }
 
 
@@ -193,30 +193,14 @@ class Details extends Component {
     var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage, loginAlert } = this.state;
 
 
-// console.log(saveImage)
+    // console.log(saveImage)
 
-    console.log("user loaded?" , this.state.userLoaded)
+    console.log("user loaded?", this.state.userLoaded)
 
 
     // console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
-
-    // gunData.dealer_price = this.state.gunData.dealer_price * 1.25;
-
-    // const dealerPrice = this.state.gunData.msp;
-    // console.log(Number(dealerPrice));
-    // gunDat.replace(/[$,]+/g,"");
-    // var result = parseFloat(currency) + .05;
-
-    // if (loginAlert) {
-    //   return(
-    //     <Alert variant="warning">
-    //     This is an alert—check it out!
-    //   </Alert>
-    //   )
-  
-    // }
 
     if (isLoading) {
       return (
@@ -239,148 +223,251 @@ class Details extends Component {
     }
     else {
       return (
-        <div className="">
-
-
+        <div className="details-bg">
 
           {gunSpecs ? (
-            <div className="details">
-              <Card className="text-center details-page">
-                {saveImage ? (
-                   <FontAwesomeIcon icon={faCheck}
-                   //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
-                    className="w-25"></FontAwesomeIcon>
-    
-                ): (
-                  <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25"></FontAwesomeIcon>
-                )}
-                {loginAlert ? (
-                  <Alert variant="warning">
-                  {/* Please login to save items to your profile */}
-                  Feature Coming Soon!
-                </Alert>
-                ): (
-                  <div></div>
-                )}
-                <a className="back-link" href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
-                <h1 className="pt4">{gunData["Item Description"]}</h1>
-                {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
-                {
-                  gunSpecs.image1 ? (
-                    <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
-                      // TODO: come up with better way to get images than this solution
-                      src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
-                      onError={this.usePlaceholderImg}
-                    />
-                  ) : (
+            <div className="details-page">
 
+              <Row>
+                <Col>
+                  <a className="back-link" href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
+                  <h1 className="pt4">{gunData["Item Description"]}</h1>
+                  <p style={{marginBottom:'0px'}}>{gunData.features}</p>
+                  <p>Finish: {gunData.finish}</p>
+                  </Col>
+              </Row>
+              {/* <Card className="text-center details-page"> */}
+
+              <Row>
+                <Col className="img-container" sm={12} md={8} >
+                  {saveImage ? (
+                    <FontAwesomeIcon icon={faCheck}
+                      //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
+                      className="w-25 fa-icon"></FontAwesomeIcon>
+
+                  ) : (
+                      <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25 fa-icon"></FontAwesomeIcon>
+                    )}
+                  {loginAlert ? (
+                    <Alert variant="warning">
+                      {/* Please login to save items to your profile */}
+                  Feature Coming Soon!
+                    </Alert>
+                  ) : (
+                      <div></div>
+                    )}
+                  {
+                    gunSpecs.image1 ? (
                       <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
                         // TODO: come up with better way to get images than this solution
-                        src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                        src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
                         onError={this.usePlaceholderImg}
                       />
-                    )
-                }
-                {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img> */}
-                {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
-                <h2 className="retail-price">${gunData["Retail Price"]}</h2>
-                {gunSpecs.retailmap > 0 ? (
-                  <h1 className="text-center">${gunSpecs.retailmap}</h1>
-                ) : (
-                    <h1>${price}</h1>
-                  )
-                }
-                <h1>{gunData.model}</h1>
-                <h1>{gunData["Model Series"]}</h1>
-                <h2>{gunData["Gun Type"]}</h2>
-                <h2>{gunData.manufacturer}</h2>
-                <h3>{gunData.caliber}</h3>
-                <h3>{gunData["Gun Action"]}</h3>
-                <p>{gunData.features}</p>
-                <p>Finish: {gunData.finish}</p>
-                <h2 style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
+                    ) : (
 
-                <Accordion>
-                  <Card>
-                    <Accordion.Toggle className="additionalinfo-btn" as={Button} variant="button" eventKey="0" onClick={this.scrollPage}>
-                      <a>Click for Additional information</a>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                      <Card.Body className="description-list">
-                        <ListGroup variant="flush" style={{ width: '50%', margin: '0px auto' }}>
-                          <p>Features:</p>
-                          {gunData.features1 ? (
-                            <ListGroupItem>{gunSpecs.features1}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                          }
-                          {gunData.features2 ? (
-                            <ListGroupItem>{gunSpecs.features2}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                          }
-                          {gunData.features3 ? (
-                            <ListGroupItem>{gunSpecs.features3}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                          }
-                          <ListGroupItem> Frame Material: {gunSpecs.framematerial}</ListGroupItem>
-                          <ListGroupItem>Capacity: {gunSpecs.capacity}</ListGroupItem>
-                          <ListGroupItem>Stock: {gunSpecs.stock}</ListGroupItem>
-                          <ListGroupItem>Mag Type: {gunSpecs.magtype}</ListGroupItem>
-                          <ListGroupItem>Overall Length {gunSpecs.overalllength}</ListGroupItem>
-                          <ListGroupItem>Sight Front: {gunSpecs.sightfront}</ListGroupItem>
-                          <ListGroupItem>Sight Rear: {gunSpecs.sightrear}</ListGroupItem>
-                          <ListGroupItem>Trigger Guard: {gunSpecs.triggerguard}</ListGroupItem>
-                          <ListGroupItem>Weight: {gunSpecs.weight}</ListGroupItem>
-                          <ListGroupItem>Frame Finish: {gunSpecs.finishframe}</ListGroupItem>
-                          <ListGroupItem>Class Finish: {gunSpecs.finishclass}</ListGroupItem>
-                        </ListGroup>
-                        <a name="scrolltobottom"></a>
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  </Card>
-                </Accordion>
+                        <img className="gun-img" alt={`${gunSpecs.itemdesc1}`}
+                          // TODO: come up with better way to get images than this solution
+                          src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                          onError={this.usePlaceholderImg}
+                        />
+                      )
+                  }</Col>
 
-              </Card>
-              <BrowseTabber title="Revise Search" />
-            </div>
-          ) : (
-              <div className="details">
-                <Card className="text-center details-page">
-                  <a href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
-                  {/* <a href={`/inventory/${gunData.manuf}`}><Button variant="outline-info">back</Button></a> */}
-                  <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
-                  {/* <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/ProdImageSm/${gunData.item_no}.jpg`}></img> */}
+
+                <Col className="price-box" sm={12} md={4}>
+
                   <h2 className="retail-price">${gunData["Retail Price"]}</h2>
-                  {gunData.retailmap > 0 ? (
+                  {gunSpecs.retailmap > 0 ? (
                     <h1 className="text-center">${gunSpecs.retailmap}</h1>
                   ) : (
                       <h1>${price}</h1>
                     )
                   }
-
                   <h1>{gunData.model}</h1>
                   <h1>{gunData["Model Series"]}</h1>
                   <h2>{gunData["Gun Type"]}</h2>
                   <h2>{gunData.manufacturer}</h2>
                   <h3>{gunData.caliber}</h3>
                   <h3>{gunData["Gun Action"]}</h3>
-                  <p>{gunData.features}</p>
-                  <p>{gunData.finish}</p>
-                  <h2 style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
-                </Card>
-                <BrowseTabber title="Revise Search" />
-              </div>
-            )}
+                  
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+            
+                    <Card.Body className="description-list">
+                      <Col>
+                        <ul className="desc-list">
+               
+                          {gunData.features1 ? (
+                            <li className="list-item">{gunSpecs.features1}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunData.features2 ? (
+                            <li className="list-item">{gunSpecs.features2}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunData.features3 ? (
+                            <li className="list-item">{gunSpecs.features3}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.framematerial ? (
+                            <li className="list-item"> Frame Material: {gunSpecs.framematerial}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.capacity ? (
+                            <li className="list-item">Capacity: {gunSpecs.capacity}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.stock ? (
+                          <li className="list-item">Stock: {gunSpecs.stock}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.magtype ? (
+                            <li className="list-item">Mag Type: {gunSpecs.magtype}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.overalllength ? (
+                            <li className="list-item">Overall Length: {gunSpecs.overalllength}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.sightfront ? (
+                             <li className="list-item">Sight Front: {gunSpecs.sightfront}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.sightrear ? (
+                               <li className="list-item">Sight Rear: {gunSpecs.sightrear}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.triggerguard ? (
+                            <li className="list-item">Trigger Guard: {gunSpecs.triggerguard}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.finishframe ? (
+                            <li className="list-item">Frame Finish: {gunSpecs.finishframe}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                          {gunSpecs.finishclass ? (
+                           <li className="list-item">Class Finish: {gunSpecs.finishclass}</li>
+                          ) : (
+                              <div></div>
+                            )
+                          }
+                         
+                        </ul>
+                      </Col>
+                      <a name="scrolltobottom"></a>
+                    </Card.Body>
+             
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                <h2 className="pa4" style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
+                <p><i>"Add to Cart" Coming Soon</i></p>
+                </Col>
+              </Row>
+         
+              <BrowseTabber title="Revise Search" />
+            </div>
+          ) : (
+        
+
+              <div className="details-page">
+  
+                <Row>
+                  <Col>
+                    <a className="back-link" href={`/manufacturer/${gunData.manufacturer}`}><Button variant="dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Explore More From {gunData.manufacturer}</Button></a>
+                    <h1 className="pt4">{gunData["Item Description"]}</h1>
+                    <p style={{marginBottom:'0px'}}>{gunData.features}</p>
+                    <p>Finish: {gunData.finish}</p>
+                    </Col>
+                </Row>
+                {/* <Card className="text-center details-page"> */}
+  
+                <Row>
+                  <Col className="img-container" sm={12} md={8} >
+                    {saveImage ? (
+                      <FontAwesomeIcon icon={faCheck}
+                        //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
+                        className="w-25"></FontAwesomeIcon>
+  
+                    ) : (
+                        <FontAwesomeIcon icon={faHeart} onClick={this.saveItem} className="w-25"></FontAwesomeIcon>
+                      )}
+                    {loginAlert ? (
+                      <Alert variant="warning">
+                        {/* Please login to save items to your profile */}
+                    Feature Coming Soon!
+                      </Alert>
+                    ) : (
+                        <div></div>
+                      )}
+                   <img className="img-responsive gun-img-detailspg" src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`} onError={this.usePlaceholderImg}></img>
+                    
+                    </Col>
+  
+  
+                  <Col className="price-box" sm={12} md={4}>
+  
+                    <h2 className="retail-price">${gunData["Retail Price"]}</h2>
+                    {gunData.retailmap > 0 ? (
+                      <h1 className="text-center">${gunSpecs.retailmap}</h1>
+                    ) : (
+                        <h1>${price}</h1>
+                      )
+                    }
+                    <h1>{gunData.model}</h1>
+                    <h1>{gunData["Model Series"]}</h1>
+                    <h2>{gunData["Gun Type"]}</h2>
+                    <h2>{gunData.manufacturer}</h2>
+                    <h3>{gunData.caliber}</h3>
+                    <h3>{gunData["Gun Action"]}</h3>
+                    
+                  </Col>
+                </Row>
+                <Row>
+                <Col>
+                <h2 className="pa4" style={{ color: 'rgb(221, 103, 23)' }}>Order with Item # : {gunData["Item #"]}</h2>
+                <p><i>"Add to Cart" Coming Soon</i></p>
+                </Col>
+              </Row>
+         
+              <BrowseTabber title="Revise Search" />
         </div>
+            )}
+            </div>
       )
     }
   }
 }
 export default Details;
+
+
 
 

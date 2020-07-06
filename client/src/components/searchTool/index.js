@@ -2,13 +2,6 @@ import React, {useState, browserHistory} from "react";
 import { Nav, Form, FormControl, Button, NavDropdown } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import './style.css'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Home from "../../pages/Home"
-import About from "../../pages/About"
-import App from "../../App"
-// import Logo from '../../media/Logo.png';
-import Image from 'react-bootstrap/Image';
-import logo from '../../media/cds.jpg'
 
 // import './style.css';
 function SearchTool(props) {

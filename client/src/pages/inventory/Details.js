@@ -170,12 +170,10 @@ class Details extends Component {
         .then(res => res.json())
         .then(json => {
           console.log("users", json.data)
-          //  console.log("oh well hello there")
           this.setState({
             userData: json.data[0],
             userLoaded: true
-            // isLoading: false,
-            // isLoggedIn: true,
+  
           })
         })
     }
@@ -186,7 +184,7 @@ class Details extends Component {
   render() {
 
 
-    console.log(this.state.user)
+    // console.log(this.state.user)
 
     const profitMargin = 1.15
 
@@ -195,10 +193,10 @@ class Details extends Component {
 
     // console.log(saveImage)
 
-    console.log("user loaded?", this.state.userLoaded)
+    // console.log("user loaded?", this.state.userLoaded)
 
 
-    // console.log(gunData);
+    console.log(gunData);
     var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
@@ -289,6 +287,7 @@ class Details extends Component {
                   <h2>{gunData.manufacturer}</h2>
                   <h3>{gunData.caliber}</h3>
                   <h3>{gunData["Gun Action"]}</h3>
+                  <h4>{gunData.total_quantity} In Stock</h4>
                   
                 </Col>
               </Row>
@@ -448,6 +447,7 @@ class Details extends Component {
                     <h2>{gunData.manufacturer}</h2>
                     <h3>{gunData.caliber}</h3>
                     <h3>{gunData["Gun Action"]}</h3>
+                    <h4>{gunData.total_quantity} In Stock</h4>
                     
                   </Col>
                 </Row>

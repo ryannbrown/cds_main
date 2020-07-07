@@ -1,5 +1,5 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Row, Col } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -66,112 +66,112 @@ class CdsDetails extends Component {
 
     else {
       return (
-        <div className="text-center details">
-          <Card className='card details-page'>
-            {/* back button logic */}
-            {gunData.location == 'featured' ? (
-              <a href="/cds/inventory/featured"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Featured Products</Button></a>
-            ) : gunData.location == 'aeroprecision' ? (
-              <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
-            ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
-            }
+        <div className="details-bg">
+          <div className='details-page'>
 
-            <img className="gun-img-detailspg" alt={`${gunData.itemdesc1}`}
-              src={`https://cdsinventoryimages.s3.amazonaws.com/${gunData.image}`}
-              onError={this.usePlaceholderImg}
-            />
-            <h3 style={{ padding: '15px' }} className="">{gunData.product_name}</h3>
-            {/* <p className=" gun-desc">{gunData.product_description}</p> */}
-            <h5 className="retail-price">{gunData.msrp_price}</h5>
-            <h4>{gunData.sale_price}</h4>
+            <Row>
+              <Col>
+                {/* back button logic */}
+                {gunData.location == 'featured' ? (
+                  <a href="/cds/inventory/featured"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Featured Products</Button></a>
+                ) : gunData.location == 'aeroprecision' ? (
+                  <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
+                ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
+                }
 
-            {gunData.manufacturer || gunData.model || gunData.type || gunData.caliber || gunData.capacity || gunData.sights || gunData.barrellength || gunData.finish ? (
-              <Accordion>
-                <Card>
-                  <Accordion.Toggle className="additionalinfo-btn" as={Button} variant="button" eventKey="0" onClick={this.scrollPage}>
-                    <a>Click for Additional information</a>
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body className="description-list">
-                      <ListGroup variant="flush" style={{ width: '50%', margin: '0px auto' }}>
-                        {
-                          gunData.manufacturer ? (
-                            <ListGroupItem>manufacturer: {gunData.manufacturer}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.model ? (
-                            <ListGroupItem>Model: {gunData.model}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.type ? (
-                            <ListGroupItem>Type: {gunData.type}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.caliber ? (
-                            <ListGroupItem>Caliber: {gunData.caliber}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.capacity ? (
-                            <ListGroupItem>Capacity: {gunData.capacity}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.finish ? (
-                            <ListGroupItem>Finish: {gunData.finish}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.sights ? (
-                            <ListGroupItem>Sights: {gunData.sights}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.barrellength ? (
-                            <ListGroupItem>Barrel Length: {gunData.barrellength}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                        {
-                          gunData.upcnumber ? (
-                            <ListGroupItem>UPC #: {gunData.upcnumber}</ListGroupItem>
-                          ) : (
-                              <div></div>
-                            )
-                        }
-                      </ListGroup>
-                      <a name="scrolltobottom"></a>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-            ) : (
-                <div></div>
-              )
-            }
-            {/* <h4 className="">{gunData.quantity}</h4>
-     <h4 className="">{gunData.caliber}</h4> */}
+              </Col>
+            </Row>
+
+            <Row>
+              <Col className="img-container" sm={12} md={8} >
+                <img className="gun-img-detailspg" alt={`${gunData.itemdesc1}`}
+                  src={`https://cdsinventoryimages.s3.amazonaws.com/${gunData.image}`}
+                  onError={this.usePlaceholderImg}
+                />
+              </Col>
+              <Col className="price-box" sm={12} md={4}>
+                <h1 style={{ padding: '15px' }} className="">{gunData.product_name}</h1>
+                <h2 className="retail-price">{gunData.msrp_price}</h2>
+                <h1>{gunData.sale_price}</h1>
+                <h4>{gunData.quantity} In Stock</h4>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <Card.Body className="description-list">
+                  <ul className="desc-list">
+                    {
+                      gunData.manufacturer ? (
+                        <li className="list-item">manufacturer: {gunData.manufacturer}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.model ? (
+                        <li className="list-item">Model: {gunData.model}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.type ? (
+                        <li className="list-item">Type: {gunData.type}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.caliber ? (
+                        <li className="list-item">Caliber: {gunData.caliber}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.capacity ? (
+                        <li className="list-item">Capacity: {gunData.capacity}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.finish ? (
+                        <li className="list-item">Finish: {gunData.finish}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.sights ? (
+                        <li className="list-item">Sights: {gunData.sights}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.barrellength ? (
+                        <li className="list-item">Barrel Length: {gunData.barrellength}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                    {
+                      gunData.upcnumber ? (
+                        <li className="list-item">UPC #: {gunData.upcnumber}</li>
+                      ) : (
+                          <div></div>
+                        )
+                    }
+                  </ul>
+
+                </Card.Body>
+              </Col>
+            </Row>
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>
-          </Card>
-          <BrowseTabber title="Search Additional Inventory" />
+            <BrowseTabber title="Search Additional Inventory" />
+          </div>
         </div>
       )
     }

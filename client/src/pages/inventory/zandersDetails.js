@@ -106,7 +106,11 @@ class zandersDetails extends Component {
                             <h1>{gunData.model}</h1>
                             <h2>{gunData.manufacturer}</h2>
                             <h3>{gunData.caliber}</h3>
-                            <h4>{gunData.qty1} In Stock</h4>
+                            {gunData.available > 0 ? (
+                            <h5 className="text-center">{gunData.available} Left</h5>
+                        ) : (
+                                <h5 className="text-center">Out of Stock</h5>
+                            )}
 
                         </Col>
                     </Row>

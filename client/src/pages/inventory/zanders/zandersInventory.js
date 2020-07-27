@@ -128,7 +128,7 @@ console.log(param)
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        <a target="_blank" rel="noopener noreferrer" href={`/inventory/2/model/${item.itemnumber}`}>
+        <a href={`/inventory/2/model/${item.itemnumber}`}>
               <img className="gun-img" alt={item.imagelink}
                 // TODO: come up with better way to get images than this solution
                 src={item.imagelink}

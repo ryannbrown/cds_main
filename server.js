@@ -498,8 +498,8 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   FROM all_dist
   LEFT JOIN davidsons_attributes
   ON davidsons_attributes.itemno = all_dist."Item #"
-  LEFT JOIN zanders_images
-  ON zanders_images.itemnumber = all_dist."Item #"
+  LEFT JOIN zanders_images_distinct
+  ON zanders_images_distinct.itemnumber = all_dist."Item #"
   WHERE all_dist.manufacturer ILIKE $1`
 
 

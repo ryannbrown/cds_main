@@ -130,7 +130,11 @@ class davidsonsDetails extends Component {
                                 <h2>{gunData.manufacturer}</h2>
                                 <h3>{gunData.caliber}</h3>
                                 <h3>{gunData["Gun Action"]}</h3>
-                                <h4>{gunData.total_quantity} In Stock</h4>
+                                {gunData.total_quantity > 0 ? (
+                            <h5 className="text-center">{gunData.total_quantity} Left</h5>
+                        ) : (
+                                <h5 className="text-center">Out of Stock</h5>
+                            )}
 
                             </Col>
                         </Row>
@@ -297,7 +301,11 @@ class davidsonsDetails extends Component {
                                     <h2>{gunData.manufacturer}</h2>
                                     <h3>{gunData.caliber}</h3>
                                     <h3>{gunData["Gun Action"]}</h3>
-                                    <h4>{gunData.total_quantity} In Stock</h4>
+                                    {gunData.total_quantity > 0 ? (
+                            <h5 className="text-center">{gunData.total_quantity} Left</h5>
+                        ) : (
+                                <h5 className="text-center">Out of Stock</h5>
+                            )}
 
                                 </Col>
                             </Row>

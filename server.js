@@ -418,7 +418,7 @@ app.get('/browse/:criteria', (req, response) => {
   var criteria = req.params.criteria;
   console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
-  client.query(`SELECT DISTINCT "${criteria}" FROM davidsons_inventory_selected
+  client.query(`SELECT DISTINCT "${criteria}" FROM all_dist
   WHERE "${criteria}" IS NOT NULL
   ORDER BY "${criteria}" DESC`, (error, results) => {
     if (error) {
@@ -434,7 +434,59 @@ app.get('/browse/:criteria', (req, response) => {
 
 // TODO: Change inventory to davidsons_inventory_selected
 // TO DO : SLIM ALL THIS DOWN 
-// MANUFACTURER
+// // MANUFACTURER Only Davidsons
+// app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
+
+//   const data = {
+//     manufacturer: req.params.manufacturer
+//   }
+//   var sort = req.params.sort;
+//   // var sortString;
+//   let query = `SELECT *
+//   FROM davidsons_inventory_selected
+//   LEFT JOIN davidsons_attributes
+//   ON davidsons_attributes.itemno = davidsons_inventory_selected."Item #"
+//   LEFT JOIN davidsons_quantity
+//   ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+//   WHERE davidsons_inventory_selected.manufacturer ILIKE $1`;
+
+
+
+//   //#region query logic
+//   if (sort == 'priceUp') {
+//     query += `ORDER BY "Dealer Price" ASC`
+//   } else if (sort == 'priceDown') {
+//     query += `ORDER BY "Dealer Price" DESC`
+//   } else if (sort == 'priceUpInStock') {
+//     query += `AND total_quantity > 0 ORDER BY "Dealer Price" ASC`
+//   } else if (sort == 'quantityDown') {
+//     query += `ORDER BY total_quantity DESC`
+//   } else if (sort == 'priceDownInStock') {
+//     query += `AND total_quantity > 0 ORDER BY "Dealer Price" DESC `
+//   } else if (sort == 'onlyInStock') {
+//     query += `AND total_quantity > 0 `
+//   }
+
+
+//   const values = [data.manufacturer];
+//   console.log("query", query)
+//   // console.log(manufacturer);
+//   console.log("sort:", sort)
+//   client.query(query,
+//     values,
+//     (error, results) => {
+//       if (error) {
+//         throw error
+//       }
+
+//       var data = results.rows
+//       response.send(JSON.stringify({ data }));
+
+//     });
+//   //#endregion
+
+// })
+// MANUFACTURER ALL DIST
 app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
 
   const data = {
@@ -443,12 +495,12 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   var sort = req.params.sort;
   // var sortString;
   let query = `SELECT *
-  FROM davidsons_inventory_selected
+  FROM all_dist
   LEFT JOIN davidsons_attributes
-  ON davidsons_attributes.itemno = davidsons_inventory_selected."Item #"
-  LEFT JOIN davidsons_quantity
-  ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
-  WHERE davidsons_inventory_selected.manufacturer ILIKE $1`;
+  ON davidsons_attributes.itemno = all_dist."Item #"
+  LEFT JOIN zanders_images
+  ON zanders_images.itemnumber = all_dist."Item #"
+  WHERE all_dist.manufacturer ILIKE $1`
 
 
 
@@ -467,7 +519,8 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
     query += `AND total_quantity > 0 `
   }
 
-
+  // TODO: Remove this is just for testing
+// query += ` ORDER BY "Item #";`
   const values = [data.manufacturer];
   console.log("query", query)
   // console.log(manufacturer);
@@ -576,11 +629,17 @@ app.get('/caliber/:caliber/:sort', (req, response) => {
 
 })
 
-app.get('/davidsons/model/:item_no', (req, response) => {
+app.get('/details/:distributor/model/:item_no', (req, response) => {
 
   const data = {
-    item_no: req.params.item_no
+    item_no: req.params.item_no,
+    distributor: req.params.distributor
   }
+  console.log(req.params.item_no)
+
+  var processed = data.item_no.replace(',', '')
+  console.log(processed)
+
 
   // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
@@ -588,10 +647,28 @@ app.get('/davidsons/model/:item_no', (req, response) => {
 
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
-  const query = ` SELECT * FROM davidsons_inventory_selected
+
+if (data.distributor == 'davidsons') {
+  console.log("Pulling Davidsons data for item")
+var query = `
+SELECT * FROM davidsons_inventory_selected
     LEFT JOIN davidsons_quantity
     ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
     WHERE davidsons_inventory_selected."Item #" = $1`
+}
+else if (data.distributor == 'zanders') {
+  console.log("Pulling Zanders data for item")
+  var query = ` SELECT * FROM zanders_inventory_selected
+  LEFT JOIN zanders_images
+  ON zanders_images.itemnumber = zanders_inventory_selected.itemnumber
+  WHERE zanders_inventory_selected.itemnumber = $1 `
+}
+
+console.log(query)
+
+    // LEFT JOIN davidsons_quantity
+    // ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
+    // WHERE davidsons_inventory_selected."Item #" = $1`
 
   const values = [data.item_no]
   client.query(query, values, (error, results) => {

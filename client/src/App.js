@@ -93,7 +93,7 @@ class App extends Component {
             <Route path="/manufacturer/:manufacturer" component={Inventory} />
             <Route path="/caliber/:caliber" component={Inventory} />
 
-            <Route path="/inventory/model/:item_no" component={Details} />
+            <Route path="/inventory/:distributor/model/:item_no" component={Details} />
 
 
             <Route path="/inventory/2/model/:item_no" component={zandersDetails} />

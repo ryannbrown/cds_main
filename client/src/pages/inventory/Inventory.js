@@ -99,7 +99,7 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
     fetch(`/${keyParam}/${valParam}/${this.state.sort}`)
       .then(res => res.json())
       .then(json => {
-        // console.log("json", json)
+        console.log("json", json)
         this.setState({
           gunData: json.data,
           isLoading: false
@@ -152,23 +152,48 @@ console.log(pageNumbers.length)
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        <a target="_blank" rel="noopener noreferrer" href={`/inventory/model/${item["Item #"]}`}>
+        <a target="_blank" rel="noopener noreferrer" href={`/inventory/${item.distributor}/model/${item["Item #"]}`}>
+          {/* image logic */}
           {
-            item.image1 ? (
-              <img className="gun-img" alt={`${item.itemdesc1}`}
-                // TODO: come up with better way to get images than this solution
-                src={`https://www.davidsonsinc.com/ProdImageSm/${item.image1}`}
-                onError={this.usePlaceholderImg}
-              />
-            ) : (
+            item.distributor == 'davidsons' ? 
+            (
 
                 <img className="gun-img" alt={`${item.itemdesc1}`}
-                  // TODO: come up with better way to get images than this solution
-                  src={`https://www.davidsonsinc.com/ProdImageSm/${item["Item #"]}.jpg`}
-                  onError={this.usePlaceholderImg}
-                />
-              )
-          }
+              // TODO: come up with better way to get images than this solution
+              src={`https://www.davidsonsinc.com/ProdImageSm/${item["Item #"]}.jpg`}
+              onError={this.usePlaceholderImg}
+            />
+
+              //    <img className="gun-img" alt={`${item.itemdesc1}`}
+          //    // TODO: come up with better way to get images than this solution
+          //    src={`https://www.davidsonsinc.com/ProdImageSm/${item.image1}`}
+          //    onError={this.usePlaceholderImg}
+          //  />
+
+             
+            )
+
+             : (
+              <div></div>
+             ) 
+          //    <img className="gun-img" alt={`${item.itemdesc1}`}
+          //    // TODO: come up with better way to get images than this solution
+          //    src={`https://www.davidsonsinc.com/ProdImageSm/${item.image1}`}
+          //    onError={this.usePlaceholderImg}
+          //  />
+    }
+
+    {
+      item.distributor == 'zanders' ? (
+        <img className="gun-img" alt={`${item.itemdesc1}`}
+                // TODO: come up with better way to get images than this solution
+                src={`${item.imagelink}`}
+                onError={this.usePlaceholderImg}
+              />
+      ) : (
+        <div></div>
+      )
+    }
           <p className="text-center">{item["Item Description"]}</p>
           <p className="text-center">{item["Model Series"]}</p>
           <h5 className="retail-price text-center">${item["Retail Price"]}</h5>

@@ -28,15 +28,15 @@ console.log(this.props.title);
                     <Tab eventKey="featured" title="Featured">
                         <a href="/cds/inventory/featured"><div className="text-center mt-2"><button type="button" className=" mt-3 btn btn-dark" style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }}>Browse Featured</button></div></a>
                     </Tab>
-                    <Tab eventKey="home" title="Manufacturer">
+                    <Tab eventKey="home" title="Search By Manufacturer">
                         <Filter param="manufacturer" link="/browse/manufacturer" />
                     </Tab>
-                    <Tab eventKey="profile" title="Gun Type">
+                    {/* <Tab eventKey="profile" title="Gun Type">
                         <Filter param="gun_type" link="/browse/Gun%20Type" />
                     </Tab>
                     <Tab eventKey="contact" title="Caliber">
                         <Filter param="caliber" link="/browse/caliber" />
-                    </Tab>
+                    </Tab> */}
                 </Tabs>
             </div>
 

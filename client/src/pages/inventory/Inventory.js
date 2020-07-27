@@ -152,7 +152,7 @@ console.log(pageNumbers.length)
     const items = currentItems.map((item, i) => {
       return (
       <Card key={i} className='inventory-card'>
-        <a target="_blank" rel="noopener noreferrer" href={`/inventory/${item.distributor}/model/${item["Item #"]}`}>
+        <a href={`/inventory/${item.distributor}/model/${item["Item #"]}`}>
           {/* image logic */}
           {
             item.distributor == 'davidsons' ? 

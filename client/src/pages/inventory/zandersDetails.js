@@ -1,5 +1,5 @@
 import React, { Component, } from "react";
-import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert, Row, Col } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Alert, Row, Col, Carousel } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -24,6 +24,7 @@ class zandersDetails extends Component {
             saveImage: false,
             catData: [],
             gunSpecs: [],
+            imgData: [],
             param: '',
             descriptionKeys: [],
             descriptionValues: [],
@@ -41,6 +42,21 @@ class zandersDetails extends Component {
 
     componentDidMount() {
 
+
+        var item_no = this.props.gunData.itemnumber;
+
+        fetch(`/zanders/model/${item_no}`)
+            .then(res => res.json())
+            .then(json => {
+                console.log("json", json)
+                console.log("inventory", json.data[0])
+                console.log("imgdata", json.data)
+                this.setState({
+                    imgData: json.data,
+                })
+                // var size = Object.keys(this.state.gunData).length;
+                // console.log(size);
+            })
     }
 
     componentDidUpdate() {
@@ -48,6 +64,21 @@ class zandersDetails extends Component {
     }
 
     render() {
+
+
+      
+
+        const images = this.state.imgData.map((item, i) => {
+            return (
+                <Carousel.Item key={i}>
+                    <img className="gun-img" alt={item.desc1}
+                        // TODO: come up with better way to get images than this solution
+                        src={item.imagelink}
+                        onError={this.usePlaceholderImg}
+                    />
+                </Carousel.Item>
+            )
+        })
 
         var { gunData, saveImage, loginAlert, saveItem } = this.props;
         const profitMargin = 1.15
@@ -73,28 +104,34 @@ class zandersDetails extends Component {
                     <Row>
                         <Col className="img-container" sm={12} md={8} >
                             {saveImage ? (
-                                        <FontAwesomeIcon icon={faCheck}
-                                            //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
-                                            className="w-25"></FontAwesomeIcon>
+                                <FontAwesomeIcon icon={faCheck}
+                                    //  onClick={this.saveItem} TODO: NEED TO BE ABLE TO DELETE
+                                    className="w-25"></FontAwesomeIcon>
 
-                                    ) : (
-                                            <FontAwesomeIcon icon={faHeart} onClick={saveItem} className="w-25"></FontAwesomeIcon>
-                                        )}
-                                    {loginAlert ? (
-                                        <Alert variant="warning">
-                            {/* Please login to save items to your profile */}
+                            ) : (
+                                    <FontAwesomeIcon icon={faHeart} onClick={saveItem} className="w-25"></FontAwesomeIcon>
+                                )}
+                            {loginAlert ? (
+                                <Alert variant="warning">
+                                    {/* Please login to save items to your profile */}
                             Feature Coming Soon!
-                                        </Alert>
-                                    ) : (
-                                            <div></div>
-                                        )}
+                                </Alert>
+                            ) : (
+                                    <div></div>
+                                )}
 
 
-                            <img className="gun-img" alt={`${gunData.desc1}`}
-                                // TODO: come up with better way to get images than this solution
-                                src={`${gunData.imagelink}`}
-                                onError={this.usePlaceholderImg}
-                            />
+                            {this.state.imgData.length > 0 ? (
+                                <Carousel>
+                                    {images}
+                                </Carousel>
+                            ) : (
+                                    <img className="gun-img" alt={gunData.desc1}
+                                        // TODO: come up with better way to get images than this solution
+                                        src={gunData.imagelink}
+                                        onError={this.usePlaceholderImg}
+                                    />
+                                )}
 
                         </Col>
 
@@ -107,10 +144,10 @@ class zandersDetails extends Component {
                             <h2>{gunData.manufacturer}</h2>
                             <h3>{gunData.caliber}</h3>
                             {gunData.available > 0 ? (
-                            <h5 className="text-center">{gunData.available} Left</h5>
-                        ) : (
-                                <h5 className="text-center">Out of Stock</h5>
-                            )}
+                                <h5 className="text-center">{gunData.available} Left</h5>
+                            ) : (
+                                    <h5 className="text-center">Out of Stock</h5>
+                                )}
 
                         </Col>
                     </Row>

@@ -194,6 +194,17 @@ console.log(pageNumbers.length)
         <div></div>
       )
     }
+    {
+      item.distributor == 'lipseys' ? (
+        <img className="gun-img" alt={`${item["Item Description"]}`}
+                // TODO: come up with better way to get images than this solution
+                src={`https://www.lipseyscloud.com/images/${item.imagename}`}
+                onError={this.usePlaceholderImg}
+              />
+      ) : (
+        <div></div>
+      )
+    }
           <p className="text-center">{item["Item Description"]}</p>
           <p className="text-center">{item["Model Series"]}</p>
           <h5 className="retail-price text-center">${item["Retail Price"]}</h5>

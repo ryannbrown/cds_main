@@ -500,6 +500,8 @@ app.get('/manufacturer/:manufacturer/:sort', (req, response) => {
   ON davidsons_attributes.itemno = all_dist."Item #"
   LEFT JOIN zanders_images_distinct
   ON zanders_images_distinct.itemnumber = all_dist."Item #"
+  LEFT JOIN lipseys_images
+  on lipseys_images.itemno = all_dist."Item #"
   WHERE all_dist.manufacturer ILIKE $1`
 
 
@@ -656,12 +658,18 @@ SELECT * FROM davidsons_inventory_selected
     ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
     WHERE davidsons_inventory_selected."Item #" = $1`
 }
-else if (data.distributor == 'zanders') {
+ if (data.distributor == 'zanders') {
   console.log("Pulling Zanders data for item")
   var query = ` SELECT * FROM zanders_inventory_selected
   LEFT JOIN zanders_images
   ON zanders_images.itemnumber = zanders_inventory_selected.itemnumber
   WHERE zanders_inventory_selected.itemnumber = $1 `
+}
+
+else if (data.distributor == 'lipseys') {
+  console.log("Pulling lipseys data for item")
+  var query = ` SELECT * FROM lipseys_inventory_selected
+  WHERE lipseys_inventory_selected.itemno = $1 `
 }
 
 console.log(query)
@@ -754,6 +762,36 @@ app.get('/zanders/model/:item_no', (req, response) => {
 
 
 })
+// app.get('/lipseys/model/:item_no', (req, response) => {
+
+//   const data = {
+//     item_no: req.params.item_no
+//   }
+
+//   console.log("item no", data.item_no)
+//   console.log("HEELLLOOO?")
+
+//   // Took this away from below query because additional spec call comes later
+//   // LEFT JOIN davidsons_attributes
+//   // ON davidsons_attributes.itemno = davidsons_inventory_selected.item_no
+
+//   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+
+//   const query = `SELECT * from lipseys_inventory WHERE itemno = $1`
+
+//   const values = [data.item_no]
+//   client.query(query, values, (error, results) => {
+//     if (error) {
+//       throw error
+//     }
+
+//     var data = results.rows
+//     response.send(JSON.stringify({ data }));
+
+//   });
+
+
+// })
 app.get('/api/:specs/:item_no', (req, response) => {
   const data = {
     item_no: req.params.item_no

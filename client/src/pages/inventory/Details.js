@@ -7,6 +7,7 @@ import "../Home";
 import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
 import DavidsonsDetails from "./davidsonsDetails"
+import LipseysDetails from "./lipseysDetails"
 import ZandersDetails from "./zandersDetails"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -230,16 +231,22 @@ class Details extends Component {
     // else {
       return (
         <div className="details-bg">
+          { gunData.distributor == 'lipseys' ? (
+  <LipseysDetails itemno={gunData.itemnumber} gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></LipseysDetails>
+          ) :
+          <div></div>
+          }
           { gunData.distributor == 'davidsons' ? (
    <DavidsonsDetails gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></DavidsonsDetails>
           ) :
           <div></div>
           }
           { gunData.distributor == 'zanders' ? (
-  <ZandersDetails gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></ZandersDetails>
+  <ZandersDetails itemno={gunData.itemnumber} gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></ZandersDetails>
           ) :
           <div></div>
           }
+          
        
           
             </div>

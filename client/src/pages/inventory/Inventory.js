@@ -5,7 +5,7 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
-
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
@@ -113,6 +113,11 @@ fetch(`/${this.state.keyParam}/${this.state.valParam}/${sortVar}`)
   };
 
   render() {
+
+
+    const seoTitle = Object.values(this.props.match.params) + 's for sale in Durham, NC'
+
+    const seoDescription = 'At Coleman Defense Solutions, we have a wide range of ' + Object.values(this.props.match.params) + 's for sale in Durham, NC'
 
     const profitMargin = 1.15;
     // var equation= gunData.dealer_price * profitMargin;
@@ -246,6 +251,11 @@ console.log(pageNumbers.length)
     else {
       return (
       <div className="inventory-div">
+         <Helmet>
+          <title>{seoTitle}</title>
+          <meta name="description" content={seoDescription} charSet="utf-8" />
+          {/* <link rel="canonical" href="http://www.colemandefense.com/" /> */}
+        </Helmet>
       <div className="deck-wrapper">
         <DropdownButton size="lg" variant="dark" className="tc mt-2" id="dropdown-basic-button" title="Sort">
         <Dropdown.Header>Price</Dropdown.Header>

@@ -5,6 +5,7 @@ import './style.css'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
+import { Helmet } from "react-helmet";
 
 // const queryString = require('query-string');
 
@@ -51,6 +52,12 @@ class CdsDetails extends Component {
 
     var { gunData, isLoading } = this.state;
 
+
+    const seoTitle = gunData.product_name;
+    console.log(seoTitle);
+    const seoDescription = 'Buy a ' + gunData.product_name + ' from Coleman Defense Solutions, based out of Durham, NC'
+    
+
     console.log(gunData.location)
 
 
@@ -67,6 +74,11 @@ class CdsDetails extends Component {
     else {
       return (
         <div className="details-bg">
+          <Helmet>
+                    <title>{seoTitle}</title>
+                    <meta name="description" content={seoDescription} charSet="utf-8" />
+                    {/* <link rel="canonical" href="http://www.colemandefense.com/" /> */}
+                </Helmet>
           <div className='details-page'>
 
             <Row>

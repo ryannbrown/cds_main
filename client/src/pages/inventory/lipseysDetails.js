@@ -8,7 +8,7 @@ import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
-
+import { Helmet } from "react-helmet";
 // const queryString = require('query-string');
 
 
@@ -68,9 +68,12 @@ class lipseysDetails extends Component {
     }
 
     render() {
+        var { gunData, saveImage, loginAlert, saveItem } = this.props;
 
+        const seoTitle = gunData.manufacturer + ' | ' + gunData.description1;
+        console.log(seoTitle);
+        const seoDescription = 'Buy a ' + gunData.description1 + ' from Coleman Defense Solutions, based out of Durham, NC'
 
-      
 
         const images = this.state.imgData.map((item, i) => {
             return (
@@ -84,7 +87,6 @@ class lipseysDetails extends Component {
             )
         })
 
-        var { gunData, saveImage, loginAlert, saveItem } = this.props;
         const profitMargin = 1.15
         var price = (gunData.price * profitMargin).toFixed(2);
 
@@ -92,7 +94,11 @@ class lipseysDetails extends Component {
         return (
             <div className="details-bg">
 
-
+                <Helmet>
+                    <title>{seoTitle}</title>
+                    <meta name="description" content={seoDescription} charSet="utf-8" />
+                    {/* <link rel="canonical" href="http://www.colemandefense.com/" /> */}
+                </Helmet>
 
                 <div className="details-page">
 
@@ -163,128 +169,128 @@ class lipseysDetails extends Component {
                     </Row>
 
                     <Row>
-                            <Col>
+                        <Col>
 
-                                <Card.Body className="description-list">
-                                    <Col>
-                                        <ul className="desc-list">
+                            <Card.Body className="description-list">
+                                <Col>
+                                    <ul className="desc-list">
 
-                                            {gunData.action ? (
-                                                <li className="list-item">{gunData.action}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.additionalfeature1 ? (
-                                                <li className="list-item">{gunData.additionalfeature1}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.additionalfeature2 ? (
-                                                <li className="list-item">{gunData.additionalfeature2}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.additionalfeature3 ? (
-                                                <li className="list-item">{gunData.additionalfeature3}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.framematerial ? (
-                                                <li className="list-item"> Frame Material: {gunData.framematerial}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.capacity ? (
-                                                <li className="list-item">Capacity: {gunData.capacity}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.stock ? (
-                                                <li className="list-item">Stock: {gunData.stock}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.chamber ? (
-                                                <li className="list-item">Chamber: {gunData.stock}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.magtype ? (
-                                                <li className="list-item">Mag Type: {gunData.magtype}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.barrellength ? (
-                                                <li className="list-item">Barrel Length: {gunData.barrellength}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.overalllength ? (
-                                                <li className="list-item">Overall Length: {gunData.overalllength}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.reticle ? (
-                                                <li className="list-item">Reticle: {gunData.reticle}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.safety ? (
-                                                <li className="list-item">Safety: {gunData.safety}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.sights ? (
-                                                <li className="list-item">Sights:{gunData.sights}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.fflrequired ? (
-                                                <li className="list-item" style={{color:'red'}}>FFL Required</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.triggerguard ? (
-                                                <li className="list-item">Trigger Guard: {gunData.triggerguard}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.finish ? (
-                                                <li className="list-item">Finish: {gunData.finish}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
-                                            {gunData.finishclass ? (
-                                                <li className="list-item">Class Finish: {gunData.finishclass}</li>
-                                            ) : (
-                                                    <div></div>
-                                                )
-                                            }
+                                        {gunData.action ? (
+                                            <li className="list-item">{gunData.action}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.additionalfeature1 ? (
+                                            <li className="list-item">{gunData.additionalfeature1}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.additionalfeature2 ? (
+                                            <li className="list-item">{gunData.additionalfeature2}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.additionalfeature3 ? (
+                                            <li className="list-item">{gunData.additionalfeature3}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.framematerial ? (
+                                            <li className="list-item"> Frame Material: {gunData.framematerial}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.capacity ? (
+                                            <li className="list-item">Capacity: {gunData.capacity}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.stock ? (
+                                            <li className="list-item">Stock: {gunData.stock}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.chamber ? (
+                                            <li className="list-item">Chamber: {gunData.stock}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.magtype ? (
+                                            <li className="list-item">Mag Type: {gunData.magtype}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.barrellength ? (
+                                            <li className="list-item">Barrel Length: {gunData.barrellength}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.overalllength ? (
+                                            <li className="list-item">Overall Length: {gunData.overalllength}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.reticle ? (
+                                            <li className="list-item">Reticle: {gunData.reticle}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.safety ? (
+                                            <li className="list-item">Safety: {gunData.safety}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.sights ? (
+                                            <li className="list-item">Sights:{gunData.sights}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.fflrequired ? (
+                                            <li className="list-item" style={{ color: 'red' }}>FFL Required</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.triggerguard ? (
+                                            <li className="list-item">Trigger Guard: {gunData.triggerguard}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.finish ? (
+                                            <li className="list-item">Finish: {gunData.finish}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
+                                        {gunData.finishclass ? (
+                                            <li className="list-item">Class Finish: {gunData.finishclass}</li>
+                                        ) : (
+                                                <div></div>
+                                            )
+                                        }
 
-                                        </ul>
-                                    </Col>
-                                    <a name="scrolltobottom"></a>
-                                </Card.Body>
+                                    </ul>
+                                </Col>
+                                <a name="scrolltobottom"></a>
+                            </Card.Body>
 
-                            </Col>
-                        </Row>
+                        </Col>
+                    </Row>
 
                     <BrowseTabber title="Revise Search" />
 

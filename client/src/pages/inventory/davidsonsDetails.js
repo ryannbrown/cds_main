@@ -8,6 +8,7 @@ import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { Helmet } from "react-helmet";
 
 // const queryString = require('query-string');
 
@@ -37,25 +38,38 @@ class davidsonsDetails extends Component {
     usePlaceholderImg(ev) {
         ev.target.src = 'https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg'
         console.log(ev);
-      }
+    }
 
 
     componentDidMount() {
-      
+
     }
 
-    componentDidUpdate(){
-     
+    componentDidUpdate() {
+
     }
 
     render() {
-        var {gunData, gunSpecs, saveImage, loginAlert, saveItem} = this.props;
+        
+        
+        var { gunData, gunSpecs, saveImage, loginAlert, saveItem } = this.props;
+
+
+        const seoTitle = gunData.manufacturer + ' | ' +  gunData["Item Description"];
+        console.log(seoTitle);
+        const seoDescription = 'Buy a ' + gunData["Item Description"] + ' from Coleman Defense Solutions, based out of Durham, NC'
+        
         const profitMargin = 1.15
         var price = (gunData["Dealer Price"] * profitMargin).toFixed(2);
 
 
         return (
             <div className="details-bg">
+                <Helmet>
+                    <title>{seoTitle}</title>
+                    <meta name="description" content={seoDescription} charSet="utf-8" />
+                    {/* <link rel="canonical" href="http://www.colemandefense.com/" /> */}
+                </Helmet>
                 {gunSpecs ? (
                     <div className="details-page">
 
@@ -81,36 +95,36 @@ class davidsonsDetails extends Component {
                                     )}
                                 {loginAlert ? (
                                     <Alert variant="warning">
-                                         {/* Please login to save items to your profile */}
-                                    Feature Coming Soon! 
+                                        {/* Please login to save items to your profile */}
+                                    Feature Coming Soon!
                                     </Alert>
                                 ) : (
                                         <div></div>
-                                    )}  
+                                    )}
                                 {
                                     gunSpecs.image1 ?
                                         (
 
-                                           
+
                                             <img className="gun-img" alt={`${gunData.itemdesc1}`}
-                                            // TODO: come up with better way to get images than this solution
-                                            src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
-                                            onError={this.usePlaceholderImg}
-                                          />
+                                                // TODO: come up with better way to get images than this solution
+                                                src={`https://www.davidsonsinc.com/Prod_images/${gunSpecs.image1}`}
+                                                onError={this.usePlaceholderImg}
+                                            />
 
                                         )
 
                                         : (
 
                                             <img className="gun-img" alt={`${gunData.itemdesc1}`}
-                                            // TODO: come up with better way to get images than this solution
-                                            src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
-                                            onError={this.usePlaceholderImg}
-                                        />
+                                                // TODO: come up with better way to get images than this solution
+                                                src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                                                onError={this.usePlaceholderImg}
+                                            />
 
-                                                
+
                                         )
-                                  
+
                                 }</Col>
 
 
@@ -131,10 +145,10 @@ class davidsonsDetails extends Component {
                                 <h3>{gunData.caliber}</h3>
                                 <h3>{gunData["Gun Action"]}</h3>
                                 {gunData.total_quantity > 0 ? (
-                            <h5 className="text-center">{gunData.total_quantity} Left</h5>
-                        ) : (
-                                <h5 className="text-center">Out of Stock</h5>
-                            )}
+                                    <h5 className="text-center">{gunData.total_quantity} Left</h5>
+                                ) : (
+                                        <h5 className="text-center">Out of Stock</h5>
+                                    )}
 
                             </Col>
                         </Row>
@@ -274,14 +288,14 @@ class davidsonsDetails extends Component {
                                     ) : (
                                             <div></div>
                                         )}
-                                    
-                                        
+
+
                                     <img className="gun-img" alt={`${gunData.itemdesc1}`}
-                                                // TODO: come up with better way to get images than this solution
-                                                src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
-                                                onError={this.usePlaceholderImg}
-                                            />
-                                    
+                                        // TODO: come up with better way to get images than this solution
+                                        src={`https://www.davidsonsinc.com/Prod_images/${gunData["Item #"]}.jpg`}
+                                        onError={this.usePlaceholderImg}
+                                    />
+
                                 </Col>
 
 
@@ -302,10 +316,10 @@ class davidsonsDetails extends Component {
                                     <h3>{gunData.caliber}</h3>
                                     <h3>{gunData["Gun Action"]}</h3>
                                     {gunData.total_quantity > 0 ? (
-                            <h5 className="text-center">{gunData.total_quantity} Left</h5>
-                        ) : (
-                                <h5 className="text-center">Out of Stock</h5>
-                            )}
+                                        <h5 className="text-center">{gunData.total_quantity} Left</h5>
+                                    ) : (
+                                            <h5 className="text-center">Out of Stock</h5>
+                                        )}
 
                                 </Col>
                             </Row>

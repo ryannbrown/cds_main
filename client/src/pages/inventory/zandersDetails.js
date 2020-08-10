@@ -8,7 +8,7 @@ import BrowseTabber from "../../components/BrowseTabber/BrowseTabber";
 import SearchTool from "../../components/searchTool/index"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
-
+import { Helmet } from "react-helmet";
 // const queryString = require('query-string');
 
 
@@ -64,9 +64,16 @@ class zandersDetails extends Component {
     }
 
     render() {
+        var { gunData, saveImage, loginAlert, saveItem } = this.props;
 
 
-      
+
+        const seoTitle = gunData.manufacturer + ' | ' + gunData.desc1;
+        console.log(seoTitle);
+        const seoDescription = 'Buy a ' + gunData.desc1 + ' from Coleman Defense Solutions, based out of Durham, NC'
+
+
+
 
         const images = this.state.imgData.map((item, i) => {
             return (
@@ -80,7 +87,6 @@ class zandersDetails extends Component {
             )
         })
 
-        var { gunData, saveImage, loginAlert, saveItem } = this.props;
         const profitMargin = 1.15
         var price = (gunData.price1 * profitMargin).toFixed(2);
 
@@ -88,8 +94,11 @@ class zandersDetails extends Component {
         return (
             <div className="details-bg">
 
-
-
+                <Helmet>
+                    <title>{seoTitle}</title>
+                    <meta name="description" content={seoDescription} charSet="utf-8" />
+                    {/* <link rel="canonical" href="http://www.colemandefense.com/" /> */}
+                </Helmet>
                 <div className="details-page">
 
                     <Row>

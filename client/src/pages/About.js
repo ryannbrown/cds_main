@@ -38,8 +38,9 @@ class About extends Component {
           <Col><a href="mailto: info@colemandefense.com"><MobileBoxes link="/service" text="Email" id="main3" /></a></Col>
 
         </div>
+        {/* <!-- LightWidget WIDGET --><script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script><iframe src="https://cdn.lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" class="lightwidget-widget" style="width:100%;border:0;overflow:hidden;"></iframe> */}
 
-        <iframe src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
+        <iframe src="https://cdn.lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: '100%' }}></iframe>
         <Container>
 
           <Row>

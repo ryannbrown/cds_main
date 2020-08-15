@@ -125,7 +125,7 @@ export default class Home extends Component {
         </div>
        
           <div className="insta-div">
-          <iframe className="mt-4" src="//lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: 'auto' }}></iframe>
+          <iframe className="mt-4" src="https://cdn.lightwidget.com/widgets/f8dfc718a9bc5fdf95d69fb036b22d21.html" scrolling="no" allowtransparency="true" onload="resizeIframe(this)" className="lightwidget-widget" style={{ width: `100%`, height: 'auto' }}></iframe>
           </div>
       </div>
     )

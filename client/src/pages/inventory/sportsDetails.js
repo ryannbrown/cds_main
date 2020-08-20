@@ -156,8 +156,8 @@ class sportsDetails extends Component {
                                 <h1>{gunData.imodel}</h1>
                                 <h2>{gunData.mgfnm}</h2>
                                 <h3>{gunData.series}</h3>
-                                {gunData.qtyoh > 0 ? (
-                                    <h5 className="text-center">{gunData.qtyoh} Left</h5>
+                                {gunData.quantity > 0 ? (
+                                    <h5 className="text-center">{gunData.quantity} Left</h5>
                                 ) : (
                                         <h5 className="text-center">Out of Stock</h5>
                                     )}

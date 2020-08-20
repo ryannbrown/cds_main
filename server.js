@@ -415,12 +415,23 @@ app.post('/api/upload', function (req, res, next) {
 // })
 
 app.get('/browse/:criteria', (req, response) => {
+
   var criteria = req.params.criteria;
+ 
+
+
+if (criteria == 'silencers') {
+  var query = `select distinct manufacturer from lipseys_inventory
+  WHERE type = 'Accessory-Silencer Accessories'`
+} else {
+  var query = `SELECT DISTINCT "${criteria}" FROM all_dist
+  WHERE "${criteria}" IS NOT NULL
+  ORDER BY "${criteria}" DESC`
+}
+
   console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
-  client.query(`SELECT DISTINCT "${criteria}" FROM all_dist
-  WHERE "${criteria}" IS NOT NULL
-  ORDER BY "${criteria}" DESC`, (error, results) => {
+  client.query(query, (error, results) => {
     if (error) {
       throw error
     }
@@ -671,6 +682,11 @@ else if (data.distributor == 'lipseys') {
   var query = ` SELECT * FROM lipseys_inventory_selected
   WHERE lipseys_inventory_selected.itemno = $1 `
 }
+else if (data.distributor == 'sports south') {
+  console.log("Pulling sports south data for item")
+  var query = `SELECT * from sports_inventory_selected 
+  WHERE itemno = $1`
+}
 
 console.log(query)
 
@@ -762,6 +778,36 @@ app.get('/zanders/model/:item_no', (req, response) => {
 
 
 })
+// app.get('/sportssouth/model/:item_no', (req, response) => {
+
+//   const data = {
+//     item_no: req.params.item_no
+//   }
+
+//   console.log("item no", data.item_no)
+
+//   // Took this away from below query because additional spec call comes later
+//   // LEFT JOIN davidsons_attributes
+//   // ON davidsons_attributes.itemno = davidsons_inventory_selected.item_no
+
+//   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
+
+//   const query = `SELECT * from sports_inventory_selected
+//     WHERE itemno = $1`
+
+//   const values = [data.item_no]
+//   client.query(query, values, (error, results) => {
+//     if (error) {
+//       throw error
+//     }
+
+//     var data = results.rows
+//     response.send(JSON.stringify({ data }));
+
+//   });
+
+
+// })
 // app.get('/lipseys/model/:item_no', (req, response) => {
 
 //   const data = {
@@ -1058,6 +1104,58 @@ const submittedPass = data.password
     }
     );
   })
+
+
+
+  // app.get('/silencers/manufacturer/:manufacturer/:sort', (req, response) => {
+
+  //   const data = {
+  //     manufacturer: req.params.manufacturer
+  //   }
+  //   var sort = req.params.sort;
+  //   // var sortString;
+  //   let query = `SELECT *
+  //   FROM lipseys_inventory
+  //   WHERE manufacturer ILIKE $1
+  //   AND TYPE = 'Silencer' `
+  
+  // console.log("THE EAGLE")
+  
+  //   //#region query logic
+  //   if (sort == 'priceUp') {
+  //     query += `ORDER BY "Dealer Price" ASC`
+  //   } else if (sort == 'priceDown') {
+  //     query += `ORDER BY "Dealer Price" DESC`
+  //   } else if (sort == 'priceUpInStock') {
+  //     query += `AND total_quantity > 0 ORDER BY "Dealer Price" ASC`
+  //   } else if (sort == 'quantityDown') {
+  //     query += `ORDER BY total_quantity DESC`
+  //   } else if (sort == 'priceDownInStock') {
+  //     query += `AND total_quantity > 0 ORDER BY "Dealer Price" DESC `
+  //   } else if (sort == 'onlyInStock') {
+  //     query += `AND total_quantity > 0 `
+  //   }
+  
+  //   // TODO: Remove this is just for testing
+  // // query += ` ORDER BY "Item #";`
+  //   const values = [data.manufacturer];
+  //   console.log("query", query)
+  //   // console.log(manufacturer);
+  //   console.log("sort:", sort)
+  //   client.query(query,
+  //     values,
+  //     (error, results) => {
+  //       if (error) {
+  //         throw error
+  //       }
+  
+  //       var data = results.rows
+  //       response.send(JSON.stringify({ data }));
+  
+  //     });
+  //   //#endregion
+  
+  // })
 
 
 

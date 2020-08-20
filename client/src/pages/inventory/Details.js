@@ -9,6 +9,7 @@ import SearchTool from "../../components/searchTool/index"
 import DavidsonsDetails from "./davidsonsDetails"
 import LipseysDetails from "./lipseysDetails"
 import ZandersDetails from "./zandersDetails"
+import SportsDetails from "./sportsDetails"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart, faCheck } from '@fortawesome/free-solid-svg-icons'
 
@@ -198,7 +199,9 @@ class Details extends Component {
 
     var { param, descriptionKeys, descriptionValues, gunData, gunSpecs, isLoading, errorPage, userData, saveImage, loginAlert } = this.state;
 
-    console.log(gunData)
+    console.log(gunData.description1)
+
+    console.log("specs", this.state.gunSpecs);
 
     // console.log(saveImage)
 
@@ -243,6 +246,11 @@ class Details extends Component {
           }
           { gunData.distributor == 'zanders' ? (
   <ZandersDetails itemno={gunData.itemnumber} gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></ZandersDetails>
+          ) :
+          <div></div>
+          }
+          { gunData.distributor == 'sports south' ? (
+  <SportsDetails itemno={gunData.itemnumber} gunSpecs={gunSpecs} gunData={gunData} saveImage={saveImage} saveItem={this.saveItem} loginAlert={loginAlert}></SportsDetails>
           ) :
           <div></div>
           }

@@ -41,10 +41,10 @@ class Transfers extends Component {
                   <p>Pricing:</p>
 
                   <p>Long Guns & Handguns:</p>
-                  <p>$20 per transfer</p>
+                  <p>$20 per transfer (up to 3 firearms)</p>
 
                   <p>Class 3/NFA Transfers:</p>
-                  <p>$50 per transfer</p>
+                  <p>$65 per transfer</p>
                   <p>Firearms shipped from non FFL holders are accepted. All private sale shipments must include a copy of the shippers drivers license or the firearm will not be logged in and transfered to the receiver</p>
                   <p>Shipping to another FFL will include shipping charges plus above fees</p>
                   <p>Send a copy of your transfering FFL to:
@@ -53,7 +53,6 @@ class Transfers extends Component {
       <a style={{ color: 'blue' }} target="_blank" rel="noopener noreferrer" href="https://fflezcheck.atf.gov/fflezcheck/"> ATF EZ Check</a> to verify my license:</p>
                   <p className="ba b--dotted bw2">1-56-XXX-XX-XX-13252</p>
                   <p>Payment can be made at time of transfer with cash, check, or credit card.</p>
-                  <p>All major credit cards are accepted with an additional 3.99% processing fee added to the total.</p>
                 </div>
               </div>
             </Col>

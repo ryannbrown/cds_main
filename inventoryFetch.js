@@ -13,21 +13,21 @@ var c = new Client();
 c.on('ready', function () {
 
   var finishedCalls = 0;
-  c.get('davidsons_inventory.csv', function (err, stream) {
-    // console.log(stream)
-    if (err) throw err;
-    stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
-    stream.on('finish', function () {
-      finishedCalls++
-      console.log("number of calls", finishedCalls)
-      fixInventoryFile();
-      console.log("inventory downloaded")
-      if (finishedCalls == 1) {
-        console.log("all calls finished")
-      c.end()
-      }
-    });
-  });
+  // c.get('davidsons_inventory.csv', function (err, stream) {
+  //   // console.log(stream)
+  //   if (err) throw err;
+  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_inventory_local.csv'));
+  //   stream.on('finish', function () {
+  //     finishedCalls++
+  //     console.log("number of calls", finishedCalls)
+  //     fixInventoryFile();
+  //     console.log("inventory downloaded")
+  //     if (finishedCalls == 1) {
+  //       console.log("all calls finished")
+  //     c.end()
+  //     }
+  //   });
+  // });
   // c.get('davidsons_quantity.csv', function (err, stream) {
 
   //   if (err) throw err;
@@ -44,20 +44,20 @@ c.on('ready', function () {
   //   });
   // });
 
-  // c.get('davidsons_firearm_attributes.csv', function (err, stream) {
-  //   // if (err) throw err;
-  //   stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_attributes_local.csv', 'utf8'));
-  //   stream.on('finish', function () {
-  //     finishedCalls++
-  //     console.log("number of calls", finishedCalls)
-  //     fixAttributeFile();
-  //     console.log("attributes downloaded")
-  //     if (finishedCalls == 3) {
-  //       console.log("all calls finished")
-  //     c.end()
-  //     }
-  //   });
-  // });
+  c.get('davidsons_firearm_attributes.csv', function (err, stream) {
+    // if (err) throw err;
+    stream.pipe(fs.createWriteStream('C:/Users/Kathryn/Downloads/davidsons_attributes_local.csv', 'utf8'));
+    stream.on('finish', function () {
+      finishedCalls++
+      console.log("number of calls", finishedCalls)
+      fixAttributeFile();
+      console.log("attributes downloaded")
+      if (finishedCalls == 1) {
+        console.log("all calls finished")
+      c.end()
+      }
+    });
+  });
 
 
 
@@ -122,7 +122,6 @@ c.on('ready', function () {
         console.log("The inv file was saved!");
         // runInventoryQueries()
       });
-
     })
 
   }
@@ -143,7 +142,7 @@ c.on('ready', function () {
 
       console.log(rows)
 
-      // console.log("after", rows[0])
+      console.log("after", rows[0])
       for (var i = rows.length - 1; i >= 0; i--) {
         if (rows[i].length == 0) {
           console.log("line to be removed:", rows[i], i)
@@ -160,7 +159,7 @@ c.on('ready', function () {
           return console.log(err);
         }
         console.log("The attr file was saved!");
-        runAttributeQueries()
+        // runAttributeQueries()
       });
 
     })
@@ -247,7 +246,7 @@ c.on('ready', function () {
           if (err) {
             throw (err);
           }
-          // console.log("res", res)
+          console.log("res", res)
           if (res) {
             console.log("ran first inventory query")
             iTwo()
@@ -318,6 +317,65 @@ c.on('ready', function () {
           // console.log("res", res)
           if (res) {
             console.log("ran fifth!!")
+            iSix();
+          }
+        })
+
+    }
+    function iSix() {
+      pool.query(`
+      SELECT * INTO davidsons_inventory_selected FROM davidsons_inventory_new 
+      WHERE manufacturer ='FN America'
+      OR manufacturer ='Streamlight'
+      OR manufacturer ='DRD Tactical'
+      OR manufacturer ='Shadow Systems'
+      OR manufacturer ='Remington'
+      OR manufacturer ='Smith & Wesson|Smith & Wesson Performance Ctr'
+      OR manufacturer ='Nosler'
+      OR manufacturer ='Marlin'
+      OR manufacturer ='Sig Sauer'
+      OR manufacturer ='Browning'
+      OR manufacturer ='CMMG'
+      OR manufacturer ='Walther Arms Inc'
+      OR manufacturer ='B&T'
+      OR manufacturer ='Beretta'
+      OR manufacturer ='Glock'
+      OR manufacturer ='Winchester'
+      OR manufacturer ='Mossberg|Mossberg International'
+      OR manufacturer ='Christenson Arms'
+      OR manufacturer ='LEGACY SPORTS INTL|HOWA'
+      OR manufacturer ='Kimber'
+      OR manufacturer ='Magnum Research'
+      OR manufacturer ='Ruger'
+      OR manufacturer ='Windham Weaponry'
+      OR manufacturer ='CZ-USA'
+      OR manufacturer ='Federal'
+      OR manufacturer ='Barrett'
+      OR manufacturer ='Ameriglo'
+      OR manufacturer ='Smith & Wesson'
+      OR manufacturer ='IWI-US'
+      OR manufacturer ='Mossberg'
+      OR manufacturer ='Holosun'
+      OR manufacturer ='Beretta|Tikka'
+      OR manufacturer ='Heckler & Koch'
+      OR manufacturer ='Les Baer Custom'
+      OR manufacturer ='POF-USA'
+      OR manufacturer ='Fiocchi'
+      OR manufacturer ='Trijicon'
+      OR manufacturer ='Winchester Repeating Arms'
+      OR manufacturer ='Wilson Combat'
+      OR manufacturer ='Zev Technologies'
+      OR manufacturer ='Century Arms'
+      OR manufacturer ='Kel-Tec';
+      
+      `
+        , (err, res) => {
+          if (err) {
+            throw (err);
+          }
+          // console.log("res", res)
+          if (res) {
+            console.log("ran six, trimmed manufacturers!!")
             // qThree();
           }
         })
@@ -348,7 +406,7 @@ c.on('ready', function () {
 
     }
 
-    // \COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER
+    // \COPY davidsons_quantity(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER
 
     function qTwo() {
       pool.query("COPY davidsons_quantity_new(Item_Number, UPC_Code, Quantity_NC, Quantity_AZ)FROM 'C:/Users/Kathryn/Downloads/davidsons_quantity_local.csv' DELIMITER ',' CSV HEADER"

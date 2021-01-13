@@ -46,10 +46,10 @@ class Browse extends Component {
     this.setState({
      param: param
    })
-    fetch(this.props.link)
+    fetch(this.props.apiLink)
       .then(res => res.json())
       .then(json => {
-        // console.log("json", json)
+        console.log("json", json)
 
         var size = Object.keys(json.data).length;
         var criteriaVals = [];
@@ -77,7 +77,7 @@ class Browse extends Component {
     var { param } = this.state;
 
     const items = this.state.data.map((item, i) =><Card>
-<a href={`/inventory/${item}`}>
+<a href={this.props.link}>
   <div className="text-center" key={i}>{item}</div></a></Card>
 );
 

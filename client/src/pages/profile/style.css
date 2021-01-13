@@ -20,3 +20,15 @@ a:hover{
 #tooltip{
     font-size:18px;
 }
+
+.card.details-page {
+    display:flex;
+    min-height:25vh;
+    padding-top: 15px;
+    justify-content: center;
+    align-items:center;
+}
+
+span.tool-tip {
+    margin: 0px 15px;
+}

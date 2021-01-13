@@ -259,12 +259,6 @@ class EditNewItem extends Component {
             )
         }
     }
-    // if (isLoggedIn) {
-    //     return (
-    //         <AdminPanel></AdminPanel>
-
-    //     );
-    // }
 }
 
 

@@ -90,7 +90,8 @@ export default class Home extends Component {
 <div className="browse-section">
 <a id="tabber"> </a>
   <div className="browse-content">
-          <div className="headliner">Explore 1000's of Items</div>
+          {/* <div className="headliner">Explore 1000's of Items</div> */}
+          <div className="headliner">Browse Current Inventory</div>
           <div className="tab-browse"><BrowseTabber />
             <ScrollIntoView selector="#contact"> <FontAwesomeIcon className="browseArrow" icon={faArrowDown} /></ScrollIntoView></div>
 </div>

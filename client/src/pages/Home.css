@@ -2,11 +2,16 @@
  /* NEW CSS */
 
  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
- * {
-     font-family: "Bebas Neue" !important;
- }
- 
+body, p, li, h1, h2, h3, h4  {
+  font-family: "Bebas Neue" !important;
+}
+input {
+  font-family: 'Roboto', sans-serif;
+  font-weight:500;
+
+}
  /* footer {
      display:none !important;
  } */

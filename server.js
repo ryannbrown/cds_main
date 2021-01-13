@@ -26,6 +26,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var Client = require('ftp');
 var fs = require('fs');
+var bcrypt = require('bcrypt-nodejs');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -867,37 +868,20 @@ app.get('/api/:specs/:item_no', (req, response) => {
 
 
 app.post('/api/register', function (req, res) {
-  console.log("keys")
-  const data = {
-    // id: req.body.id,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    password: req.body.password,
-    // category: req.body.category,
-    // caliber: req.body.caliber,
-    // manufacturer: req.body.manufacturer,
-    // model: req.body.model,
-    // type: req.body.type,
-    // barrelLength: req.body.barrelLength,
-    // finish: req.body.finish,
-    // quantity: req.body.quantity,
-    // capacity: req.body.capacity,
-    // sights: req.body.sights,
-    // upcNumber: req.body.upcNumber,
-    // location: req.body.location,
-  };
+const { first_name, last_name, email, password, subscribe} = req.body;
+console.log(req.body)
 
-  posts.push(data)
+const hash = bcrypt.hashSync(password);
 
-  const query = `INSERT INTO cds_users(first_name, last_name, email, password )
-     VALUES($1,$2,$3,$4)`
-  const values = [data.first_name, data.last_name, data.email, data.password];
+
+  const query = `INSERT INTO cds_users(first_name, last_name, email, password, subscribed )
+     VALUES($1,$2,$3,$4,$5)`
+  const values = [first_name, last_name, email, hash, subscribe];
   //  FOR DEV
-  console.log(query)
+  // console.log(query)
   //  console.log(values)
   // console.log(res);
-  console.log(data)
+  // console.log(data)
   client.query(query, values, (error, results) => {
     if (error) {
       return res.status(400).send({
@@ -911,38 +895,18 @@ app.post('/api/register', function (req, res) {
 app.post('/api/signin', function (req, res) {
   console.log("keys")
   const data = {
-    // id: req.body.id,
-    // first_name: req.body.first_name,
-    // last_name: req.body.last_name,
     email: req.body.email,
     password: req.body.password,
-    // category: req.body.category,
-    // caliber: req.body.caliber,
-    // manufacturer: req.body.manufacturer,
-    // model: req.body.model,
-    // type: req.body.type,
-    // barrelLength: req.body.barrelLength,
-    // finish: req.body.finish,
-    // quantity: req.body.quantity,
-    // capacity: req.body.capacity,
-    // sights: req.body.sights,
-    // upcNumber: req.body.upcNumber,
-    // location: req.body.location,
   };
-
-  // posts.push(data)
-const submittedPass = data.password
   const query = `SELECT * from cds_users WHERE email = $1`
   const values = [data.email];
   //  FOR DEV
-  console.log(query)
-  //  console.log(values)
-  // console.log(res);
-  console.log(data)
+  // console.log(query)
+  // //  console.log(values)
+  // // console.log(res);
+  // console.log(data)
 
   client.query(query, values, (error, results) => {
-
-
     let data = results.rows;
     // console.log("password", data[0].password)
     
@@ -951,61 +915,67 @@ const submittedPass = data.password
       return res.status(400).send({
         message: 'This is an error!'
       });
-    } else {
-      const password = [data[0].password];
-      if (submittedPass != password) {
-        console.log(submittedPass, password);
-      return res.status(400).send({
-        message: 'This is an error!'
-      });
     }
+  const isValid = bcrypt.compareSync(req.body.password, data[0].password);
+  if (isValid) {
+    res.send(200);
+  } else {
+    return res.status(400).send({
+            message: 'incorrect password'
+          });
   }
-  res.send(200);
-  const createSession =() => {
-    let email = data[0].email
-    id = Math.floor(Math.random() * 10000 + 1);
-    console.log(id);
-    const query = `CREATE TABLE session_${id} (
-      email     varchar(250)
-  );`
-    console.log(data[0].email)
-    // console.log(name)
 
-    client.query(query, (error, results) => {
 
-     if (!error) {
-      // sayHi(email, id)
-     }
+
+
+  // const createSession =() => {
+  //   let email = data[0].email
+  //   id = Math.floor(Math.random() * 10000 + 1);
+  //   console.log(id);
+  //   const query = `CREATE TABLE session_${id} (
+  //     email     varchar(250)
+  // );`
+  //   console.log(data[0].email)
+  //   // console.log(name)
+
+  //   client.query(query, (error, results) => {
+
+  //    if (!error) {
+  //     // sayHi(email, id)
+  //    }
       
-      // if (error)  {
-      //   return res.status(400).send({
-      //     message: 'This is an error!'
-      //   });
-      // }
-      // res.send(200);
-    })
-    const sayHi = (email, id) => {
+  //     // if (error)  {
+  //     //   return res.status(400).send({
+  //     //     message: 'This is an error!'
+  //     //   });
+  //     // }
+  //     // res.send(200);
+  //   })
+
+
+
+  //   const sayHi = (email, id) => {
      
-      const query = `INSERT INTO session_${id} VALUES  (
-        '${email}'
-    );`
-      client.query(query, (error, results) => {
+  //     const query = `INSERT INTO session_${id} VALUES  (
+  //       '${email}'
+  //   );`
+  //     client.query(query, (error, results) => {
 
-        if (!error) {
-        console.log("I think it worked")
-        }
+  //       if (!error) {
+  //       console.log("I think it worked")
+  //       }
          
-         // if (error)  {
-         //   return res.status(400).send({
-         //     message: 'This is an error!'
-         //   });
-         // }
-         // res.send(200);
-       })
+  //        // if (error)  {
+  //        //   return res.status(400).send({
+  //        //     message: 'This is an error!'
+  //        //   });
+  //        // }
+  //        // res.send(200);
+  //      })
 
 
-    }
-  }
+  //   }
+  // }
   // createSession();
   })
 })

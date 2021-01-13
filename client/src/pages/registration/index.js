@@ -19,6 +19,7 @@ class Registration extends Component {
         this.email = React.createRef();
         this.password = React.createRef();
         this.verPassword = React.createRef();
+        this.isSubscribed = React.createRef();
 
     }
 
@@ -54,6 +55,8 @@ class Registration extends Component {
         let email = this.email.current.value
         let password = this.password.current.value
         let verPassword = this.verPassword.current.value
+        let isSubscribed = this.isSubscribed.current.checked
+        console.log(isSubscribed, "subscribe value")
 
 
         const addUser = () => {
@@ -70,6 +73,7 @@ class Registration extends Component {
                     last_name: last_name,
                     email: email,
                     password: password,
+                    isSubscribed: isSubscribed
                 })
             }).then(response => {
                 console.log("hey i did it")
@@ -134,31 +138,31 @@ class Registration extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>First Name</Form.Label>
-                            <Form.Control ref={this.first_name} type="text" />
+                            <Form.Control required ref={this.first_name} type="text" />
 
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Last Name</Form.Label>
-                            <Form.Control ref={this.last_name} type="text" />
+                            <Form.Control required ref={this.last_name} type="text" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Email Address</Form.Label>
                             <Form.Text className="text-muted">
                                 We'll never share your email with anyone else.
     </Form.Text>
-                            <Form.Control ref={this.email} type="email" />
+                            <Form.Control required ref={this.email} type="email" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control ref={this.password} type="password" />
+                            <Form.Label>Password (Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters)</Form.Label>
+                            <Form.Control required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ref={this.password} type="password" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Please Confirm Password</Form.Label>
-                            <Form.Control ref={this.verPassword} type="password" />
+                            <Form.Control required ref={this.verPassword} type="password" />
                         </Form.Group>
                         <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Would you like to subscribe to mailing list? NO Spam, just sweet new guns and stuff like that." />
+                            <Form.Check  ref={this.isSubscribed} type="checkbox" label="Would you like to subscribe to mailing list? NO Spam, just sweet new guns and stuff like that." />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit

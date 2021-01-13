@@ -140,19 +140,17 @@ class Profile extends Component {
           </Card>
           <Card className="card details-page">
 
-
-
-
-            <OverlayTrigger
+        <OverlayTrigger
               overlay={
                 <Tooltip id={`tooltip`}>
-                  Save items to your wish list by browsing through our inventory and clicking on the heart on the top left.
+                 You will be able to save items to your wish list by browsing through our inventory and clicking on the heart on the top left.
         </Tooltip>
               }
             >
-                <span><FontAwesomeIcon icon={faInfoCircle} /></span>
+                <span  className="tool-tip"><FontAwesomeIcon icon={faInfoCircle} /></span>
             </OverlayTrigger>
             <h1 className="tc">Saved Items</h1>
+            <h2 className="tc">Coming Soon!</h2>
            
             {mapIt ? (
               <CardDeck>

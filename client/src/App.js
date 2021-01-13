@@ -28,6 +28,7 @@ import Registration from '../src/pages/registration/index.js';
 import CdsInventory from "./pages/inventory/CdsInventory";
 import CdsDetails from "./pages/inventory/CdsDetails";
 import Transfers from "./pages/Transfers.js"
+import SilencerInventory from "./pages/inventory/silencerInventory"
 import AeroPrecision from "./pages/AeroPrecision/AeroPrecision.js"
 import zandersInventory from "./pages/inventory/zanders/zandersInventory.js"
 import zandersDetails from "./pages/inventory/zanders/zandersDetails.js"
@@ -36,6 +37,7 @@ import NotFoundPage from "./pages/NotFoundPage/index.js"
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
+import {Helmet} from "react-helmet";
 
 // Google analytics
 ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_NO)
@@ -77,6 +79,12 @@ class App extends Component {
     return (
       <Router>
         <div>
+        <Helmet>
+                <meta charSet="utf-8" />
+                <title>Coleman Defense Solutions</title>
+                <content>Coleman Defense Solutions</content>
+                <link rel="canonical" href="http://www.colemandefense.com/" />
+            </Helmet>
           <Nav action={this.handler} loggedIn={this.state.loggedIn} user={this.state.user}>
             {/* <loginModal></loginModal> */}
           </Nav>
@@ -93,11 +101,13 @@ class App extends Component {
             <Route path="/manufacturer/:manufacturer" component={Inventory} />
             <Route path="/caliber/:caliber" component={Inventory} />
 
+            <Route path="/silencers/:manufacturer" component={SilencerInventory} />
+
             <Route path="/inventory/:distributor/model/:item_no" component={Details} />
 
 
-            <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
-            <Route path="/inventory/2/category/:category" component={zandersInventory} />
+            {/* <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
+            <Route path="/inventory/2/category/:category" component={zandersInventory} /> */}
 
             {/* <Route path="/inventory" component={About} /> */}
 

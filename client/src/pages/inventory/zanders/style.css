@@ -31,7 +31,7 @@
 
 .gun-desc {
     max-height: 250px;
-    overflow: scroll;
+    overflow:scroll;
     padding:15px;
 }
 

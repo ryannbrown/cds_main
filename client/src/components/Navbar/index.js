@@ -27,9 +27,14 @@ import App from "../../App";
 // import Logo from '../../media/Logo.png';
 import Image from "react-bootstrap/Image";
 import logo from "../../media/cds.jpg";
+import {
+  ThemeContextConsumer,
+  ThemeContextProvider,
+} from "../../utils/themeContext";
 
 // import './style.css';
 class Navigation extends Component {
+  static contextType = ThemeContextConsumer;
   constructor(props) {
     super(props);
     this.state = {
@@ -59,6 +64,8 @@ class Navigation extends Component {
   };
 
   handleSubmit = (e) => {
+    const ourContext = this.context;
+
     let email = this.emailRef.current.value;
     let password = this.passwordRef.current.value;
 
@@ -96,8 +103,11 @@ class Navigation extends Component {
             showLoginAlert: false,
           });
           // sessionStorage.setItem("name", postData.name);
-          sessionStorage.setItem("email", email);
-          sessionStorage.setItem("loggedIn", true);
+          // sessionStorage.setItem("email", email);
+          // sessionStorage.setItem("loggedIn", true);
+
+           ourContext.activateUser(email)
+
           this.props.action(email);
           // alert("success")
         } else if (response.status == "400") {
@@ -140,9 +150,8 @@ class Navigation extends Component {
     const { show } = this.state;
 
     return (
-      <Router>
         <Navbar sticky="top" bg="dark" expand="lg">
-          <Navbar.Brand className="mr4" style={{ color: "white" }} href="/">
+          <Navbar.Brand as={Link} className="mr4" style={{ color: "white" }} to="/">
             <img
               src={logo}
               width="125"
@@ -156,19 +165,20 @@ class Navigation extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/cds/transfers">Transfers</Nav.Link>
-              <Nav.Link href="/cds/about">About</Nav.Link>
-              {/* <Nav.Link href="/inventory">Shop</Nav.Link> */}
+              
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/cds/transfers">Transfers</Nav.Link>
+              <Nav.Link as={Link} to="/cds/about">About</Nav.Link>
+              {/* <Nav.Link to="/inventory">Shop</Nav.Link> */}
               <NavDropdown title="Browse" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/cds/inventory/featured">
+                <NavDropdown.Item  as={Link} to="/cds/inventory/featured">
                   Current Inventory
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/lmt">
+                <NavDropdown.Item as={Link} to="/lmt">
                   {" "}
                   Lewis Machine & Tool
                 </NavDropdown.Item>
-                <NavDropdown.Item href="/aeroprecision">
+                <NavDropdown.Item as={Link} to="/aeroprecision">
                   Aero Precision
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item> */}
@@ -186,9 +196,9 @@ class Navigation extends Component {
             ) : (
               <div className="nav-login-container">
                 <p className="nav-login-greeting">hello, {this.state.user}</p>
-                <a href="/profile">
+                <Link to="/profile">
                   <Button className="prof-btn">View Profile</Button>
-                </a>
+                </Link>
                 <Button onClick={this.logOut}>LOGOUT</Button>
               </div>
             )}
@@ -239,9 +249,9 @@ class Navigation extends Component {
                 </Alert>
                 }
                 <h2>New Customer?</h2>
-                <a href="/cds/registration">
+                <Link to="/cds/registration">
                   <Button>Register Here</Button>
-                </a>
+                </Link>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
@@ -257,7 +267,6 @@ class Navigation extends Component {
           </Navbar.Collapse>
           <p className="gov-id mt2">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
         </Navbar>
-      </Router>
     );
   }
 }

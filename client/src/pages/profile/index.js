@@ -7,17 +7,23 @@ import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner }
 import "./style.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import {
+  ThemeContextConsumer,
+  ThemeContextProvider,
+} from "../../utils/themeContext";
 require("dotenv").config();
 
 class Profile extends Component {
+  static contextType = ThemeContextConsumer;
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: props.loggedIn,
+      loggedIn: false,
       isLoading: true,
       // userData: []
       mapIt: [],
-      itemDeleted: false
+      itemDeleted: false,
+      showError: false
     };
   }
 
@@ -62,42 +68,32 @@ class Profile extends Component {
 
 
   componentDidMount() {
-    this.setState({
-      loggedIn: sessionStorage.getItem("loggedIn"),
-      user: sessionStorage.getItem("email")
-    })
+    let ourContext = this.context;
+    // console.log(ourContext)
 
-    fetch(`/profile/${this.state.user}`)
-      .then(res => res.json())
-      .then(json => {
-        this.setState({
-          userData: json.data[0],
-          isLoading: true,
-        })
-
+    if (ourContext.userData.email) {
+      // console.log("HOWDY")
+      this.setState({
+        isLoading:false,
+        // userData: this.props.userData
+        userData: ourContext.userData,
+        loggedIn: true
       })
-
-
-  }
-  componentDidUpdate(previousProps, previousState) {
-
-    fetch(`/profile/${this.state.user}`)
-      .then(res => res.json())
-      .then(json => {
-        if (previousState.userData == this.state.userData && this.state.loggedIn) {
-          this.setState({
-            userData: json.data[0],
-            isLoading: false,
-            isLoggedIn: true,
-            mapIt: json.data[0].saved
-          })
-        }
+    } else {
+      this.setState({
+        showError: true
       })
+    }
   }
+
+
 
   render() {
 
-    const { loggedIn, userData, isLoading, mapIt } = this.state;
+
+
+    const { loggedIn, userData, isLoading, mapIt, showError } = this.state;
+
 
 
     if (this.state.mapIt) {
@@ -113,8 +109,13 @@ class Profile extends Component {
       })
     }
 
+    // if (showError && loggedIn) {
+    //   return (
+    //     <div className="spinner-box">Trouble Accessing Account</div>
+    //   )
+    // }
 
-    if (loggedIn && isLoading) {
+     if (loggedIn && isLoading) {
       return (
 <div className="spinner-box">
             <Spinner animation="border" role="status">
@@ -130,10 +131,12 @@ class Profile extends Component {
 
 
       return (
+        <ThemeContextConsumer>
+        {(context) => (
         <div className="profile-page">
           <Card className="card details-page tc">
-            <h1>{userData.first_name} {userData.last_name}'s profile</h1>
-            <h3>{userData.email}</h3>
+            <h1>{context.userData.first_name} {context.userData.last_name}'s profile</h1>
+            <h3>{context.userData.email}</h3>
             <h3></h3>
 
 
@@ -173,7 +176,11 @@ class Profile extends Component {
 
 
           </Card>
+          
         </div>
+          )}
+          </ThemeContextConsumer>
+
       )
 
     } else {

@@ -998,6 +998,7 @@ app.post("/api/signin", function (req, res) {
     }
     const isValid = bcrypt.compareSync(req.body.password, data[0].password);
     if (isValid) {
+
       res.send(200);
     } else {
       return res.status(400).send({
@@ -1064,7 +1065,7 @@ app.get("/api/users", function (req, response) {
   });
 });
 
-app.get("/profile/:email", function (req, response) {
+app.get("/api/:email", function (req, response) {
   const data = {
     email: req.params.email,
   };

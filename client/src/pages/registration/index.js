@@ -23,21 +23,21 @@ class Registration extends Component {
 
     }
 
-    componentDidMount() {
-        // console.log("id:", this.props.id)
+    // componentDidMount() {
+    //     // console.log("id:", this.props.id)
 
-        fetch(`/api/users`)
-            .then(res => res.json())
-            .then(json => {
-                console.log("users", json.data)
-                //   this.setState({
-                //     gunData: json.data[0],
-                //     isLoading: false,
-                //   })
-                //   var size = Object.keys(this.state.gunData).length;
-                //   console.log(size);
-            })
-    }
+    //     fetch(`/api/users`)
+    //         .then(res => res.json())
+    //         .then(json => {
+    //             console.log("users", json.data)
+    //             //   this.setState({
+    //             //     gunData: json.data[0],
+    //             //     isLoading: false,
+    //             //   })
+    //             //   var size = Object.keys(this.state.gunData).length;
+    //             //   console.log(size);
+    //         })
+    // }
 
     componentDidUpdate() {
 

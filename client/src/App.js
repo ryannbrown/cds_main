@@ -34,6 +34,11 @@ import zandersInventory from "./pages/inventory/zanders/zandersInventory.js"
 import zandersDetails from "./pages/inventory/zanders/zandersDetails.js"
 import LMT from "./pages/AeroPrecision/LMT.js"
 import NotFoundPage from "./pages/NotFoundPage/index.js"
+import ScrollToTop from "./utils/scrollToTop.js"
+import {
+  ThemeContextConsumer,
+  ThemeContextProvider,
+} from "./utils/themeContext";
 import { createBrowserHistory } from 'history'
 // import transfers from "./pages/transfers.js ";
 import ReactGA from 'react-ga'
@@ -47,6 +52,7 @@ browserHistory.listen((location, action) => {
 })
 
 class App extends Component {
+  static contextType = ThemeContextConsumer;
   constructor(props) {
     super(props)
     this.state = {
@@ -65,11 +71,17 @@ class App extends Component {
   componentDidUpdate() {
     //TODO: assess if this is best or if it affects other functionality-- current purpose is to give state chance to catch up
     // after user logs in
-    window.location.reload();
+    // window.location.reload();
+  
   }
 
   componentDidMount() {
+    let ourContext = this.context;
     ReactGA.pageview(window.location.pathname + window.location.search)
+
+
+
+    console.log(ourContext)
   }
 
   render() {
@@ -77,8 +89,11 @@ class App extends Component {
 
 
     return (
-      <Router>
-        <div>
+      <ThemeContextConsumer>
+      {(context) => (
+      <div>
+
+
         <Helmet>
                 <meta charSet="utf-8" />
                 <title>Coleman Defense Solutions</title>
@@ -88,8 +103,7 @@ class App extends Component {
           <Nav action={this.handler} loggedIn={this.state.loggedIn} user={this.state.user}>
             {/* <loginModal></loginModal> */}
           </Nav>
-
-
+          <ScrollToTop / >
           <Switch>
             <Route exact path="/" component={() =>
               <Home
@@ -120,7 +134,7 @@ class App extends Component {
 
             <Route path="/cds/transfers" component={Transfers} />
             <Route path="/cds/about" component={About} />
-            <Route path="/profile" component={ () => <Profile loggedIn={this.state.loggedIn} user={this.state.user} />} />
+            <Route path="/profile" component={ () => <Profile loggedIn={this.state.loggedIn} user={this.state.user} userData={context.userData} />} />
 
 
 
@@ -132,11 +146,10 @@ class App extends Component {
 
 
           </Switch>
-
-        </div>
         <footer id="footer">Copyright© 2020| Coleman Defense Solutions | Durham, NC </footer>
-      </Router>
-
+        </div>
+     )}
+     </ThemeContextConsumer>
     );
 
 

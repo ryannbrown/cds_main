@@ -92,11 +92,18 @@ span.brand-text.navbar-brand {
         display: block;
         width: 100%;
         text-align: center;
+ 
+    }
+     .navbar-collapse + .gov-id {
+        margin-bottom: 0px;
+        margin-top: -15px;
     }
     .btn-initial-signin {
         text-align:center;
         width:100%;
     }
+
+    
 }
 
 .nav-login-container {

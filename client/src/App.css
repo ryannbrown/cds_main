@@ -117,6 +117,12 @@ footer#footer {
     background-color: black;
     color: white;
     padding-top:2%;
+    /* position: absolute;
+    bottom: 0px;
+    width: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .spinner-box {

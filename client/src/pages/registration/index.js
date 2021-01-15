@@ -9,7 +9,7 @@ class Registration extends Component {
         super(props);
         this.state = {
             state: "hello I am Home's state",
-            itemPosted: false
+            itemPosted: true
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.fileChanged = this.fileChanged.bind(this);
@@ -109,7 +109,7 @@ class Registration extends Component {
 
         if (itemPosted) {
             return (
-                <div className="reg-success mv5 tc f2 1h-solid w-75 center">
+                <div className="registration-success">
                     <Alert variant="success">
                         <h2>You have successfully created an account at Coleman Defense</h2>
                         <hr />

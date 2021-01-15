@@ -1,15 +1,20 @@
 import React, { Component, Fragment } from "react";
 import { Col, Row, Container, Form, Button, Alert } from "react-bootstrap";
 import './style.css'
+import {
+    ThemeContextConsumer,
+    ThemeContextProvider,
+  } from "../../utils/themeContext";
 require("dotenv").config();
 
 
 class Registration extends Component {
+    static contextType = ThemeContextConsumer;
     constructor(props) {
         super(props);
         this.state = {
             state: "hello I am Home's state",
-            itemPosted: true
+            itemPosted: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         // this.fileChanged = this.fileChanged.bind(this);
@@ -49,6 +54,7 @@ class Registration extends Component {
 
 
     handleSubmit(event) {
+        const ourContext = this.context;
         event.preventDefault()
         let first_name = this.first_name.current.value
         let last_name = this.last_name.current.value
@@ -79,9 +85,11 @@ class Registration extends Component {
                 console.log("hey i did it")
                 console.log(response)
                 if (response.status == '200') {
+                    ourContext.activateUser(email)
                     this.setState({
                         itemPosted: true,
                     })
+
 
                 } else if (response.status == '400') {
                     this.setState({
@@ -113,7 +121,7 @@ class Registration extends Component {
                     <Alert variant="success">
                         <h2>You have successfully created an account at Coleman Defense</h2>
                         <hr />
-                        <p>Please click the "Login/Register" button again and login with your credentials.</p>
+                        <p>You have been automatically logged in.</p>
                       
 
                     </Alert>

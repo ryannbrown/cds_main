@@ -57,16 +57,16 @@ class App extends Component {
     super(props)
     this.state = {
     };
-    this.handler = this.handler.bind(this);
+    // this.handler = this.handler.bind(this);
   }
 
-  handler(user) {
-    // console.log("handler has actually handled!")
-    this.setState({
-      loggedIn: true,
-      user: user
-    })
-  }
+  // handler(user) {
+  //   console.log("handler has actually handled!")
+  //   this.setState({
+  //     loggedIn: true,
+  //     user: user
+  //   })
+  // }
 
   componentDidUpdate() {
     //TODO: assess if this is best or if it affects other functionality-- current purpose is to give state chance to catch up
@@ -81,7 +81,7 @@ class App extends Component {
 
 
 
-    console.log(ourContext)
+    // console.log(ourContext)
   }
 
   render() {
@@ -100,7 +100,7 @@ class App extends Component {
                 <content>Coleman Defense Solutions</content>
                 <link rel="canonical" href="http://www.colemandefense.com/" />
             </Helmet>
-          <Nav action={this.handler} loggedIn={this.state.loggedIn} user={this.state.user}>
+          <Nav userLoggedIn={context.userLoggedIn} user={context.userEmail}>
             {/* <loginModal></loginModal> */}
           </Nav>
           <ScrollToTop / >

@@ -964,6 +964,7 @@ VALUES ($1, $2)`;
     // this bit runs after login is created, for profile purposes
     client.query(query, values, (error, results) => {
       if (error) {
+        console.log(error)
         return res.status(400).send({
           message: "This is an error!",
         });
@@ -1069,7 +1070,6 @@ app.get("/api/:email", function (req, response) {
   const data = {
     email: req.params.email,
   };
-  console.log("the data is", data);
   const values = [data.email];
 
   const query = `SELECT DISTINCT ON (saved) *  from cds_users WHERE email = $1`;
@@ -1098,10 +1098,10 @@ app.post("/savegun", function (req, res) {
   const query = `UPDATE cds_users SET saved = saved || '{${data.itemId}}' WHERE email = $1`;
   const values = [data.email];
   //  FOR DEV
-  console.log(query);
-  //  console.log(values)
-  // console.log(res);
-  console.log(data);
+  // console.log(query);
+  // //  console.log(values)
+  // // console.log(res);
+  // console.log(data);
   client.query(query, values, (error, results) => {
     if (error) {
       return res.status(400).send({

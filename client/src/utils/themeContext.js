@@ -47,6 +47,7 @@ const { Provider, Consumer } = React.createContext();
 
 componentDidUpdate(){
   // console.log(this.state.client)
+  // console.log(this.state)
 }
 
 
@@ -78,7 +79,7 @@ console.log(email, "email in backend")
  fetch(`/api/${email}`)
       .then(res => res.json())
       .then(json => {
-          console.log(json)
+          // console.log(json)
         this.setState({
           userData: json.data[0],
           userLoggedIn: true,

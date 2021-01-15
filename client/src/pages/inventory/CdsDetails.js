@@ -85,7 +85,7 @@ class CdsDetails extends Component {
               <Col>
                 {/* back button logic */}
                 {gunData.location == 'featured' ? (
-                  <a href="/cds/inventory/featured"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Featured Products</Button></a>
+                  <a href="/cds/inventory/featured"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></a>
                 ) : gunData.location == 'aeroprecision' ? (
                   <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
                 ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
@@ -106,6 +106,7 @@ class CdsDetails extends Component {
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
                 <h4>{gunData.quantity} In Stock</h4>
+                <Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
               </Col>
             </Row>
 

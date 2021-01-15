@@ -121,7 +121,7 @@ class Registration extends Component {
                     <Alert variant="success">
                         <h2>You have successfully created an account at Coleman Defense</h2>
                         <hr />
-                        <p>Please click the "Login/Register" button again and login with your credentials.</p>
+                        <p>You have been automatically logged in.</p>
                       
 
                     </Alert>

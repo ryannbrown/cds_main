@@ -94,9 +94,14 @@ span.brand-text.navbar-brand {
         text-align: center;
  
     }
-     .navbar-collapse + .gov-id {
+     .collapse + .gov-id {
         margin-bottom: 0px;
         margin-top: -15px;
+    }
+     .collapse.show + .gov-id {
+        margin-bottom: unset;
+        margin-top: 0px;
+        /* transition: .6s; */
     }
     .btn-initial-signin {
         text-align:center;

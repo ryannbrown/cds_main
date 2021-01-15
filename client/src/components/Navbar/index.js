@@ -27,10 +27,12 @@ import App from "../../App";
 // import Logo from '../../media/Logo.png';
 import Image from "react-bootstrap/Image";
 import logo from "../../media/cds.jpg";
+import moLogo from "../../media/icon.png"
 import {
   ThemeContextConsumer,
   ThemeContextProvider,
 } from "../../utils/themeContext";
+var _ = require("lodash");
 
 // import './style.css';
 class Navigation extends Component {
@@ -41,6 +43,7 @@ class Navigation extends Component {
       show: false,
       setShow: false,
       loggedIn: props.loggedIn,
+      isMobile: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     // this.fileChanged = this.fileChanged.bind(this);
@@ -134,8 +137,34 @@ class Navigation extends Component {
       loggedIn: sessionStorage.getItem("loggedIn"),
       user: sessionStorage.getItem("email"),
     });
+
+      if (window.innerWidth < 991) {
+        this.setState({
+          isMobile: true,
+        });
+      } else if (window.innerWidth < 991) {
+        this.setState({
+          isMobile: false,
+        });
+      }
   }
   componentDidUpdate() {
+    window.addEventListener(
+      "resize",
+      _.debounce(() => {
+        if (window.innerWidth > 991) {
+          console.log("isn't mobile")
+          this.setState({
+            isMobile: false,
+          });
+        } if (window.innerWidth < 991) {
+          console.log('is mobile')
+          this.setState({
+            isMobile: true,
+          });
+        }
+      }, 400)
+    );
     // console.log("updated nav state:", this.state)
   }
 
@@ -147,18 +176,28 @@ class Navigation extends Component {
   // }, [props])
 
   render() {
-    const { show } = this.state;
+    const { show, isMobile } = this.state;
 
     return (
         <Navbar collapseOnSelect sticky="top" bg="dark" expand="lg">
           <Navbar.Brand eventKey="1" as={Link} className="mr4" style={{ color: "white" }} to="/">
-            <img
-              src={logo}
-              width="115"
-              height="115"
-              className="d-inline-block align-top"
-              alt="React Bootstrap logo"
-            />
+            {isMobile?  
+            //  <img
+            //   src={moLogo}
+            //   width="115"
+            //   height="auto"
+            //   className="d-inline-block align-top"
+            //   alt="CDS Logo"
+            // />
+            <h1>Coleman Defense</h1>
+             :   <img
+            src={logo}
+            width="115"
+            height="115"
+            className="d-inline-block align-top"
+            alt="CDS Logo"
+          />  }
+          
             {/* Coleman Defense Solutions */}
           </Navbar.Brand>
 

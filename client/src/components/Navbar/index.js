@@ -181,13 +181,16 @@ class Navigation extends Component {
     return (
         <Navbar collapseOnSelect sticky="top" bg="dark" expand="lg">
           <Navbar.Brand eventKey="1" as={Link} className="mr4" style={{ color: "white" }} to="/">
-            {isMobile?   <img
-              src={moLogo}
-              width="115"
-              height="auto"
-              className="d-inline-block align-top"
-              alt="CDS Logo"
-            /> :   <img
+            {isMobile?  
+            //  <img
+            //   src={moLogo}
+            //   width="115"
+            //   height="auto"
+            //   className="d-inline-block align-top"
+            //   alt="CDS Logo"
+            // />
+            <h1>Coleman Defense</h1>
+             :   <img
             src={logo}
             width="115"
             height="115"

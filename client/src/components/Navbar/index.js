@@ -28,6 +28,7 @@ import App from "../../App";
 import Image from "react-bootstrap/Image";
 import logo from "../../media/cds.jpg";
 import moLogo from "../../media/icon.png"
+import LoginModal from "../loginModal/index"
 import {
   ThemeContextConsumer,
   ThemeContextProvider,
@@ -42,13 +43,10 @@ class Navigation extends Component {
     this.state = {
       show: false,
       setShow: false,
-      loggedIn: props.loggedIn,
+      userLoggedIn: props.userLoggedIn,
       isMobile: ''
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    // this.fileChanged = this.fileChanged.bind(this);
-    this.emailRef = React.createRef();
-    this.passwordRef = React.createRef();
+
   }
 
   handleClose = () => {
@@ -66,75 +64,18 @@ class Navigation extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    const ourContext = this.context;
-
-    let email = this.emailRef.current.value;
-    let password = this.passwordRef.current.value;
-
-    // console.log(email, password)
-
-    const userPassword = [];
-
-    e.preventDefault();
-    // console.log("handled it")
-
-    const signIn = () => {
-      // console.log("posting to DB")
-      // POST TO DB
-      fetch("/api/signin", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // first_name: first_name,
-          // last_name: last_name,
-          email: email,
-          password: password,
-        }),
-      }).then((response) => {
-        // console.log("hey i did it")
-        // console.log(response)
-        if (response.status == "200") {
-          // console.log(email);
-          this.setState({
-            loggedIn: true,
-            user: email,
-            show: false,
-            showLoginAlert: false,
-          });
-          // sessionStorage.setItem("name", postData.name);
-          // sessionStorage.setItem("email", email);
-          // sessionStorage.setItem("loggedIn", true);
-
-           ourContext.activateUser(email)
-
-          this.props.action(email);
-          // alert("success")
-        } else if (response.status == "400") {
-          this.setState({
-            showLoginAlert: true,
-          });
-        }
-      });
-    };
-    signIn();
-  };
-
   logOut = () => {
     this.setState({
-      loggedIn: false,
+      userLoggedIn: false,
     });
-    sessionStorage.removeItem("loggedIn");
+    sessionStorage.removeItem("userLoggedIn");
     sessionStorage.removeItem("email");
     window.location.reload();
   };
 
   componentDidMount() {
     this.setState({
-      loggedIn: sessionStorage.getItem("loggedIn"),
+      userLoggedIn: sessionStorage.getItem("userLoggedIn"),
       user: sessionStorage.getItem("email"),
     });
 
@@ -168,17 +109,13 @@ class Navigation extends Component {
     // console.log("updated nav state:", this.state)
   }
 
-  // useEffect(() => {
-  //     setLoggedInState(props);
-  //     setUser(props.user);
-
-  //     // setUser(props);
-  // }, [props])
 
   render() {
     const { show, isMobile } = this.state;
 
     return (
+      <ThemeContextConsumer>
+      {(context) => (
         <Navbar collapseOnSelect sticky="top" bg="dark" expand="lg">
           <Navbar.Brand eventKey="1" as={Link} className="mr4" style={{ color: "white" }} to="/">
             {isMobile?  
@@ -224,7 +161,7 @@ class Navigation extends Component {
               </NavDropdown>
             </Nav>
 
-            {!this.state.loggedIn ? (
+            {!context.userLoggedIn ? (
               <Button
                 className="btn-initial-signin"
                 variant="primary"
@@ -234,7 +171,7 @@ class Navigation extends Component {
               </Button>
             ) : (
               <div className="nav-login-container">
-                <p className="nav-login-greeting">hello, {this.state.user}</p>
+                <p className="nav-login-greeting">hello, {this.context.userData.first_name}</p>
                 <Link to="/profile">
                   <Button className="prof-btn">View Profile</Button>
                 </Link>
@@ -242,70 +179,14 @@ class Navigation extends Component {
               </div>
             )}
 
-            <Modal
-              show={show}
-              onHide={this.handleClose}
-              // backdrop="static"
-              keyboard={false}
-              centered
-              size="lg"
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Login/Register</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <div>Returning Customer? Login Below</div>
-
-                <form
-                  onSubmit={this.handleSubmit}
-                  encType="multipart/form-data"
-                >
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Control
-                      type="text"
-                      ref={this.emailRef}
-                      placeholder="email"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Control
-                      type="password"
-                      ref={this.passwordRef}
-                      placeholder="password"
-                    />
-                  </Form.Group>
-                </form>
-                {this.state.showLoginAlert &&
-                <Alert
-                  variant="danger"
-                  onClose={() => this.setState({showLoginAlert: false})}
-                  dismissible
-                >
-                  <Alert.Heading>We are having trouble finding you.</Alert.Heading>
-                  <p>
-                    Try a different password, otherwise ensure your login is correct.
-                  </p>
-                </Alert>
-                }
-                <h2>New Customer?</h2>
-                <a href="/cds/registration">
-                  <Button>Register Here</Button>
-                </a>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleClose}>
-                  Close
-                </Button>
-                <Button variant="primary" onClick={this.handleSubmit}>
-                  Login
-                </Button>
-              </Modal.Footer>
-            </Modal>
+            <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal>
 
             {/* <SearchTool searchText="Search by Item #"></SearchTool> */}
           </Navbar.Collapse>
           <p className="gov-id">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
         </Navbar>
+          )}
+    </ThemeContextConsumer>
     );
   }
 }

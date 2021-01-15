@@ -160,7 +160,7 @@ class Navigation extends Component {
         } if (window.innerWidth < 991) {
           console.log('is mobile')
           this.setState({
-            isMobile: false,
+            isMobile: true,
           });
         }
       }, 400)

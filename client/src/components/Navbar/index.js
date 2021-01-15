@@ -154,8 +154,8 @@ class Navigation extends Component {
           <Navbar.Brand as={Link} className="mr4" style={{ color: "white" }} to="/">
             <img
               src={logo}
-              width="125"
-              height="125"
+              width="115"
+              height="115"
               className="d-inline-block align-top"
               alt="React Bootstrap logo"
             />
@@ -249,9 +249,9 @@ class Navigation extends Component {
                 </Alert>
                 }
                 <h2>New Customer?</h2>
-                <Link to="/cds/registration">
+                <a href="/cds/registration">
                   <Button>Register Here</Button>
-                </Link>
+                </a>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
@@ -265,7 +265,7 @@ class Navigation extends Component {
 
             {/* <SearchTool searchText="Search by Item #"></SearchTool> */}
           </Navbar.Collapse>
-          <p className="gov-id mt2">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
+          <p className="gov-id">DUNS: 08-654-7079 | CAGE: 8M1W7</p>
         </Navbar>
     );
   }

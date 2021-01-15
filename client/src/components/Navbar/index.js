@@ -150,8 +150,8 @@ class Navigation extends Component {
     const { show } = this.state;
 
     return (
-        <Navbar sticky="top" bg="dark" expand="lg">
-          <Navbar.Brand as={Link} className="mr4" style={{ color: "white" }} to="/">
+        <Navbar collapseOnSelect sticky="top" bg="dark" expand="lg">
+          <Navbar.Brand eventKey="1" as={Link} className="mr4" style={{ color: "white" }} to="/">
             <img
               src={logo}
               width="115"
@@ -166,19 +166,19 @@ class Navigation extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/cds/transfers">Transfers</Nav.Link>
-              <Nav.Link as={Link} to="/cds/about">About</Nav.Link>
+              <Nav.Link eventKey="2"  as={Link} to="/">Home</Nav.Link>
+              <Nav.Link eventKey="3" as={Link} to="/cds/transfers">Transfers</Nav.Link>
+              <Nav.Link eventKey="4" as={Link} to="/cds/about">About</Nav.Link>
               {/* <Nav.Link to="/inventory">Shop</Nav.Link> */}
               <NavDropdown title="Browse" id="basic-nav-dropdown">
-                <NavDropdown.Item  as={Link} to="/cds/inventory/featured">
+                <NavDropdown.Item eventKey="5"  as={Link} to="/cds/inventory/featured">
                   Current Inventory
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/lmt">
+                <NavDropdown.Item eventKey="6" as={Link} to="/lmt">
                   {" "}
                   Lewis Machine & Tool
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/aeroprecision">
+                <NavDropdown.Item eventKey="7" as={Link} to="/aeroprecision">
                   Aero Precision
                 </NavDropdown.Item>
                 {/* <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item> */}

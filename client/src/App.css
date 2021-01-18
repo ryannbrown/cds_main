@@ -11,6 +11,10 @@ input {
  
 }
 
+.link {
+    font-family: "Bebas Neue" !important;
+}
+
 .h4 {
     height: auto !important;
 }

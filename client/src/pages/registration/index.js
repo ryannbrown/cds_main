@@ -122,8 +122,6 @@ class Registration extends Component {
                         <h2>You have successfully created an account at Coleman Defense</h2>
                         <hr />
                         <p>You have been automatically logged in.</p>
-                      
-
                     </Alert>
                 </div>
             )

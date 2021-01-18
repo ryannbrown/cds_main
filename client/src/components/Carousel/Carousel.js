@@ -23,7 +23,7 @@ class AdminPanel extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts/featured`)
+        fetch(`/api/posts/current`)
             .then(res => res.json())
             .then(json => {
                 console.log("json", json)
@@ -81,7 +81,7 @@ class AdminPanel extends Component {
 
         return (
             <div className="carousel-contents">
-                <h1 className="carousel-title">Featured Inventory</h1>
+                <h1 className="carousel-title">current Inventory</h1>
                 <Carousel>
                     {items}
                 </Carousel>

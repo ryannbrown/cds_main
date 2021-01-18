@@ -56,7 +56,7 @@ export default class Home extends Component {
         <a id="home"></a>
         <Nav style={{ display: 'none' }} variant="pills" defaultActiveKey="home" className="flex-column trippy-nav">
           <ScrollIntoView selector="#home"><Nav.Link eventKey="home">Home</Nav.Link></ScrollIntoView>
-          <ScrollIntoView selector="#car"><Nav.Link eventKey="link-1">Featured</Nav.Link></ScrollIntoView>
+          <ScrollIntoView selector="#car"><Nav.Link eventKey="link-1">current</Nav.Link></ScrollIntoView>
           <ScrollIntoView selector="#tabber"><Nav.Link eventKey="link-2">Browse</Nav.Link></ScrollIntoView>
           <ScrollIntoView selector="#contact"><Nav.Link eventKey="link-3">
             Social

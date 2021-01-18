@@ -82,9 +82,15 @@ app.get("/api/posts/:selection", cors(), function (req, response) {
     selection: req.params.selection,
   };
 
-  const values = [data.selection];
+ console.log(data.selection)
+  if (data.selection === 'current') {
+    console.log('is current')
+    var query = `SELECT * FROM cds_inventory`;
+  } else {
+    var values = [data.selection];
+    var query = `SELECT * FROM cds_inventory WHERE location = $1`;
+  }
 
-  const query = `SELECT * FROM cds_inventory WHERE location = $1`;
   console.log(query);
   client.query(query, values, (error, results) => {
     if (error) {
@@ -94,6 +100,25 @@ app.get("/api/posts/:selection", cors(), function (req, response) {
     response.send(JSON.stringify({ data }));
   });
 });
+
+
+// app.get("/api/posts/current", cors(), function (req, response) {
+//   // const data = {
+//   //   selection: req.params.selection,
+//   // };
+
+//   // const values = [data.selection];
+
+//   const query = `SELECT * FROM cds_inventory`;
+//   console.log(query);
+//   client.query(query, values, (error, results) => {
+//     if (error) {
+//       throw error;
+//     }
+//     var data = results.rows;
+//     response.send(JSON.stringify({ data }));
+//   });
+// });
 
 app.get("/api/details/:id", cors(), function (req, response) {
   // var gun_id = req.params.id;

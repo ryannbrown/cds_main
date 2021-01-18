@@ -191,7 +191,7 @@ class EditNewItem extends Component {
                                 <hr></hr>
                                 <option>aeroprecision</option>
                                 <option>lmt</option>
-                                <option>featured</option>
+                                <option>current</option>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">

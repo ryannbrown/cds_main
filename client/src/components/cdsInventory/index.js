@@ -36,7 +36,7 @@ class CdsInventory extends Component {
     }
 
 componentDidMount () {
-
+console.log(this.props.selection)
     this.fetchPosts();
     
     }

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 import { Helmet } from "react-helmet";
+import LoginModal from "../../components/loginModal/index"
 
 // const queryString = require('query-string');
 
@@ -84,8 +85,8 @@ class CdsDetails extends Component {
             <Row>
               <Col>
                 {/* back button logic */}
-                {gunData.location == 'featured' ? (
-                  <a href="/cds/inventory/featured"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></a>
+                {gunData.location == 'current' ? (
+                  <a href="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></a>
                 ) : gunData.location == 'aeroprecision' ? (
                   <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
                 ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
@@ -185,6 +186,9 @@ class CdsDetails extends Component {
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>
             <BrowseTabber title="Search Additional Inventory" />
           </div>
+
+
+          {/* <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal> */}
         </div>
       )
     }

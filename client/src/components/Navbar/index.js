@@ -147,7 +147,7 @@ class Navigation extends Component {
               <Nav.Link eventKey="4" as={Link} to="/cds/about">About</Nav.Link>
               {/* <Nav.Link to="/inventory">Shop</Nav.Link> */}
               <NavDropdown title="Browse" id="basic-nav-dropdown">
-                <NavDropdown.Item eventKey="5"  as={Link} to="/cds/inventory/featured">
+                <NavDropdown.Item eventKey="5"  as={Link} to="/cds/inventory/current">
                   Current Inventory
                 </NavDropdown.Item>
                 <NavDropdown.Item eventKey="6" as={Link} to="/lmt">

@@ -156,7 +156,7 @@ class AddItem extends Component {
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Location on site:</Form.Label>
                             <Form.Control ref={this.location} as="select">
-                                <option>featured</option>
+                                <option>current</option>
                                 <option>aeroprecision</option>
                                 <option>lmt</option>
                             </Form.Control>

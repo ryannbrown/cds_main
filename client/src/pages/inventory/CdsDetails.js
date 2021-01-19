@@ -107,7 +107,7 @@ class CdsDetails extends Component {
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
                 <h4>{gunData.quantity} In Stock</h4>
-                <Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                {/* <Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button> */}
               </Col>
             </Row>
 

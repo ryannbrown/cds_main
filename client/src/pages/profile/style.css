@@ -32,3 +32,19 @@ a:hover{
 span.tool-tip {
     margin: 0px 15px;
 }
+
+.profile-cart{
+    display:flex;
+}
+.profile-cart img {
+    max-width:250px;
+    /* margin:50px; */
+}
+
+.profile-details {
+    margin:50px;
+}
+
+.profile-details * {
+    margin:15px;
+}

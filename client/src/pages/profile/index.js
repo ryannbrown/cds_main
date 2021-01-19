@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner } from "react-bootstrap";
+import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner, Button } from "react-bootstrap";
 // import Bio from "../components/bio/bio"
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
@@ -23,7 +23,8 @@ class Profile extends Component {
       // userData: []
       mapIt: [],
       itemDeleted: false,
-      showError: false
+      showError: false,
+      cartItem: []
     };
   }
 
@@ -69,6 +70,59 @@ class Profile extends Component {
 
   componentDidMount() {
     let ourContext = this.context;
+
+
+let itemz = sessionStorage.getItem("firstItem");
+console.log(itemz)
+
+var firstItem = ourContext.currentCart.lineItems[0];
+if (firstItem) {
+  sessionStorage.setItem("firstItem", firstItem)
+}
+  
+   
+    // sessionStorage.setItem("firstItem", firstItem);
+
+// got to make line items persistent across refreshes
+    if (ourContext.currentCart.lineItems.length > 0) {
+      if (itemz) {
+        console.log(itemz)
+        firstItem = itemz
+      }
+      fetch(`/getquote/${firstItem}`)
+        .then(res => res.json())
+        .then(json => {
+          console.log("json", json)
+          this.setState({
+              cartItem:json.data,
+              // isLoading: false
+          })
+        })
+    }
+    // if (ourContext.currentCart.lineItems.length > 0) {
+    //   console.log(ourContext.currentCart.lineItems[0])
+    //   fetch('/getquote', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         items: ourContext.currentCart.lineItems[0],
+    //     })
+    // }).then(res => res.json())
+    // .then(response => {
+    //     console.log("hey i did it")
+    //     console.log(response.data[0])
+    //     if (response.status == '200') {
+    //       this.setState({
+    //         cartItem: response.data[0]
+    //       })
+    //        console.log("that worked")
+    //     }
+    // })
+    // }
+
     // console.log(ourContext)
 
     if (ourContext.userData.email) {
@@ -94,7 +148,7 @@ class Profile extends Component {
     let ourContext = this.context;
 
 
-    const { loggedIn, userData, isLoading, mapIt, showError } = this.state;
+    const { loggedIn, userData, isLoading, mapIt, showError, cartItem } = this.state;
 
 
 
@@ -110,11 +164,27 @@ class Profile extends Component {
         );
       })
     }
-    if (ourContext.currentCart.lineItems.length > 0) {
-      var cartItems = ourContext.currentCart.lineItems.map((item, i) => {
+    // if (ourContext.currentCart.lineItems.length > 0) {
+    //   var cartItems = ourContext.currentCart.lineItems.map((item, i) => {
+
+    //     return (
+    //       <p>{item}</p>
+    //     );
+    //   })
+    // }
+    if (cartItem.sale_price != []) {
+      console.log("trying with", cartItem)
+      var cartItems = cartItem.map((item, i) => {
 
         return (
-          <p>{item}</p>
+          <div className="profile-cart">
+                 <img src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}/>
+            <div className="profile-details">
+            <h1>Name: {item.product_name}</h1>
+            <h1>Total: {item.sale_price}</h1>
+            <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>
+            </div>
+          </div>
         );
       })
     }
@@ -181,9 +251,7 @@ class Profile extends Component {
           </Card>
           <Card className="card details-page">
             <h1 className="tc">My Cart</h1>
-            <h2 className="tc">coming soon</h2>
             {cartItems}
-
 
 
           </Card>

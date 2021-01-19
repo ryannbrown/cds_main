@@ -48,7 +48,7 @@ class CdsDetails extends Component {
     let ourContext = this.context;
     // console.log('adding to cart', this.state.gunData.uuid)
 
-    ourContext.addToCart(this.state.gunData.product_name)
+    ourContext.addToCart(this.state.gunData.uuid, this.state.gunData.product_name, this.state.gunData.sale_price)
   }
 
 

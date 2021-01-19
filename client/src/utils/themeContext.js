@@ -94,14 +94,17 @@ console.log(email, "email in backend")
 
   }
 
-  addToCart = (id) => {
-    console.log('this id is', id)
+  addToCart = (id, name, price) => {
+    // console.log('this id is', id)
     // this.setState( prevState => ({
     //   currentCart: { lineItems : [... prevState.currentCart.lineItems], lineItems: [id] }})
     //   )
     // this.state.currentCart.lineItems.push(id)
+    // sessionStorage.setItem("email", email);
+    // sessionStorage.setItem("loggedIn", true);
+    // sessionStorage.setItem("firstItem", firstItem);
+
     var added = this.state.currentCart.lineItems.concat(id)
-    console.log(added)
     this.setState({
       currentCart: { lineItems: added}
     })

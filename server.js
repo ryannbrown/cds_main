@@ -1164,6 +1164,71 @@ app.post("/deletesavedgun", function (req, res) {
   });
 });
 
+
+
+
+// app.post("/getquote", function (req, res) {
+//   console.log("keys");
+//   const data = {
+//     // id: req.body.id,
+//     items: req.body.items,
+//     // email: req.body.email,
+//   };
+
+//  console.log("data", data)
+
+//   const query = `select * from cds_inventory where uuid = $1`;
+//   const values = [data.items];
+//   //  FOR DEV
+//   console.log(query);
+//    console.log(values)
+//   // console.log(res);
+//   console.log(data);
+//   client.query(query, values, (error, results) => {
+//     var data = results.rows
+//     console.log(data, "data")
+//     if (error) {
+//       return res.status(400).send({
+//         message: "This is an error!",
+//       });
+//     } else {
+//       res.send(JSON.stringify({ data }));
+//     }
+//   });
+// });
+app.get("/getquote/:item", function (req, res) {
+  console.log("keys");
+  const data = {
+    // id: req.body.id,
+    item: req.params.item,
+    // email: req.body.email,
+  };
+
+ console.log("data", data)
+
+  const query = `select * from cds_inventory where uuid = $1`;
+  const values = [data.item];
+  //  FOR DEV
+  console.log(query);
+   console.log(values)
+  // console.log(res);
+  console.log(data);
+  client.query(query, values, (error, results) => {
+    var data = results.rows
+    console.log(data, "data")
+    if (error) {
+      return res.status(400).send({
+        message: "This is an error!",
+      });
+    } else {
+      res.send(JSON.stringify({ data }));
+    }
+  });
+});
+
+
+
+
 // app.get('/silencers/manufacturer/:manufacturer/:sort', (req, response) => {
 
 //   const data = {

@@ -4,10 +4,19 @@
     border-radius: 25px;
 }
 
+@media (min-width:997px) {
+    .card-deck {
+        max-width: 1200px;
+        margin: 0px auto;
+        border-radius: 25px;
+        padding: 150px;
+    }
+}
+
 
 @media(max-width:997px){
-    .deck-wrapper{
-        /* margin-top: 20%; */
+    img.gun-img {
+        max-width: 250px;
     }
 }
 @media(min-width:997px){
@@ -18,7 +27,7 @@
 }
 
 .gun-img {
-    max-width: 450px;
+    /* max-width: 450px; */
     margin: 25px auto;
 }
 

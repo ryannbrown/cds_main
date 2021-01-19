@@ -178,6 +178,14 @@
     font-size:1.25rem;
 }
 
+.cds-inv-page{
+    position:relative;
+}
+
+.cds-inv-page .transf-back-btn{
+    left:25px;
+}
+
 
 
 

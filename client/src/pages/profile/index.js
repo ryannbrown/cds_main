@@ -84,12 +84,14 @@ class Profile extends Component {
         showError: true
       })
     }
+
+    console.log(ourContext)
   }
 
 
 
   render() {
-
+    let ourContext = this.context;
 
 
     const { loggedIn, userData, isLoading, mapIt, showError } = this.state;
@@ -105,6 +107,14 @@ class Profile extends Component {
             <a href={`/inventory/model/${item}`}><img className="saved-img" src={`https://www.davidsonsinc.com/Prod_images/${item}.jpg`} /></a>
             <p>Item#: {item}</p>
           </Card>
+        );
+      })
+    }
+    if (ourContext.currentCart.lineItems.length > 0) {
+      var cartItems = ourContext.currentCart.lineItems.map((item, i) => {
+
+        return (
+          <p>{item}</p>
         );
       })
     }
@@ -171,7 +181,8 @@ class Profile extends Component {
           </Card>
           <Card className="card details-page">
             <h1 className="tc">My Cart</h1>
-            <h2 className="tc">Coming Soon!</h2>
+            <h2 className="tc">coming soon</h2>
+            {cartItems}
 
 
 

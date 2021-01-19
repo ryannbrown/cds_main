@@ -2,7 +2,7 @@ import React, { Component, } from "react";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Row, Col } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 import { Helmet } from "react-helmet";
@@ -45,7 +45,10 @@ class CdsDetails extends Component {
   };
 
   addToCart = () => {
-    console.log('adding to cart', this.state.gunData.uuid)
+    let ourContext = this.context;
+    // console.log('adding to cart', this.state.gunData.uuid)
+
+    ourContext.addToCart(this.state.gunData.product_name)
   }
 
 
@@ -116,10 +119,10 @@ class CdsDetails extends Component {
               <Col>
                 {/* back button logic */}
                 {gunData.location == 'featured' || gunData.location == 'current' ? (
-                  <a href="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></a>
+                  <Link to="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></Link>
                 ) : gunData.location == 'aeroprecision' ? (
-                  <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
-                ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
+                  <Link to="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></Link>
+                ) : (<Link to="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></Link>)
                 }
 
               </Col>

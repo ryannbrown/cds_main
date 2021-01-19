@@ -7,6 +7,8 @@ import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 import { Helmet } from "react-helmet";
 import LoginModal from "../../components/loginModal/index"
+import { ThemeContextConsumer } from "../../utils/themeContext";
+
 
 // const queryString = require('query-string');
 
@@ -14,16 +16,42 @@ import LoginModal from "../../components/loginModal/index"
 require("dotenv").config();
 
 class CdsDetails extends Component {
+    static contextType = ThemeContextConsumer;
   constructor(props) {
     super(props);
     this.state = {
       gunData: [] || '',
       isLoading: true,
+      show: false,
+      setShow: false
     };
   }
 
 
+  
+  handleClose = () => {
+    // console.log("clicked")
+    this.setState({
+      show: false,
+      setShow: false,
+    });
+  };
+
+  handleShow = () => {
+    this.setState({
+      show: true,
+      setShow: true,
+    });
+  };
+
+  addToCart = () => {
+    console.log('adding to cart', this.state.gunData.uuid)
+  }
+
+
   componentDidMount() {
+    let ourContext = this.context;
+    console.log(ourContext)
 
     console.log(this.props.match.params)
 
@@ -51,7 +79,7 @@ class CdsDetails extends Component {
 
   render() {
 
-    var { gunData, isLoading } = this.state;
+    var { gunData, isLoading, show } = this.state;
 
 
     const seoTitle = gunData.product_name;
@@ -74,6 +102,8 @@ class CdsDetails extends Component {
 
     else {
       return (
+        <ThemeContextConsumer>
+        {(context) => (
         <div className="details-bg">
           <Helmet>
                     <title>{seoTitle}</title>
@@ -107,7 +137,7 @@ class CdsDetails extends Component {
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
                 <h4>{gunData.quantity} In Stock</h4>
-                <Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
               </Col>
             </Row>
 
@@ -184,12 +214,15 @@ class CdsDetails extends Component {
               </Col>
             </Row>
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>
+            <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal>
             <BrowseTabber title="Search Additional Inventory" />
           </div>
 
 
           {/* <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal> */}
         </div>
+          )}
+          </ThemeContextConsumer>
       )
     }
   }

@@ -23,7 +23,8 @@ class CdsDetails extends Component {
       gunData: [] || '',
       isLoading: true,
       show: false,
-      setShow: false
+      setShow: false,
+      addedToCart: false
     };
   }
 
@@ -49,17 +50,20 @@ class CdsDetails extends Component {
     // console.log('adding to cart', this.state.gunData.uuid)
 
     ourContext.addToCart(this.state.gunData.uuid, this.state.gunData.product_name, this.state.gunData.sale_price)
+    this.setState({
+      addedToCart: true
+    })
   }
 
 
   componentDidMount() {
     let ourContext = this.context;
-    console.log(ourContext)
+    // console.log(ourContext)
 
-    console.log(this.props.match.params)
+    // console.log(this.props.match.params)
 
     let param = Object.values(this.props.match.params);
-    console.log(param)
+    // console.log(param)
     this.setState({
       param: param
     })
@@ -67,13 +71,13 @@ class CdsDetails extends Component {
     fetch(`/api/details/${param}`)
       .then(res => res.json())
       .then(json => {
-        console.log("inventory", json.data[0])
+        // console.log("inventory", json.data[0])
         this.setState({
           gunData: json.data[0],
           isLoading: false,
         })
         var size = Object.keys(this.state.gunData).length;
-        console.log(size);
+        // console.log(size);
       })
   };
 
@@ -86,11 +90,11 @@ class CdsDetails extends Component {
 
 
     const seoTitle = gunData.product_name;
-    console.log(seoTitle);
+    // console.log(seoTitle);
     const seoDescription = 'Buy a ' + gunData.product_name + ' from Coleman Defense Solutions, based out of Durham, NC'
     
 
-    console.log(gunData.location)
+    // console.log(gunData.location)
 
 
     if (isLoading) {
@@ -141,6 +145,7 @@ class CdsDetails extends Component {
                 <h1>{gunData.sale_price}</h1>
                 <h4>{gunData.quantity} In Stock</h4>
                 <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                {this.state.addedToCart && <p>Item Added!</p>}
               </Col>
             </Row>
 

@@ -26,7 +26,7 @@ class LoginModal extends Component {
 
 
   handleClose = () => {
-    console.log("clicked")
+    // console.log("clicked")
     this.setState({
       show: false,
       setShow: false,
@@ -73,7 +73,7 @@ class LoginModal extends Component {
         // console.log(response)
         if (response.status == "200") {
             ourContext.activateUser(email)
-            console.log(email)
+            // console.log(email)
             this.props.handleClose();
             // if (this.props.userLoggedIn) {
                 this.setState({

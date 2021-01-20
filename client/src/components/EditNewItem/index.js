@@ -44,23 +44,23 @@ class EditNewItem extends Component {
 
 
     componentDidMount () {
-        console.log("id:", this.props.id)
+        // console.log("id:", this.props.id)
 
         fetch(`/api/details/${this.props.id}`)
         .then(res => res.json())
         .then(json => {
-          console.log("inventory", json.data[0])
+        //   console.log("inventory", json.data[0])
           this.setState({
             gunData: json.data[0],
             isLoading: false,
           })
           var size = Object.keys(this.state.gunData).length;
-          console.log(size);
+        //   console.log(size);
         })
     }
 
     fileChanged(event) {
-        console.log(event)
+        // console.log(event)
         var f = event.target.files;
         console.log(f)
         this.setState({

@@ -71,7 +71,7 @@ class Browse extends Component {
           data: criteriaVals,
           isLoaded: true
         })
-        console.log(this.state.data);
+        // console.log(this.state.data);
         var size = Object.keys(this.state.data).length;
         console.log(size);
       });

@@ -26,7 +26,7 @@ class AdminPanel extends Component {
         fetch(`/api/posts/current`)
             .then(res => res.json())
             .then(json => {
-                console.log("json", json)
+                // console.log("json", json)
                 this.setState({
                     posts: json.data
                 })

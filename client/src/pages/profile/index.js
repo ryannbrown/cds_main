@@ -4,6 +4,8 @@ import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner, 
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
 // import fbLogo from "../media/fb.jpg"
+import {Link} from "react-router-dom"
+import CheckoutModal from "../../components/CheckoutModal/index"
 import "./style.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
@@ -24,7 +26,9 @@ class Profile extends Component {
       mapIt: [],
       itemDeleted: false,
       showError: false,
-      cartItem: []
+      cartItems: [],
+      show: false,
+      setShow: false
     };
   }
 
@@ -64,6 +68,40 @@ class Profile extends Component {
     }
   }
 
+  handleCheckout = () => {
+
+
+
+    this.setState({
+      show: true,
+      setShow: true,
+    });
+  }
+
+
+  handleClose = () => {
+    // console.log("clicked")
+    this.setState({
+      show: false,
+      setShow: false,
+    });
+  };
+
+  handleShow = () => {
+    this.setState({
+      show: true,
+      setShow: true,
+    });
+  };
+
+  clearCart = () => {
+    let ourContext = this.context;
+    ourContext.clearCart();
+    this.setState({
+      cartItems: []
+    })
+  }
+
 
 
 
@@ -73,55 +111,56 @@ class Profile extends Component {
 
 
 let itemz = sessionStorage.getItem("firstItem");
-console.log(itemz)
+// console.log(itemz)
 
 var firstItem = ourContext.currentCart.lineItems[0];
 if (firstItem) {
   sessionStorage.setItem("firstItem", firstItem)
 }
+
   
    
     // sessionStorage.setItem("firstItem", firstItem);
 
 // got to make line items persistent across refreshes
-    if (ourContext.currentCart.lineItems.length > 0) {
-      if (itemz) {
-        console.log(itemz)
-        firstItem = itemz
-      }
-      fetch(`/getquote/${firstItem}`)
-        .then(res => res.json())
-        .then(json => {
-          console.log("json", json)
-          this.setState({
-              cartItem:json.data,
-              // isLoading: false
-          })
-        })
-    }
     // if (ourContext.currentCart.lineItems.length > 0) {
-    //   console.log(ourContext.currentCart.lineItems[0])
-    //   fetch('/getquote', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         items: ourContext.currentCart.lineItems[0],
-    //     })
-    // }).then(res => res.json())
-    // .then(response => {
-    //     console.log("hey i did it")
-    //     console.log(response.data[0])
-    //     if (response.status == '200') {
+    //   if (itemz) {
+    //     console.log(itemz)
+    //     firstItem = itemz
+    //   }
+    //   fetch(`/getquote/${firstItem}`)
+    //     .then(res => res.json())
+    //     .then(json => {
+    //       console.log("json", json)
     //       this.setState({
-    //         cartItem: response.data[0]
+    //           cartItems:json.data,
+    //           // isLoading: false
     //       })
-    //        console.log("that worked")
-    //     }
-    // })
+    //     })
     // }
+    if (ourContext.currentCart.lineItems.length > 0) {
+      // console.log(ourContext.currentCart.lineItems[0])
+      fetch('/getquote', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            items: ourContext.currentCart.lineItems,
+        })
+    }).then(res => res.json())
+    .then(response => {
+        // console.log("hey i did it")
+        if (response.data) {
+          // console.log("setting state")
+          this.setState({
+            cartItems: response.data
+          })
+        
+        }
+    })
+    }
 
     // console.log(ourContext)
 
@@ -139,7 +178,7 @@ if (firstItem) {
       })
     }
 
-    console.log(ourContext)
+    // console.log(ourContext)
   }
 
 
@@ -148,7 +187,7 @@ if (firstItem) {
     let ourContext = this.context;
 
 
-    const { loggedIn, userData, isLoading, mapIt, showError, cartItem } = this.state;
+    const { loggedIn, userData, isLoading, mapIt, showError, cartItems, show } = this.state;
 
 
 
@@ -165,24 +204,34 @@ if (firstItem) {
       })
     }
     // if (ourContext.currentCart.lineItems.length > 0) {
-    //   var cartItems = ourContext.currentCart.lineItems.map((item, i) => {
+    //   var cartItemss = ourContext.currentCart.lineItems.map((item, i) => {
 
     //     return (
     //       <p>{item}</p>
     //     );
     //   })
     // }
-    if (cartItem.sale_price != []) {
-      console.log("trying with", cartItem)
-      var cartItems = cartItem.map((item, i) => {
+    if (cartItems.length > 0 ) {
+      var sum = 0
+      for (var i= 0; i < cartItems.length; i++) {
+        sum += parseFloat(cartItems[i].sale_price.substring(1));
+        // console.log(cartItems[i].sale_price)
+      }
+      // console.log(sum)
 
+    var grandTotal =new Intl.NumberFormat().format(sum);
+      
+      
+      // console.log("trying with", cartItems)
+      var renderCartItems = cartItems.map((item, i) => {
         return (
-          <div className="profile-cart">
-                 <img src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}/>
+          <div className="cart-item">
+                <Link to={`/cds/details/${item.uuid}`}>
+                <img src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}/>
+                  </Link>
             <div className="profile-details">
-            <h1>Name: {item.product_name}</h1>
-            <h1>Total: {item.sale_price}</h1>
-            <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>
+            <h1>{item.product_name}</h1>
+            <h1>{item.sale_price}</h1>
             </div>
           </div>
         );
@@ -251,11 +300,23 @@ if (firstItem) {
           </Card>
           <Card className="card details-page">
             <h1 className="tc">My Cart</h1>
-            {cartItems}
+            {/* <div className="profile-cart">
+            </div> */}
+            {renderCartItems}
+        
+          {context.currentCart.lineItems.length > 0 ? 
+          <div className="cart-btns">
+              <h2> Subtotal: ${grandTotal}</h2>
+            <Button onClick={this.clearCart} style={{ fontSize: '24px' }} variant="secondary">Clear Cart</Button>
+            <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>
+          </div>
+          :<div><p>Cart is empty</p></div>}
 
 
           </Card>
-          
+          {this.state.cartItems.length > 0 &&
+            <CheckoutModal clearCart={this.clearCart} cartItems={this.state.cartItems} action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></CheckoutModal>
+         }
         </div>
           )}
           </ThemeContextConsumer>

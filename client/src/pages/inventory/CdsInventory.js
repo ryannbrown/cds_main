@@ -27,7 +27,7 @@ class AdminPanel extends Component {
         fetch(`/api/posts/${param}`)
         .then(res => res.json())
         .then(json => {
-          console.log("json", json)
+        //   console.log("json", json)
           this.setState({
               posts:json.data,
               isLoading: false
@@ -46,7 +46,7 @@ let param = valParam.toString();
 
 
     render() {
-        console.log(this.state.posts)
+        // console.log(this.state.posts)
         const { isLoading } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>

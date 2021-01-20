@@ -47,20 +47,26 @@ const { Provider, Consumer } = React.createContext();
 }
 
 componentDidUpdate(){
-  console.log("context updated state", this.state.currentCart)
+  // console.log("context updated state", this.state.currentCart)
   // console.log(this.state.client)
   // console.log(this.state)
 }
 
 
   toggleTheme = () => {
-    console.log('toggle theme')
+    // console.log('toggle theme')
     this.setState(prevState => {
       return {
         theme: prevState.theme === "Day" ? "Night" : "Day"
       };
     });
   };
+
+  clearCart = () => {
+   this.setState({
+    currentCart: { lineItems: [] }
+   })
+  }
 
   handleCartClose = () => {
     // console.log("clicked to close")
@@ -76,7 +82,7 @@ handleCartOpen = () =>  {
   }
 
   activateUser = (email) => {
-console.log(email, "email in backend")
+// console.log(email, "email in backend")
 
  fetch(`/api/${email}`)
       .then(res => res.json())
@@ -125,7 +131,8 @@ console.log(email, "email in backend")
             userLoggedIn: this.state.userLoggedIn,
             userData: this.state.userData,
             addToCart: this.addToCart,
-            currentCart: this.state.currentCart
+            currentCart: this.state.currentCart,
+            clearCart: this.clearCart
            }}
       >
         {this.props.children}

@@ -23,6 +23,7 @@
 // } else {
 
 const express = require("express");
+const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 var Client = require("ftp");
 var fs = require("fs");
@@ -82,16 +83,16 @@ app.get("/api/posts/:selection", cors(), function (req, response) {
     selection: req.params.selection,
   };
 
- console.log(data.selection)
+//  console.log(data.selection)
   if (data.selection === 'current') {
-    console.log('is current')
+    // console.log('is current')
     var query = `SELECT * FROM cds_inventory`;
   } else {
     var values = [data.selection];
     var query = `SELECT * FROM cds_inventory WHERE location = $1`;
   }
 
-  console.log(query);
+  // console.log(query);
   client.query(query, values, (error, results) => {
     if (error) {
       throw error;
@@ -141,7 +142,7 @@ app.get("/api/details/:id", cors(), function (req, response) {
 //    POST CUSTOM INVENTORY
 let posts = [];
 app.post("/api/post", function (req, res) {
-  console.log("keys");
+  // console.log("keys");
   const data = {
     image: req.body.image,
     product_name: req.body.product_name,
@@ -186,9 +187,9 @@ app.post("/api/post", function (req, res) {
     data.location,
   ];
   //  FOR DEV
-  console.log(query);
+  // console.log(query);
   //  console.log(values)
-  console.log(data);
+  // console.log(data);
   client.query(query, values, (error, results) => {
     if (error) {
       throw error;
@@ -465,7 +466,7 @@ app.post("/api/update", function (req, res) {
 
   const query = `UPDATE cds_inventory SET ${criteria}
   WHERE uuid = $1;`;
-  console.log(query);
+  // console.log(query);
 
   const values = [data.uuid];
 
@@ -480,11 +481,11 @@ app.post("/api/update", function (req, res) {
 //    DELETE CUSTOM INVENTORY
 app.delete("/api/remove_post", function (req, response) {
   let id = req.body.id;
-  console.log(id);
+  // console.log(id);
   client.query(
     `DELETE FROM cds_inventory WHERE id = '${id}' `,
     (error, results) => {
-      console.log(error, results);
+      // console.log(error, results);
       if (error) {
         throw error;
       }
@@ -515,11 +516,11 @@ function uploadToS3(file) {
     };
     s3bucket.upload(params, function (err, data) {
       if (err) {
-        console.log("error in callback");
-        console.log(err);
+        // console.log("error in callback");
+        // console.log(err);
       }
-      console.log("success");
-      console.log(data);
+      // console.log("success");
+      // console.log(data);
     });
   });
 }
@@ -528,14 +529,14 @@ app.post("/api/upload", function (req, res, next) {
   console.log("body", req.body);
   // console.log("req", req)
   const element1 = req.body.element1;
-  console.log(element1);
+  // console.log(element1);
   var busboy = new Busboy({ headers: req.headers });
 
   // The file upload has completed
   busboy.on("finish", function () {
-    console.log("Upload finished");
+    // console.log("Upload finished");
     const file = req.files.element1;
-    console.log(file);
+    // console.log(file);
 
     uploadToS3(file);
   });
@@ -565,7 +566,7 @@ app.get("/browse/:criteria", (req, response) => {
   ORDER BY "${criteria}" DESC`;
   }
 
-  console.log("criteria", criteria);
+  // console.log("criteria", criteria);
   // WHERE ${criteria} IS NOT NULL
   client.query(query, (error, results) => {
     if (error) {
@@ -663,9 +664,9 @@ app.get("/manufacturer/:manufacturer/:sort", (req, response) => {
   // TODO: Remove this is just for testing
   // query += ` ORDER BY "Item #";`
   const values = [data.manufacturer];
-  console.log("query", query);
+  // console.log("query", query);
   // console.log(manufacturer);
-  console.log("sort:", sort);
+  // console.log("sort:", sort);
   client.query(query, values, (error, results) => {
     if (error) {
       throw error;
@@ -763,10 +764,10 @@ app.get("/details/:distributor/model/:item_no", (req, response) => {
     item_no: req.params.item_no,
     distributor: req.params.distributor,
   };
-  console.log(req.params.item_no);
+  // console.log(req.params.item_no);
 
   var processed = data.item_no.replace(",", "");
-  console.log(processed);
+  // console.log(processed);
 
   // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
@@ -775,7 +776,7 @@ app.get("/details/:distributor/model/:item_no", (req, response) => {
   // pool.query(`SELECT * FROM davidsons_attributes WHERE itemno = '${itemno}'`, (error, results) => {
 
   if (data.distributor == "davidsons") {
-    console.log("Pulling Davidsons data for item");
+    // console.log("Pulling Davidsons data for item");
     var query = `
 SELECT * FROM davidsons_inventory_selected
     LEFT JOIN davidsons_quantity
@@ -783,22 +784,22 @@ SELECT * FROM davidsons_inventory_selected
     WHERE davidsons_inventory_selected."Item #" = $1`;
   }
   if (data.distributor == "zanders") {
-    console.log("Pulling Zanders data for item");
+    // console.log("Pulling Zanders data for item");
     var query = ` SELECT * FROM zanders_inventory_selected
   LEFT JOIN zanders_images
   ON zanders_images.itemnumber = zanders_inventory_selected.itemnumber
   WHERE zanders_inventory_selected.itemnumber = $1 `;
   } else if (data.distributor == "lipseys") {
-    console.log("Pulling lipseys data for item");
+    // console.log("Pulling lipseys data for item");
     var query = ` SELECT * FROM lipseys_inventory_selected
   WHERE lipseys_inventory_selected.itemno = $1 `;
   } else if (data.distributor == "sports south") {
-    console.log("Pulling sports south data for item");
+    // console.log("Pulling sports south data for item");
     var query = `SELECT * from sports_inventory_selected 
   WHERE itemno = $1`;
   }
 
-  console.log(query);
+  // console.log(query);
 
   // LEFT JOIN davidsons_quantity
   // ON davidsons_inventory_selected."Item #" = davidsons_quantity.item_number
@@ -823,7 +824,7 @@ app.get("/zanders/category/:category/:sort", (req, response) => {
 
   // var sort = req.params.sort;
 
-  console.log(data.sort);
+  // console.log(data.sort);
   // // console.log(caliber);
 
   const values = [data.category];
@@ -836,7 +837,7 @@ app.get("/zanders/category/:category/:sort", (req, response) => {
   if (data.sort == "onlyInStock") {
     query += `AND zanders_quantity.available > '0' `;
   }
-  console.log(query);
+  // console.log(query);
   client.query(query, values, (error, results) => {
     if (error) {
       throw error;
@@ -852,7 +853,7 @@ app.get("/zanders/model/:item_no", (req, response) => {
     item_no: req.params.item_no,
   };
 
-  console.log("item no", data.item_no);
+  // console.log("item no", data.item_no);
 
   // Took this away from below query because additional spec call comes later
   // LEFT JOIN davidsons_attributes
@@ -956,7 +957,7 @@ app.get("/api/:specs/:item_no", (req, response) => {
 
 app.post("/api/register", function (req, res) {
   const { first_name, last_name, email, password, isSubscribed } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   const hash = bcrypt.hashSync(password);
 
@@ -966,7 +967,7 @@ VALUES ($1, $2)`;
 
   client.query(loginQuery, loginValues, (error, results) => {
     if (error) {
-      console.log(error);
+      // console.log(error);
       return res.status(400).send({
         message: "This is an error!",
       });
@@ -989,7 +990,7 @@ VALUES ($1, $2)`;
     // this bit runs after login is created, for profile purposes
     client.query(query, values, (error, results) => {
       if (error) {
-        console.log(error)
+        // console.log(error)
         return res.status(400).send({
           message: "This is an error!",
         });
@@ -999,7 +1000,7 @@ VALUES ($1, $2)`;
   });
 });
 app.post("/api/signin", function (req, res) {
-  console.log("keys");
+  // console.log("keys");
   const data = {
     email: req.body.email,
     password: req.body.password,
@@ -1016,7 +1017,7 @@ app.post("/api/signin", function (req, res) {
     let data = results.rows;
     // console.log("password", data[0].password)
 
-    console.log(data.length);
+    // console.log(data.length);
     if (data.length == 0) {
       return res.status(400).send({
         message: "This is an error!",
@@ -1099,7 +1100,7 @@ app.get("/api/:email", function (req, response) {
 
   const query = `SELECT DISTINCT ON (saved) *  from cds_users WHERE email = $1`;
 
-  console.log(values);
+  // console.log(values);
 
   client.query(query, values, (error, results) => {
     if (error) {
@@ -1111,7 +1112,7 @@ app.get("/api/:email", function (req, response) {
 });
 
 app.post("/savegun", function (req, res) {
-  console.log("keys");
+  // console.log("keys");
   const data = {
     // id: req.body.id,
     itemId: req.body.itemId,
@@ -1150,10 +1151,10 @@ app.post("/deletesavedgun", function (req, res) {
   const query = `update cds_users set saved = array_remove(saved, '${data.itemId}') WHERE email = $1`;
   const values = [data.email];
   //  FOR DEV
-  console.log(query);
+  // console.log(query);
   //  console.log(values)
   // console.log(res);
-  console.log(data);
+  // console.log(data);
   client.query(query, values, (error, results) => {
     if (error) {
       return res.status(400).send({
@@ -1163,22 +1164,219 @@ app.post("/deletesavedgun", function (req, res) {
     res.send("POST request to the homepage");
   });
 });
+app.post("/orderitem", function (req, res) {
+  const {itemName, price, email, first_name, last_name, shipping, billing, cartItems, grandTotal } = req.body
+  // console.log("keys");
+  const data = {
+    // itemName,
+    // price,
+    grandTotal: grandTotal,
+    itemName: [],
+    price: [],
+    itemId:[],
+    items: cartItems,
+    email: email,
+    first_name,
+    last_name,
+    billing,
+    shipping
+  };
+
+// console.log("items", data.items)
+// console.log(data.items.length)
+
+data.items.forEach(function(item) {
+  data.price.push(item.sale_price);
+  data.itemName.push(item.product_name);
+  data.itemId.push(item.uuid);
+})
+
+var quantity = data.items.length;
+var loop = 'UPDATE cds_inventory SET quantity = quantity - 1 WHERE uuid = $1';
+ var valueLoop = [data.itemId[0]]
+for (i= 2; i <= quantity; i++ ) {
+  loop += ' or uuid = $' + [i]
+}
+for (i= 1; i < quantity; i++ ) {
+ valueLoop.push(data.itemId[i]);
+}
+
+ const query = loop;
+ const values = valueLoop;
+
+ console.log(query)
+ console.log(values)
+
+// console.log(data)
+
+  
+let mailTo = `mailto:${data.email}?subject=RE:${data.itemName}`;
+let emailContent = `
+
+<style>
+p {
+  font-family: serif;
+  font-size:19px;
+}
+button {
+  font-family:serif;
+  display: inline-block;
+  font-weight: 400;
+  color: #0E3B62;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid #0E3B62;
+  padding: .375rem .75rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button:hover {
+  color: #fff;
+  background-color: #6F8EA8;
+  border-color: #6F8EA8;
+}
+</style>
+<p><strong>${data.first_name} ${data.last_name}</strong> has ordered the following(${data.itemName.length}) item(s): <strong>${data.itemName}</strong>:<p>
+ <p><a href=${mailTo}>Email: ${data.email}<a><p>
+ <p>Full Name: ${data.first_name} ${data.last_name}</p>
+ <p>Billing Address: ${data.billing}</p>
+ <p>Shipping Address: ${data.shipping}</p>
+ <p>Item Prices: <strong>${data.price}</strong></p>
+ <hr>
+ <p>Subtotal: <strong>$${data.grandTotal}</strong></p>
+ <a href=${mailTo}><button>Reply</button></a>`
+
+  // async..await is not allowed in global scope, must use a wrapper
+async function main() {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  // let testAccount = await nodemailer.createTestAccount();
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    // service: 'Godaddy',
+    service: 'gmail',
+    // host: 'smtp.gmail.com',
+    
+    // host: 'smtpout.secureserver.net'
+    // port: 25,
+    // port: 465,
+    // secureConnection: true, // true for 465, false for other ports
+    auth: {
+      user: process.env.user, // generated ethereal user
+      pass: process.env.pass, // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized: false
+    }
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: `michael.judy@colemandefense.com`, // sender address
+    to: "michael.judy@colemandefense.com", // list of receivers
+    // to: "rb054549@gmail.com", // list of receivers
+    subject: `Order Received(${data.itemName.length}): ${data.itemName}`, // Subject line
+    // text: `${data.message}`, // plain text body
+    html: emailContent, // html body
+  });
+
+  
+  // console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+if (info.messageId) {
+  res.send('POST request to the homepage')
+} else {
+  // console.log("ERROR!")
+    return res.status(400).send({
+      message: 'This is an error!'
+    });
+}
+}
+main().catch((error) => {
+  if (error) {
+    // console.log(error)
+    res.status(400).send();
+  } else {
+    console.log("SUCCESSS")
+  }
+});
+  // const query = ``;
+  // const values = [data.email];
+
+  
+  //  FOR DEV
+  // console.log(query);
+  //  console.log(values)
+  // console.log(res);
+  // console.log(data);
+  client.query(query, values, (error, results) => {
+    if (error) {
+      return res.status(400).send({
+        message: "This is an error!",
+      });
+    }
+    // res.send("POST request to the homepage");
+  });
+})
 
 
 
 
-// app.post("/getquote", function (req, res) {
+app.post("/getquote", function (req, res) {
+  console.log("keys");
+  const data = {
+    // id: req.body.id,
+    items: req.body.items,
+    // email: req.body.email,
+  };
+
+//  console.log("data", data)
+//  console.log(data.items.length)
+ var quantity = data.items.length;
+ var loop = 'select * from cds_inventory where uuid = $1';
+  var valueLoop = [data.items[0]]
+ for (i= 2; i <= quantity; i++ ) {
+   loop += ' or uuid = $' + [i]
+ }
+ for (i= 1; i < quantity; i++ ) {
+  valueLoop.push(data.items[i])
+ }
+
+  const query = loop;
+  const values = valueLoop;
+  // console.log("query", query)
+  // console.log("values", values)
+  client.query(query, values, (error, results) => {
+    var data = results.rows
+    console.log(data, "data")
+    if (error) {
+      return res.status(400).send({
+        message: "This is an error!",
+      });
+    } else {
+      res.send(JSON.stringify({ data }));
+    }
+  });
+});
+// app.get("/getquote/:item", function (req, res) {
 //   console.log("keys");
 //   const data = {
 //     // id: req.body.id,
-//     items: req.body.items,
+//     item: req.params.item,
 //     // email: req.body.email,
 //   };
 
 //  console.log("data", data)
 
 //   const query = `select * from cds_inventory where uuid = $1`;
-//   const values = [data.items];
+//   const values = [data.item];
 //   //  FOR DEV
 //   console.log(query);
 //    console.log(values)
@@ -1196,35 +1394,6 @@ app.post("/deletesavedgun", function (req, res) {
 //     }
 //   });
 // });
-app.get("/getquote/:item", function (req, res) {
-  console.log("keys");
-  const data = {
-    // id: req.body.id,
-    item: req.params.item,
-    // email: req.body.email,
-  };
-
- console.log("data", data)
-
-  const query = `select * from cds_inventory where uuid = $1`;
-  const values = [data.item];
-  //  FOR DEV
-  console.log(query);
-   console.log(values)
-  // console.log(res);
-  console.log(data);
-  client.query(query, values, (error, results) => {
-    var data = results.rows
-    console.log(data, "data")
-    if (error) {
-      return res.status(400).send({
-        message: "This is an error!",
-      });
-    } else {
-      res.send(JSON.stringify({ data }));
-    }
-  });
-});
 
 
 

@@ -14,6 +14,7 @@ class CheckoutModal extends Component {
           show: false,
           loggedInState: this.props.loggedInState,
           user: null,
+          isWaiting: false
         //   userLoggedIn: this.props.userLoggedIn
 
       };
@@ -44,6 +45,9 @@ class CheckoutModal extends Component {
   };
 
   handleSubmit = () => {
+    this.setState({
+      isWaiting: true
+    })
 
     if (this.props.cartItems.length > 0 ) {
       var sum = 0
@@ -262,7 +266,9 @@ var renderCartItems = cartItems.map((item, i) => {
                   Close
                 </Button>
                 <Button variant="primary" onClick={this.handleSubmit}>
-                  Request Invoice | Subtotal: ${grandTotal}
+             {this.state.isWaiting ? <Spinner animation="border" role="status">
+            {/* <span className="sr-only">Placing Order</span> */}
+          </Spinner> : <p style={{marginBlockEnd: '0'}}>Request Invoice | Subtotal: ${grandTotal}</p>}
                 </Button>
               </Modal.Footer>
             </Modal>

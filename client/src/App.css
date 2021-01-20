@@ -133,7 +133,7 @@ footer#footer {
     height:100vh;
     text-align:center
 }
-.spinner-border {
+.spinner-box .spinner-border {
     width:5rem;
     height:5rem;
     margin-top:25vh;

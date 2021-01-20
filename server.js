@@ -1299,12 +1299,14 @@ if (info.messageId) {
     });
 }
 }
+var itemOrdered = false;
 main().catch((error) => {
   if (error) {
     // console.log(error)
     res.status(400).send();
   } else {
     console.log("SUCCESSS")
+    itemOrdered = true;
   }
 });
   // const query = ``;
@@ -1316,14 +1318,16 @@ main().catch((error) => {
   //  console.log(values)
   // console.log(res);
   // console.log(data);
-  client.query(query, values, (error, results) => {
-    if (error) {
-      return res.status(400).send({
-        message: "This is an error!",
-      });
-    }
-    // res.send("POST request to the homepage");
-  });
+  if (itemOrdered) {
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: "This is an error!",
+        });
+      }
+      // res.send("POST request to the homepage");
+    });
+  }
 })
 
 

@@ -1306,7 +1306,14 @@ main().catch((error) => {
     res.status(400).send();
   } else {
     console.log("SUCCESSS")
-    itemOrdered = true;
+    client.query(query, values, (error, results) => {
+      if (error) {
+        return res.status(400).send({
+          message: "This is an error!",
+        });
+      }
+      // res.send("POST request to the homepage");
+    });
   }
 });
   // const query = ``;
@@ -1319,14 +1326,7 @@ main().catch((error) => {
   // console.log(res);
   // console.log(data);
   // if (itemOrdered) {
-    client.query(query, values, (error, results) => {
-      if (error) {
-        return res.status(400).send({
-          message: "This is an error!",
-        });
-      }
-      // res.send("POST request to the homepage");
-    });
+
   // }
 })
 

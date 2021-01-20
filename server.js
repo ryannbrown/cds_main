@@ -1299,7 +1299,7 @@ if (info.messageId) {
     });
 }
 }
-var itemOrdered = false;
+// var itemOrdered = false;
 main().catch((error) => {
   if (error) {
     // console.log(error)
@@ -1318,7 +1318,7 @@ main().catch((error) => {
   //  console.log(values)
   // console.log(res);
   // console.log(data);
-  if (itemOrdered) {
+  // if (itemOrdered) {
     client.query(query, values, (error, results) => {
       if (error) {
         return res.status(400).send({
@@ -1327,7 +1327,7 @@ main().catch((error) => {
       }
       // res.send("POST request to the homepage");
     });
-  }
+  // }
 })
 
 

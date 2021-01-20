@@ -175,6 +175,9 @@ class Navigation extends Component {
                 <Link to="/profile">
                   <Button className="prof-btn">View Profile</Button>
                 </Link>
+                <Link to="/profile">
+                  <Button className="prof-btn">Cart</Button>
+                </Link>
                 <Button onClick={this.logOut}>LOGOUT</Button>
               </div>
             )}

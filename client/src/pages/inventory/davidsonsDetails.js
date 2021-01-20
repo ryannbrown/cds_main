@@ -56,7 +56,7 @@ class davidsonsDetails extends Component {
 
 
         const seoTitle = gunData.manufacturer + ' | ' +  gunData["Item Description"];
-        console.log(seoTitle);
+        // console.log(seoTitle);
         const seoDescription = 'Buy a ' + gunData["Item Description"] + ' from Coleman Defense Solutions, based out of Durham, NC'
         
         const profitMargin = 1.15

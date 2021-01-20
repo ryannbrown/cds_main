@@ -27,7 +27,7 @@ class CdsInventory extends Component {
         fetch(`/api/posts/${this.props.selection}`)
         .then(res => res.json())
         .then(json => {
-          console.log("json", json)
+        //   console.log("json", json)
           this.setState({
               posts:json.data,
               isLoading: false
@@ -36,14 +36,14 @@ class CdsInventory extends Component {
     }
 
 componentDidMount () {
-console.log(this.props.selection)
+// console.log(this.props.selection)
     this.fetchPosts();
     
     }
 
 
     render() {
-        console.log(this.state.posts)
+        // console.log(this.state.posts)
         const { isLoading, posts } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>

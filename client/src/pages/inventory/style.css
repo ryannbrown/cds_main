@@ -9,7 +9,7 @@
         max-width: 1200px;
         margin: 0px auto;
         border-radius: 25px;
-        padding: 150px;
+        /* padding: 150px; */
     }
 }
 
@@ -176,6 +176,14 @@
 .price-box {
     text-align:center;
     font-size:1.25rem;
+}
+
+.cds-inv-page{
+    position:relative;
+}
+
+.cds-inv-page .transf-back-btn{
+    left:25px;
 }
 
 

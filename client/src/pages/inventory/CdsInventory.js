@@ -1,6 +1,7 @@
 
 import React, { Component } from "react";
 import Carousel from 'react-bootstrap/Carousel'
+import {Link} from "react-router-dom"
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Spinner } from 'react-bootstrap';
 import App from "../../App"
 
@@ -26,7 +27,7 @@ class AdminPanel extends Component {
         fetch(`/api/posts/${param}`)
         .then(res => res.json())
         .then(json => {
-          console.log("json", json)
+        //   console.log("json", json)
           this.setState({
               posts:json.data,
               isLoading: false
@@ -45,11 +46,11 @@ let param = valParam.toString();
 
 
     render() {
-        console.log(this.state.posts)
+        // console.log(this.state.posts)
         const { isLoading } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>
-            <a href={`/cds/details/${item.uuid}`}>
+            <Link to={`/cds/details/${item.uuid}`}>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}
@@ -60,7 +61,7 @@ let param = valParam.toString();
          <h4 className="text-center">{item.sale_price}</h4>
          {/* <h4 className="text-center">{item.quantity}</h4>
          <h4 className="text-center">{item.caliber}</h4> */}
-         </a>
+         </Link>
         </Card>
         );
 
@@ -77,7 +78,7 @@ let param = valParam.toString();
       
           else {
             return (
-                <div>
+                <div className="cds-inv-page">
                     <a href="/">
                 <Button variant="dark" style={{ backgroundColor: '#dd6717' }} className="transf-back-btn">Back</Button>
                 </a>

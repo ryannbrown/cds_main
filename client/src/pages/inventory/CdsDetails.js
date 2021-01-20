@@ -2,11 +2,13 @@ import React, { Component, } from "react";
 import { Card, ListGroup, ListGroupItem, Button, Image, CardDeck, Table, Accordion, Spinner, Row, Col } from 'react-bootstrap';
 import './style.css'
 // import logo from "./logo.svg";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "../Home";
 import BrowseTabber from '../../components/BrowseTabber/BrowseTabber'
 import { Helmet } from "react-helmet";
 import LoginModal from "../../components/loginModal/index"
+import { ThemeContextConsumer } from "../../utils/themeContext";
+
 
 // const queryString = require('query-string');
 
@@ -14,21 +16,54 @@ import LoginModal from "../../components/loginModal/index"
 require("dotenv").config();
 
 class CdsDetails extends Component {
+    static contextType = ThemeContextConsumer;
   constructor(props) {
     super(props);
     this.state = {
       gunData: [] || '',
       isLoading: true,
+      show: false,
+      setShow: false,
+      addedToCart: false
     };
   }
 
 
-  componentDidMount() {
+  
+  handleClose = () => {
+    // console.log("clicked")
+    this.setState({
+      show: false,
+      setShow: false,
+    });
+  };
 
-    console.log(this.props.match.params)
+  handleShow = () => {
+    this.setState({
+      show: true,
+      setShow: true,
+    });
+  };
+
+  addToCart = () => {
+    let ourContext = this.context;
+    // console.log('adding to cart', this.state.gunData.uuid)
+
+    ourContext.addToCart(this.state.gunData.uuid, this.state.gunData.product_name, this.state.gunData.sale_price)
+    this.setState({
+      addedToCart: true
+    })
+  }
+
+
+  componentDidMount() {
+    let ourContext = this.context;
+    // console.log(ourContext)
+
+    // console.log(this.props.match.params)
 
     let param = Object.values(this.props.match.params);
-    console.log(param)
+    // console.log(param)
     this.setState({
       param: param
     })
@@ -36,13 +71,13 @@ class CdsDetails extends Component {
     fetch(`/api/details/${param}`)
       .then(res => res.json())
       .then(json => {
-        console.log("inventory", json.data[0])
+        // console.log("inventory", json.data[0])
         this.setState({
           gunData: json.data[0],
           isLoading: false,
         })
         var size = Object.keys(this.state.gunData).length;
-        console.log(size);
+        // console.log(size);
       })
   };
 
@@ -51,15 +86,15 @@ class CdsDetails extends Component {
 
   render() {
 
-    var { gunData, isLoading } = this.state;
+    var { gunData, isLoading, show } = this.state;
 
 
     const seoTitle = gunData.product_name;
-    console.log(seoTitle);
+    // console.log(seoTitle);
     const seoDescription = 'Buy a ' + gunData.product_name + ' from Coleman Defense Solutions, based out of Durham, NC'
     
 
-    console.log(gunData.location)
+    // console.log(gunData.location)
 
 
     if (isLoading) {
@@ -74,6 +109,8 @@ class CdsDetails extends Component {
 
     else {
       return (
+        <ThemeContextConsumer>
+        {(context) => (
         <div className="details-bg">
           <Helmet>
                     <title>{seoTitle}</title>
@@ -86,10 +123,10 @@ class CdsDetails extends Component {
               <Col>
                 {/* back button logic */}
                 {gunData.location == 'featured' || gunData.location == 'current' ? (
-                  <a href="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></a>
+                  <Link to="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></Link>
                 ) : gunData.location == 'aeroprecision' ? (
-                  <a href="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></a>
-                ) : (<a href="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></a>)
+                  <Link to="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></Link>
+                ) : (<Link to="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></Link>)
                 }
 
               </Col>
@@ -107,7 +144,8 @@ class CdsDetails extends Component {
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
                 <h4>{gunData.quantity} In Stock</h4>
-                {/* <Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button> */}
+                <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                {this.state.addedToCart && <p>Item Added!</p>}
               </Col>
             </Row>
 
@@ -184,12 +222,15 @@ class CdsDetails extends Component {
               </Col>
             </Row>
             <p className="gun-desc" style={{ fontSize: '24px' }}>{gunData.product_description}</p>
+            <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal>
             <BrowseTabber title="Search Additional Inventory" />
           </div>
 
 
           {/* <LoginModal action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></LoginModal> */}
         </div>
+          )}
+          </ThemeContextConsumer>
       )
     }
   }

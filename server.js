@@ -1306,15 +1306,17 @@ main().catch((error) => {
     res.status(400).send();
   } else {
     console.log("SUCCESSS")
-    client.query(query, values, (error, results) => {
-      if (error) {
-        return res.status(400).send({
-          message: "This is an error!",
-        });
-      }
-      // res.send("POST request to the homepage");
+  
+  }
+});
+
+client.query(query, values, (error, results) => {
+  if (error) {
+    return res.status(400).send({
+      message: "This is an error!",
     });
   }
+  // res.send("POST request to the homepage");
 });
   // const query = ``;
   // const values = [data.email];

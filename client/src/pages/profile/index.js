@@ -303,7 +303,7 @@ if (firstItem) {
             {/* <div className="profile-cart">
             </div> */}
             {renderCartItems}
-        
+            <a id="cart"></a>
           {context.currentCart.lineItems.length > 0 ? 
           <div className="cart-btns">
               <h2> Subtotal: ${grandTotal}</h2>

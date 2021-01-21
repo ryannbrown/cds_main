@@ -175,8 +175,13 @@ class Navigation extends Component {
                 <Link to="/profile">
                   <Button className="prof-btn">View Profile</Button>
                 </Link>
-                <Link to="/profile">
-                  <Button className="prof-btn">Cart</Button>
+                <Link to="/profile/#cart">
+                  {/* This logic below feels reversed but it is giving me what I want?  */}
+                  {this.context.currentCart.lineItems.length > 0 ? 
+                   <Button className="prof-btn">Cart {this.context.currentCart.lineItems.length}</Button>
+                    : <Button className="prof-btn">Cart</Button>
+                }
+                  
                 </Link>
                 <Button onClick={this.logOut}>LOGOUT</Button>
               </div>

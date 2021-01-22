@@ -88,7 +88,7 @@ let param = valParam.toString();
                     <CardDeck className="mb-5">
                      {items}
                     </CardDeck>
-                    <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a>
+                    {/* <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a> */}
 
                 </div>
                 </div>

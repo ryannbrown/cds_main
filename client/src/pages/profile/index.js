@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner, Button } from "react-bootstrap";
+import { Col, Row, Container, Card, CardDeck, Tooltip, OverlayTrigger, Spinner, Button, Modal, Alert } from "react-bootstrap";
 // import Bio from "../components/bio/bio"
 // import MobileBoxes from "../components/boxes/boxes"
 // import insta from "../media/instagram.png"
@@ -14,6 +14,7 @@ import {
   ThemeContextProvider,
 } from "../../utils/themeContext";
 require("dotenv").config();
+var numeral = require('numeral');
 
 class Profile extends Component {
   static contextType = ThemeContextConsumer;
@@ -28,7 +29,8 @@ class Profile extends Component {
       showError: false,
       cartItems: [],
       show: false,
-      setShow: false
+      setShow: false,
+      orderSuccess: false
     };
   }
 
@@ -93,6 +95,16 @@ class Profile extends Component {
       setShow: true,
     });
   };
+
+  orderComplete = () => {
+    console.log("ORDER COMPLETE")
+    this.setState({
+      orderSuccess:true
+    })
+    this.handleClose();
+
+   
+  }
 
   clearCart = () => {
     let ourContext = this.context;
@@ -187,7 +199,7 @@ if (firstItem) {
     let ourContext = this.context;
 
 
-    const { loggedIn, userData, isLoading, mapIt, showError, cartItems, show } = this.state;
+    const { loggedIn, userData, isLoading, mapIt, showError, cartItems, show, orderSuccess } = this.state;
 
 
 
@@ -211,16 +223,15 @@ if (firstItem) {
     //     );
     //   })
     // }
-    if (cartItems.length > 0 ) {
-      var sum = 0
-      for (var i= 0; i < cartItems.length; i++) {
-        sum += parseFloat(cartItems[i].sale_price.substring(1));
-        // console.log(cartItems[i].sale_price)
-      }
-      // console.log(sum)
+ 
+  if (cartItems.length > 0 ) {
+    var sum = 0
+    for (var i= 0; i < cartItems.length; i++) {
+      // using numeral library to convert $ values
+      sum += numeral(cartItems[i].sale_price).value();
+    }
 
-    var grandTotal =new Intl.NumberFormat().format(sum);
-      
+  var grandTotal = sum;
       
       // console.log("trying with", cartItems)
       var renderCartItems = cartItems.map((item, i) => {
@@ -308,15 +319,33 @@ if (firstItem) {
           <div className="cart-btns">
               <h2> Subtotal: ${grandTotal}</h2>
             <Button onClick={this.clearCart} style={{ fontSize: '24px' }} variant="secondary">Clear Cart</Button>
-            <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>
+            {!orderSuccess && <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>}
           </div>
           :<div><p>Cart is empty</p></div>}
-
+          {orderSuccess &&
+               <Modal.Body>
+                   <Alert
+                  //  dismissible
+                  variant="success"
+                  onClose={() => this.setState({orderSuccess: false})}
+                >
+                  <Alert.Heading>Your order has been placed!</Alert.Heading>
+                  <p>
+                 An invoice will be sent to your email within 1 business day.
+                  </p>
+                  <p>
+                  if your order contains a firearm, please
+                  have your ffl send a copy of their license to ffl@colemandefense.com
+                  before the items can be shipped.
+                  </p>
+                </Alert>
+               </Modal.Body>
+    }
 
           </Card>
-          {this.state.cartItems.length > 0 &&
-            <CheckoutModal clearCart={this.clearCart} cartItems={this.state.cartItems} action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></CheckoutModal>
-         }
+  
+            <CheckoutModal orderComplete={this.orderComplete} clearCart={this.clearCart} cartItems={this.state.cartItems} action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></CheckoutModal>
+         
         </div>
           )}
           </ThemeContextConsumer>

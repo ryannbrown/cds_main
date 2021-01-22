@@ -4,6 +4,9 @@ import {
     ThemeContextConsumer,
     ThemeContextProvider,
   } from "../../utils/themeContext";
+  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+  var numeral = require('numeral');
 class CheckoutModal extends Component {
     static contextType = ThemeContextConsumer;
   constructor(props) {
@@ -14,7 +17,8 @@ class CheckoutModal extends Component {
           show: false,
           loggedInState: this.props.loggedInState,
           user: null,
-          isWaiting: false
+          isWaiting: false,
+          orderSuccess: false
         //   userLoggedIn: this.props.userLoggedIn
 
       };
@@ -44,7 +48,9 @@ class CheckoutModal extends Component {
     });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+
     this.setState({
       isWaiting: true
     })
@@ -52,14 +58,12 @@ class CheckoutModal extends Component {
     if (this.props.cartItems.length > 0 ) {
       var sum = 0
       for (var i= 0; i < this.props.cartItems.length; i++) {
-        sum += parseFloat(this.props.cartItems[i].sale_price.substring(1));
-        // console.log(cartItems[i].sale_price)
+        // using numeral library to convert $ values
+        sum += numeral(this.props.cartItems[i].sale_price).value();
       }
     }
-      // console.log(sum)
   
-    let grandTotal =new Intl.NumberFormat().format(sum);
-  
+    var grandTotal = sum;
 
 
     const ourContext = this.context;
@@ -70,16 +74,10 @@ class CheckoutModal extends Component {
     let billing = this.billingAddress.current.value
     let shipping = this.shippingAddress.current.value
 
-    // console.log(email, password)
-
-    const userPassword = [];
-
-    // e.preventDefault();
-    // console.log("handled it")
+  
 
     const signIn = () => {
-      // console.log("posting to DB")
-      // POST TO DB
+
       fetch("/orderitem", {
         method: "POST",
         headers: {
@@ -87,8 +85,7 @@ class CheckoutModal extends Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // itemNames: this.props.cartItem.product_name,
-          // prices: this.props.cartItem.sale_price,
+    
           grandTotal: grandTotal,
           cartItems: this.props.cartItems,
           email: email,
@@ -98,37 +95,18 @@ class CheckoutModal extends Component {
           shipping: shipping
         }),
       }).then((response) => {
-        // console.log("hey i did it")
-        // console.log(response)
+
         if (response.status == "200") {
           console.log("SUCCESS")
-            // ourContext.activateUser(email)
-            // console.log(email)
-            this.props.clearCart();
-            this.props.handleClose();
-            // if (this.props.userLoggedIn) {
-                this.setState({
-                    // userLoggedIn: true,
-                    // user: email,
-                    show: false,
-                    setShow:false,
-                    showLoginAlert: false,
-                  });
-            // }
-          // console.log(email);
-         
-          // sessionStorage.setItem("name", postData.name);
-          // sessionStorage.setItem("email", email);
-          // sessionStorage.setItem("loggedIn", true);
-
-          
-
-        //   this.props.action(email);
-          // alert("success")
+            this.props.orderComplete();
+            // this.props.clearCart();
+      
         } else if (response.status == "400") {
           this.setState({
             showLoginAlert: true,
           });
+        } else {
+          console.log("we got here")
         }
       });
     };
@@ -139,29 +117,28 @@ class CheckoutModal extends Component {
   componentDidMount(){
     console.log("cart modal props", this.props)
   }
+
+  componentDidUpdate(){
+    console.log("modal state update", this.state)
+  }
   
 
 
 
   render() {
+    const {orderSuccess} = this.state;
     const {cartItems} = this.props;
-
-  //  let name = this.props.cartItem[0].product_name;
-  //   let price = this.props.cartItem[0].sale_price;
-// console.log(name)
 
 
   if (cartItems.length > 0 ) {
     var sum = 0
     for (var i= 0; i < cartItems.length; i++) {
-      sum += parseFloat(cartItems[i].sale_price.substring(1));
-      // console.log(cartItems[i].sale_price)
+      // using numeral library to convert $ values
+      sum += numeral(cartItems[i].sale_price).value();
     }
   }
-    // console.log(sum)
 
-  var grandTotal =new Intl.NumberFormat().format(sum);
-
+  var grandTotal = sum;
 
 
 var renderCartItems = cartItems.map((item, i) => {
@@ -193,6 +170,7 @@ var renderCartItems = cartItems.map((item, i) => {
               <Modal.Header closeButton>
                 <Modal.Title>Checkout</Modal.Title>
               </Modal.Header>
+              
               <Modal.Body>
                 {renderCartItems}
                 {/* <h2>Item: {name}</h2> */}
@@ -265,11 +243,12 @@ var renderCartItems = cartItems.map((item, i) => {
                 <Button variant="secondary" onClick={this.props.handleClose}>
                   Close
                 </Button>
-                <Button variant="primary" onClick={this.handleSubmit}>
-             {this.state.isWaiting ? <Spinner animation="border" role="status">
-            {/* <span className="sr-only">Placing Order</span> */}
-          </Spinner> : <p style={{marginBlockEnd: '0'}}>Request Invoice | Subtotal: ${grandTotal}</p>}
-                </Button>
+                  <Button variant="primary" onClick={this.handleSubmit}>
+                  {this.state.isWaiting ? <Spinner animation="border" role="status">
+                 {/* <span className="sr-only">Placing Order</span> */}
+               </Spinner> : <p style={{marginBlockEnd: '0'}}>Request Invoice | Subtotal: ${grandTotal}</p>}
+                     </Button>
+              
               </Modal.Footer>
             </Modal>
     </div>

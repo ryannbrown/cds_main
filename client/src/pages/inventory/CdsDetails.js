@@ -31,7 +31,7 @@ class CdsDetails extends Component {
 
   
   handleClose = () => {
-    // console.log("clicked")
+    console.log("handling close")
     this.setState({
       show: false,
       setShow: false,
@@ -143,8 +143,13 @@ class CdsDetails extends Component {
                 <h1 style={{ padding: '15px' }} className="">{gunData.product_name}</h1>
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
-                <h4>{gunData.quantity} In Stock</h4>
-                <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                {gunData.quantity > 0 ? <div>
+                  <h4>{gunData.quantity} In Stock</h4> <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                </div>
+               :<div>Sold Out</div>
+              
+                
+              }
                 {this.state.addedToCart && <p>Item Added!</p>}
               </Col>
             </Row>

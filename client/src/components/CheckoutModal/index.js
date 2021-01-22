@@ -34,7 +34,7 @@ class CheckoutModal extends Component {
 
 
   handleClose = () => {
-    console.log("clicked")
+    // console.log("clicked")
     this.setState({
       show: false,
       setShow: false,
@@ -97,7 +97,7 @@ class CheckoutModal extends Component {
       }).then((response) => {
 
         if (response.status == "200") {
-          console.log("SUCCESS")
+          // console.log("SUCCESS")
             this.props.orderComplete();
             // this.props.clearCart();
       
@@ -106,7 +106,7 @@ class CheckoutModal extends Component {
             showLoginAlert: true,
           });
         } else {
-          console.log("we got here")
+          // console.log("we got here")
         }
       });
     };
@@ -115,11 +115,11 @@ class CheckoutModal extends Component {
 
 
   componentDidMount(){
-    console.log("cart modal props", this.props)
+    // console.log("cart modal props", this.props)
   }
 
   componentDidUpdate(){
-    console.log("modal state update", this.state)
+    // console.log("modal state update", this.state)
   }
   
 

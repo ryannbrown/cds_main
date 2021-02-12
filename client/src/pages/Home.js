@@ -23,6 +23,7 @@ import image from "../media/field22.jpg"
 import "./Home.css"
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import ScrollIntoView from 'react-scroll-into-view'
+import {Helmet} from "react-helmet"
 import logo from '../media/cds.jpg'
 require("dotenv").config();
 
@@ -53,6 +54,12 @@ export default class Home extends Component {
   render() {
     return (
       <div className="homepage">
+     <Helmet>
+                <meta charSet="utf-8" />
+                <title>Coleman Defense Solutions</title>
+                <content>Coleman Defense Solutions</content>
+                <link rel="canonical" href="http://www.colemandefense.com/" />
+            </Helmet>
         <a id="home"></a>
         <Nav style={{ display: 'none' }} variant="pills" defaultActiveKey="home" className="flex-column trippy-nav">
           <ScrollIntoView selector="#home"><Nav.Link eventKey="home">Home</Nav.Link></ScrollIntoView>

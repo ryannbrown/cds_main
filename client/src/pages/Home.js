@@ -57,7 +57,7 @@ export default class Home extends Component {
      <Helmet>
                 <meta charSet="utf-8" />
                 <title>Coleman Defense Solutions</title>
-                <content>Coleman Defense Solutions</content>
+                <content>FFL/Class 3 SOT dealer located in Durham, NC, specializing in high end weaponry for both civilians and law enforcement agencies.</content>
                 <link rel="canonical" href="http://www.colemandefense.com/" />
             </Helmet>
         <a id="home"></a>

@@ -27,7 +27,7 @@ class AdminPanel extends Component {
         fetch(`/api/posts/${param}`)
         .then(res => res.json())
         .then(json => {
-        //   console.log("json", json)
+          console.log("json", json)
           this.setState({
               posts:json.data,
               isLoading: false
@@ -59,8 +59,8 @@ let param = valParam.toString();
          {/* <p className="text-center gun-desc">{item.product_description}</p> */}
          <h5 className="text-center retail-price">{item.msrp_price}</h5>
          <h4 className="text-center">{item.sale_price}</h4>
-         {/* <h4 className="text-center">{item.quantity}</h4>
-         <h4 className="text-center">{item.caliber}</h4> */}
+         <h4 className="text-center">{item.quantity} available</h4>
+         {/* <h4 className="text-center">{item.caliber}</h4> */}
          </Link>
         </Card>
         );

@@ -30,7 +30,8 @@ class Profile extends Component {
       cartItems: [],
       show: false,
       setShow: false,
-      orderSuccess: false
+      orderSuccess: false,
+      grandTotal: null
     };
   }
 
@@ -115,6 +116,154 @@ class Profile extends Component {
   }
 
 
+  fetchQuantities = (items) => {
+
+
+   const computeCost = (guns) => {
+    //  console.log(guns)
+       var sum = 0
+  for (var i= 0; i < guns.length; i++) {
+    console.log(guns[i].order_quantity)
+    // using numeral library to convert $ values
+    sum += numeral(guns[i].sale_price).value() * guns[i].order_quantity;
+  }
+
+var grandTotal = sum;
+
+this.setState({grandTotal: grandTotal})
+    }
+    
+
+
+    // if (this.state.cartItems.length > 0) {
+    //   this.state.cartItems.forEach(element => {
+    //    console.log(element)
+    //   })
+    //   console.log(this.state.cartItems)
+    // }
+  
+    // var n = items.includes("Mango");
+console.log(items)
+let quantity = items[0]
+let guns = items[1]
+
+console.log("quantity", quantity)
+console.log("guns", guns)
+
+var itemsProcessed = 0;
+quantity.forEach(item => {
+  guns.forEach(gun => {
+
+    // console.log(item[0])
+
+    if (gun.uuid.includes(item[0])) {
+      gun.order_quantity = item[1]
+    }
+
+  })
+  itemsProcessed++
+ if (itemsProcessed === quantity.length) {
+   computeCost(guns);
+ }
+})
+
+
+
+
+
+
+
+this.setState({
+  cartItems: guns
+})
+
+console.log('updated guns', guns)
+    
+
+
+// let i = [
+//        'a35e4dfd-e2d9-4e88-a127-d6daa0b69064',
+//        'bdf83481-41ab-43ae-b416-9958dbb782d4',
+//        'd78bd1bb-53fc-4c7b-ab6d-bd5f5f399e41',
+//        'a35e4dfd-e2d9-4e88-a127-d6daa0b69064',
+//        'c94f500a-c538-45cb-9fbb-73874219e033'
+//      ]
+// let q = [ '2', '1', '2', '2', '1' ]
+
+//     var rs =  i.reduce(function(result, field, index) {
+//       result[q[index]] = field;
+//       return result;
+//     }, {})
+    
+//     console.log(rs);
+
+    // console.log(items[0], quantity)
+    // console.log(items, quantity)
+
+
+    // var result =  quantity.reduce(function(result, field, index) {
+    //   result[items[index].id] = field;
+    //   return result;
+    // }, {})
+    
+    // console.log(result);
+
+
+
+
+
+// console.log("Fetching quants")
+// console.log(quantity)
+// const newArray = []
+// newArray.push(items);
+
+    // var result =  quantity.reduce(function(result, field, index) {
+    //   result[items[index]] = field;
+    //   return result;
+    // }, {})
+    // console.log(result)
+
+// if (newArray) {
+
+// not working.. possibly don't need the for each after it?
+// for (var i = 0; i < items.length; i++) {
+
+//     // items.forEach(element => {
+//       console.log(items[i], i);
+//       items[i].order_quantity = quantity[i]
+//     // })
+//   }
+// }
+
+// this.setState({cartItems: newArray[0]})
+
+
+
+// console.log(newArray)
+
+    // if (this.state.cartItems.length > 0) {
+    //   this.state.cartItems.forEach(element => {
+    //    console.log(element)
+    //   })
+    //   console.log(this.state.cartItems)
+    // }
+  
+    // var n = items.includes("Mango");
+
+    
+    // console.log(items, quantity)
+
+    // var columns = ["Date", "Number", "Size", "Location", "Age"];
+    // var rows = ["2001", "5", "Big", "Sydney", "25"];
+    // var result =  columns.reduce(function(result, field, index) {
+    //   result[rows[index]] = field;
+    //   return result;
+    // }, {})
+    
+    // console.log(result);
+
+  }
+
 
 
 
@@ -129,6 +278,8 @@ var firstItem = ourContext.currentCart.lineItems[0];
 if (firstItem) {
   sessionStorage.setItem("firstItem", firstItem)
 }
+
+
 
   
    
@@ -151,6 +302,8 @@ if (firstItem) {
     //     })
     // }
     if (ourContext.currentCart.lineItems.length > 0) {
+      let items = ourContext.currentCart.lineItems
+      let quantity = ourContext.currentCart.quantity;
       // console.log(ourContext.currentCart.lineItems[0])
       fetch('/getquote', {
         method: 'POST',
@@ -159,19 +312,24 @@ if (firstItem) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            items: ourContext.currentCart.lineItems,
+            items: items,
+            quantity: quantity
         })
     }).then(res => res.json())
     .then(response => {
         // console.log("hey i did it")
-        if (response.data) {
+        if (response.returnArray) {
+          console.log(response.returnArray)
+            
           // console.log("setting state")
-          this.setState({
-            cartItems: response.data
-          })
+          // this.setState({
+          //   // cartItems: response.data
+          // },
+           this.fetchQuantities(response.returnArray)
         
         }
     })
+ 
     }
 
     // console.log(ourContext)
@@ -193,6 +351,9 @@ if (firstItem) {
     // console.log(ourContext)
   }
 
+  componentDidUpdate() {
+    console.log(this.state.cartItems)
+  }
 
 
   render() {
@@ -201,7 +362,17 @@ if (firstItem) {
 
     const { loggedIn, userData, isLoading, mapIt, showError, cartItems, show, orderSuccess } = this.state;
 
+    console.log(this.state.cartItems)
 
+
+
+    // if (ourContext.currentCart !== null) {
+    //   var quantity = ourContext.currentCart.map((item, i) => {
+    //     return (
+    //       <p>{item}</p>
+    //     );
+    //   })
+    // }
 
     if (this.state.mapIt) {
       var items = this.state.mapIt.map((item, i) => {
@@ -225,13 +396,14 @@ if (firstItem) {
     // }
  
   if (cartItems.length > 0 ) {
-    var sum = 0
-    for (var i= 0; i < cartItems.length; i++) {
-      // using numeral library to convert $ values
-      sum += numeral(cartItems[i].sale_price).value();
-    }
+  //   var sum = 0
+  //   for (var i= 0; i < cartItems.length; i++) {
+  //     // console.log(cartItems.order_quantity)
+  //     // using numeral library to convert $ values
+  //     sum += numeral(cartItems[i].sale_price).value();
+  //   }
 
-  var grandTotal = sum;
+  // var grandTotal = sum;
       
       // console.log("trying with", cartItems)
       var renderCartItems = cartItems.map((item, i) => {
@@ -243,6 +415,8 @@ if (firstItem) {
             <div className="profile-details">
             <h1>{item.product_name}</h1>
             <h1>{item.sale_price}</h1>
+            <h1># In Cart: {item.order_quantity}</h1>
+            {/* <h1>{quantity}</h1> */}
             </div>
           </div>
         );
@@ -317,7 +491,7 @@ if (firstItem) {
             <a id="cart"></a>
           {context.currentCart.lineItems.length > 0 ? 
           <div className="cart-btns">
-              <h2> Subtotal: ${grandTotal}</h2>
+              <h2> Subtotal: ${this.state.grandTotal}</h2>
             <Button onClick={this.clearCart} style={{ fontSize: '24px' }} variant="secondary">Clear Cart</Button>
             {!orderSuccess && <Button onClick={this.handleCheckout} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Checkout</Button>}
           </div>
@@ -344,7 +518,7 @@ if (firstItem) {
 
           </Card>
   
-            <CheckoutModal orderComplete={this.orderComplete} clearCart={this.clearCart} cartItems={this.state.cartItems} action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></CheckoutModal>
+            <CheckoutModal grandTotal={this.state.grandTotal} orderComplete={this.orderComplete} clearCart={this.clearCart} cartItems={this.state.cartItems} action={this.props.action} show={show} onHide={this.handleClose} handleShow={this.handleShow} handleClose={this.handleClose} ></CheckoutModal>
          
         </div>
           )}

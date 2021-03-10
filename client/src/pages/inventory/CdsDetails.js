@@ -24,7 +24,9 @@ class CdsDetails extends Component {
       isLoading: true,
       show: false,
       setShow: false,
-      addedToCart: false
+      addedToCart: false,
+      quantityError:false,
+      orderQuantity:1
     };
   }
 
@@ -49,14 +51,27 @@ class CdsDetails extends Component {
     let ourContext = this.context;
     // console.log('adding to cart', this.state.gunData.uuid)
 
-    ourContext.addToCart(this.state.gunData.uuid, this.state.gunData.product_name, this.state.gunData.sale_price)
+    ourContext.addToCart(this.state.gunData.uuid, this.state.gunData.product_name, this.state.gunData.sale_price, this.state.orderQuantity)
     this.setState({
       addedToCart: true
     })
   }
 
+  changeOrderQuantity = (e) => {
+console.log(e.target.value)
+if (e.target.value > this.state.gunData.quantity) {
+  this.setState({quantityError:true, orderQuantity: this.state.gunData.quantity})
+
+} else if (e.target.value <= this.state.gunData.quantity) {
+  this.setState({quantityError:false, orderQuantity: parseFloat(e.target.value)})
+}
+
+
+  }
+
 
   componentDidMount() {
+    console.log("quantity", this.state.orderQuantity)
     let ourContext = this.context;
     // console.log(ourContext)
 
@@ -82,8 +97,6 @@ class CdsDetails extends Component {
   };
 
 
-
-
   render() {
 
     var { gunData, isLoading, show } = this.state;
@@ -92,7 +105,6 @@ class CdsDetails extends Component {
     const seoTitle = gunData.product_name;
     // console.log(seoTitle);
     const seoDescription = 'Buy a ' + gunData.product_name + ' from Coleman Defense Solutions, based out of Durham, NC'
-    
 
     // console.log(gunData.location)
 
@@ -143,13 +155,13 @@ class CdsDetails extends Component {
                 <h1 style={{ padding: '15px' }} className="">{gunData.product_name}</h1>
                 <h2 className="retail-price">{gunData.msrp_price}</h2>
                 <h1>{gunData.sale_price}</h1>
-                {gunData.quantity > 0 ? <div>
-                  <h4>{gunData.quantity} In Stock</h4> <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>
+                {gunData.quantity > 0 ? <h4>{gunData.quantity} In Stock</h4>
+                :<div>Sold Out</div>}
+                <div className="order-block">
+              {gunData.quantity > 1 && <input type="number" onChange={this.changeOrderQuantity} defaultValue="1" id="quantity" name="quantity" min="1" max={gunData.quantity}/> }
+                {gunData.quantity > 0 && <Button onClick={context.userLoggedIn ? this.addToCart : this.handleShow} style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Add to cart</Button>  }
                 </div>
-               :<div>Sold Out</div>
-              
-                
-              }
+                {this.state.quantityError && <p>We are sorry but the maximum order quantity for this item is {gunData.quantity}</p>}
                 {this.state.addedToCart && <p>Item Added!</p>}
               </Col>
             </Row>

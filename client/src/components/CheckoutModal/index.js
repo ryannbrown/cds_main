@@ -92,7 +92,8 @@ class CheckoutModal extends Component {
           first_name: firstName,
           last_name: lastName,
           billing: billing,
-          shipping: shipping
+          shipping: shipping,
+          theGrandTotal: this.props.grandTotal
         }),
       }).then((response) => {
 
@@ -130,15 +131,15 @@ class CheckoutModal extends Component {
     const {cartItems} = this.props;
 
 
-  if (cartItems.length > 0 ) {
-    var sum = 0
-    for (var i= 0; i < cartItems.length; i++) {
-      // using numeral library to convert $ values
-      sum += numeral(cartItems[i].sale_price).value();
-    }
-  }
+  // if (cartItems.length > 0 ) {
+  //   var sum = 0
+  //   for (var i= 0; i < cartItems.length; i++) {
+  //     // using numeral library to convert $ values
+  //     sum += numeral(cartItems[i].sale_price).value();
+  //   }
+  // }
 
-  var grandTotal = sum;
+  // var grandTotal = sum;
 
 
 var renderCartItems = cartItems.map((item, i) => {
@@ -146,7 +147,7 @@ var renderCartItems = cartItems.map((item, i) => {
     <div className="cart-item">
       <div className="profile-details">
       <h1>{item.product_name}</h1>
-      <h1>{item.sale_price}</h1>
+      <h1>{item.sale_price} X {item.order_quantity}</h1>
       </div>
     </div>
   );
@@ -246,7 +247,7 @@ var renderCartItems = cartItems.map((item, i) => {
                   <Button variant="primary" onClick={this.handleSubmit}>
                   {this.state.isWaiting ? <Spinner animation="border" role="status">
                  {/* <span className="sr-only">Placing Order</span> */}
-               </Spinner> : <p style={{marginBlockEnd: '0'}}>Request Invoice | Subtotal: ${grandTotal}</p>}
+               </Spinner> : <p style={{marginBlockEnd: '0'}}>Request Invoice | Subtotal: ${this.props.grandTotal}</p>}
                      </Button>
               
               </Modal.Footer>

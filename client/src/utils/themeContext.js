@@ -13,7 +13,7 @@ const { Provider, Consumer } = React.createContext();
        userLoggedIn: false,
        userEmail: '',
        userData: [],
-       currentCart: { lineItems: [] }
+       currentCart: { lineItems: [], quantity: [] }
        
      };
 
@@ -47,6 +47,7 @@ const { Provider, Consumer } = React.createContext();
 }
 
 componentDidUpdate(){
+  console.log(this.state.currentCart)
   // console.log("context updated state", this.state.currentCart)
   // console.log(this.state.client)
   // console.log(this.state)
@@ -64,7 +65,7 @@ componentDidUpdate(){
 
   clearCart = () => {
    this.setState({
-    currentCart: { lineItems: [] }
+    currentCart: { lineItems: [], quantity: [] }
    })
   }
 
@@ -100,7 +101,8 @@ handleCartOpen = () =>  {
 
   }
 
-  addToCart = (id, name, price) => {
+  addToCart = (id, name, price, quantity) => {
+    console.log(this.state)
     // console.log('this id is', id)
     // this.setState( prevState => ({
     //   currentCart: { lineItems : [... prevState.currentCart.lineItems], lineItems: [id] }})
@@ -111,8 +113,9 @@ handleCartOpen = () =>  {
     // sessionStorage.setItem("firstItem", firstItem);
 
     var added = this.state.currentCart.lineItems.concat(id)
+    var quantity = this.state.currentCart.quantity.concat(quantity)
     this.setState({
-      currentCart: { lineItems: added}
+      currentCart: { lineItems: added, quantity:quantity}
     })
   }
 

@@ -1165,15 +1165,17 @@ app.post("/deletesavedgun", function (req, res) {
   });
 });
 app.post("/orderitem", function (req, res) {
-  const {itemName, price, email, first_name, last_name, shipping, billing, cartItems, grandTotal } = req.body
+  const {itemName, price, email, first_name, last_name, shipping, billing, cartItems, grandTotal, theGrandTotal } = req.body
   // console.log("keys");
   const data = {
     // itemName,
     // price,
     grandTotal: grandTotal,
+    theGrandTotal: theGrandTotal,
     itemName: [],
     price: [],
     itemId:[],
+    numSoldOfItem: [],
     items: cartItems,
     email: email,
     first_name,
@@ -1182,6 +1184,8 @@ app.post("/orderitem", function (req, res) {
     shipping
   };
 
+  console.log(data.items)
+
 // console.log("items", data.items)
 // console.log(data.items.length)
 
@@ -1189,23 +1193,8 @@ data.items.forEach(function(item) {
   data.price.push(item.sale_price);
   data.itemName.push(item.product_name);
   data.itemId.push(item.uuid);
+  data.numSoldOfItem.push(item.order_quantity)
 })
-
-var quantity = data.items.length;
-var loop = 'UPDATE cds_inventory SET quantity = quantity - 1 WHERE uuid = $1';
- var valueLoop = [data.itemId[0]]
-for (i= 2; i <= quantity; i++ ) {
-  loop += ' or uuid = $' + [i]
-}
-for (i= 1; i < quantity; i++ ) {
- valueLoop.push(data.itemId[i]);
-}
-
- const query = loop;
- const values = valueLoop;
-
- console.log(query)
- console.log(values)
 
 // console.log(data)
 
@@ -1247,9 +1236,10 @@ button:hover {
  <p>Full Name: ${data.first_name} ${data.last_name}</p>
  <p>Billing Address: ${data.billing}</p>
  <p>Shipping Address: ${data.shipping}</p>
- <p>Item Prices: <strong>${data.price}</strong></p>
+ <p>Item Price: <strong>${data.price}</strong></p>
+ <p> Number Sold : ${data.numSoldOfItem} </p>
  <hr>
- <p>Subtotal: <strong>$${data.grandTotal}</strong></p>
+ <p>Subtotal: <strong>$ ${data.theGrandTotal}</strong></p>
  <a href=${mailTo}><button>Reply</button></a>`
 
   // async..await is not allowed in global scope, must use a wrapper
@@ -1279,6 +1269,8 @@ async function main() {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
+    // from: `ryanbrownmedia@gmail.com`, // sender address
+    // to: "ryanbrownmedia@gmail.com", // list of receivers
     from: `michael.judy@colemandefense.com`, // sender address
     to: "michael.judy@colemandefense.com", // list of receivers
     // to: "rb054549@gmail.com", // list of receivers
@@ -1310,6 +1302,31 @@ main().catch((error) => {
   }
 });
 
+var numOfItems = data.items.length - 1;
+console.log(numOfItems)
+for (i= 0; i <= numOfItems; i++ ) {
+
+  var query = 'UPDATE cds_inventory SET quantity = quantity - $1 WHERE uuid = $2';
+   var values = [data.numSoldOfItem[i], data.itemId[i]]
+  // for (i= 3; i <= numOfItems; i++ ) {
+  //   loop += ' or uuid = $' + [i]
+  // }
+  // for (i= 1; i < numOfItems; i++ ) {
+  //  valueLoop.push(data.itemId[i]);
+  // }
+  
+  //  const query = loop;
+  //  const values = valueLoop;
+  
+  //  console.log(query)
+  //  console.log(values)
+  
+
+
+  // loop += ' or uuid = $' + [i]
+console.log("query", query);
+console.log("values", values);
+
 client.query(query, values, (error, results) => {
   if (error) {
     return res.status(400).send({
@@ -1318,6 +1335,7 @@ client.query(query, values, (error, results) => {
   }
   // res.send("POST request to the homepage");
 });
+}
   // const query = ``;
   // const values = [data.email];
 
@@ -1340,12 +1358,29 @@ app.post("/getquote", function (req, res) {
   const data = {
     // id: req.body.id,
     items: req.body.items,
+    quantity: req.body.quantity
     // email: req.body.email,
   };
+  console.log(data)
 
 //  console.log("data", data)
 //  console.log(data.items.length)
  var quantity = data.items.length;
+
+let returnArray = []
+ var columns = data.items
+ var rows = data.quantity
+ var result =  rows.reduce(function(result, field, index) {
+  result[columns[index]] = field;
+  return result;
+}, {})
+
+var result2 = Object.keys(result).map((key) => [key, result[key]]);
+console.log('result', result2);
+returnArray.push(result2)
+
+
+
  var loop = 'select * from cds_inventory where uuid = $1';
   var valueLoop = [data.items[0]]
  for (i= 2; i <= quantity; i++ ) {
@@ -1361,13 +1396,15 @@ app.post("/getquote", function (req, res) {
   // console.log("values", values)
   client.query(query, values, (error, results) => {
     var data = results.rows
+    returnArray.push(data)
     console.log(data, "data")
+    console.log(returnArray);
     if (error) {
       return res.status(400).send({
-        message: "This is an error!",
+        message: error,
       });
     } else {
-      res.send(JSON.stringify({ data }));
+      res.send(JSON.stringify({ returnArray }));
     }
   });
 });

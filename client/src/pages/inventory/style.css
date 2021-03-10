@@ -4,6 +4,21 @@
     border-radius: 25px;
 }
 
+.order-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-block input {
+    height:50px;
+}
+
+.order-block +p {
+    margin-top: 10px;
+}
+
+
 @media (min-width:997px) {
     .card-deck {
         max-width: 1200px;

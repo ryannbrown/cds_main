@@ -94,12 +94,7 @@ class App extends Component {
       <div>
 
 
-        <Helmet>
-                <meta charSet="utf-8" />
-                <title>Coleman Defense Solutions</title>
-                <content>Coleman Defense Solutions</content>
-                <link rel="canonical" href="http://www.colemandefense.com/" />
-            </Helmet>
+       
           <Nav userLoggedIn={context.userLoggedIn} user={context.userEmail}>
             {/* <loginModal></loginModal> */}
           </Nav>

@@ -162,3 +162,7 @@ DELETE FROM davidsons_quantity WHERE (quantity_az !~ '^[0-9]+$');DELETE FROM dav
 ALTER TABLE davidsons_quantity ALTER COLUMN quantity_az TYPE INT using quantity_az::integer, ALTER COLUMN quantity_nc TYPE INT using quantity_nc::integer;
 
 UPDATE davidsons_quantity SET total_quantity = quantity_nc + quantity_az;
+
+if your order contains a firearm, please
+have your ffl send a copy of their license to ffl@colemandefense.com
+before the items can be shipped. 

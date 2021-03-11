@@ -48,7 +48,7 @@ const { Provider, Consumer } = React.createContext();
 }
 
 componentDidUpdate(){
-  console.log(this.state.currentCart)
+  // console.log(this.state.currentCart)
   // console.log("context updated state", this.state.currentCart)
   // console.log(this.state.client)
   // console.log(this.state)
@@ -104,7 +104,7 @@ handleCartOpen = () =>  {
   }
 
   addToCart = (id, name, price, quantity) => {
-    console.log(this.state)
+    // console.log(this.state)
     // console.log('this id is', id)
     // this.setState( prevState => ({
     //   currentCart: { lineItems : [... prevState.currentCart.lineItems], lineItems: [id] }})
@@ -119,8 +119,8 @@ handleCartOpen = () =>  {
     var added = this.state.currentCart.lineItems.concat(id)
     var quantity = this.state.currentCart.quantity.concat(quantity)
     var cartSum = quantity.reduce((a, b) => a + b, 0)
-    console.log(quantity)
-    console.log(cartSum)
+    // console.log(quantity)
+    // console.log(cartSum)
     this.setState({
       currentCart: { lineItems: added, quantity:quantity},
       itemsInCart: cartSum

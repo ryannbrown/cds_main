@@ -90,8 +90,8 @@ class Navigation extends Component {
       }
   }
   componentDidUpdate() {
-    let ourContext = this.context;
-    console.log('updated', ourContext)
+    // let ourContext = this.context;
+    // console.log('updated', ourContext)
 
     window.addEventListener(
       "resize",

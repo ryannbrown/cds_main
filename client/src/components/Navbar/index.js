@@ -90,6 +90,9 @@ class Navigation extends Component {
       }
   }
   componentDidUpdate() {
+    let ourContext = this.context;
+    console.log('updated', ourContext)
+
     window.addEventListener(
       "resize",
       _.debounce(() => {
@@ -172,13 +175,13 @@ class Navigation extends Component {
             ) : (
               <div className="nav-login-container">
                 <p className="nav-login-greeting">hello, {this.context.userData.first_name}</p>
-                <Link to="/profile">
+                {/* <Link to="/profile">
                   <Button className="prof-btn">View Profile</Button>
-                </Link>
+                </Link> */}
                 <Link to="/profile/#cart">
                   {/* This logic below feels reversed but it is giving me what I want?  */}
-                  {this.context.currentCart.lineItems.length > 0 ? 
-                   <Button className="prof-btn">Cart {this.context.currentCart.lineItems.length}</Button>
+                  {this.context.itemsInCart > 0 ? 
+                   <Button className="prof-btn">Cart {this.context.itemsInCart}</Button>
                     : <Button className="prof-btn">Cart</Button>
                 }
                   

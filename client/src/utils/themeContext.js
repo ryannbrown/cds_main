@@ -13,7 +13,8 @@ const { Provider, Consumer } = React.createContext();
        userLoggedIn: false,
        userEmail: '',
        userData: [],
-       currentCart: { lineItems: [], quantity: [] }
+       currentCart: { lineItems: [], quantity: [] },
+       itemsInCart: null
        
      };
 
@@ -65,7 +66,8 @@ componentDidUpdate(){
 
   clearCart = () => {
    this.setState({
-    currentCart: { lineItems: [], quantity: [] }
+    currentCart: { lineItems: [], quantity: []},
+    itemsInCart: 0 
    })
   }
 
@@ -112,10 +114,16 @@ handleCartOpen = () =>  {
     // sessionStorage.setItem("loggedIn", true);
     // sessionStorage.setItem("firstItem", firstItem);
 
+    // console.log()
+
     var added = this.state.currentCart.lineItems.concat(id)
     var quantity = this.state.currentCart.quantity.concat(quantity)
+    var cartSum = quantity.reduce((a, b) => a + b, 0)
+    console.log(quantity)
+    console.log(cartSum)
     this.setState({
-      currentCart: { lineItems: added, quantity:quantity}
+      currentCart: { lineItems: added, quantity:quantity},
+      itemsInCart: cartSum
     })
   }
 
@@ -135,7 +143,8 @@ handleCartOpen = () =>  {
             userData: this.state.userData,
             addToCart: this.addToCart,
             currentCart: this.state.currentCart,
-            clearCart: this.clearCart
+            clearCart: this.clearCart,
+            itemsInCart: this.state.itemsInCart
            }}
       >
         {this.props.children}

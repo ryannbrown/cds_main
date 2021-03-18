@@ -207,7 +207,7 @@ class AddItem extends Component {
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>MSRP Price</Form.Label>
-                            <Form.Control ref={this.msrp} type="number" step="0.01" />
+                            <Form.Control placeholder="Leave blank and it won't show up" ref={this.msrp} type="number" step="0.01" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Listing Price</Form.Label>

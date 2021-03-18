@@ -58,7 +58,7 @@ class Registration extends Component {
         event.preventDefault()
         let first_name = this.first_name.current.value
         let last_name = this.last_name.current.value
-        let email = this.email.current.value
+        let email = this.email.current.value.toLowerCase();
         let password = this.password.current.value
         let verPassword = this.verPassword.current.value
         let isSubscribed = this.isSubscribed.current.checked

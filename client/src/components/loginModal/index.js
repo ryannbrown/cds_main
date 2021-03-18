@@ -43,7 +43,7 @@ class LoginModal extends Component {
   handleSubmit = (e) => {
     const ourContext = this.context;
 
-    let email = this.emailRef.current.value;
+    let email = this.emailRef.current.value.toLowerCase();
     let password = this.passwordRef.current.value;
 
     // console.log(email, password)

@@ -34,7 +34,10 @@ class Transfers extends Component {
                 <h1 className="text-center mt-5">Firearm Transfer Services</h1>
                 <div className="bio-text-transfer text-center">
 
-                  <p>I offer transfer services for all types of firearms and NFA items.</p>
+
+                  <p style={{ color: '#dd6717' }}> I am currently <bold>not</bold> offering transfer services. Sorry for any inconvenience.</p>
+
+                  {/* <p>I offer transfer services for all types of firearms and NFA items.</p>
 
                   <p style={{ color: '#dd6717' }}>*Pickup by appointment only.</p>
 
@@ -52,7 +55,7 @@ class Transfers extends Component {
                   <p>Use the
       <a style={{ color: 'blue' }} target="_blank" rel="noopener noreferrer" href="https://fflezcheck.atf.gov/fflezcheck/"> ATF EZ Check</a> to verify my license:</p>
                   <p className="ba b--dotted bw2">1-56-XXX-XX-XX-13252</p>
-                  <p>Payment can be made at time of transfer with cash, check, or credit card.</p>
+                  <p>Payment can be made at time of transfer with cash, check, or credit card.</p> */}
                 </div>
               </div>
             </Col>

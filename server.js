@@ -1165,7 +1165,7 @@ app.post("/deletesavedgun", function (req, res) {
   });
 });
 app.post("/orderitem", function (req, res) {
-  const {itemName, price, email, first_name, last_name, shipping, billing, cartItems, grandTotal, theGrandTotal } = req.body
+  const {itemName, price, email, first_name, last_name, street, city, state, zip, cartItems, grandTotal, theGrandTotal } = req.body
   // console.log("keys");
   const data = {
     // itemName,
@@ -1180,8 +1180,10 @@ app.post("/orderitem", function (req, res) {
     email: email,
     first_name,
     last_name,
-    billing,
-    shipping
+  street,
+  city,
+  state,
+  zip
   };
 
   console.log(data.items)
@@ -1234,8 +1236,7 @@ button:hover {
 <p><strong>${data.first_name} ${data.last_name}</strong> has ordered the following(${data.itemName.length}) item(s): <strong>${data.itemName}</strong>:<p>
  <p><a href=${mailTo}>Email: ${data.email}<a><p>
  <p>Full Name: ${data.first_name} ${data.last_name}</p>
- <p>Billing Address: ${data.billing}</p>
- <p>Shipping Address: ${data.shipping}</p>
+ <p>Shipping Address: ${data.street} ${data.city}, ${data.state} ${data.zip}</p>
  <p>Item Price: <strong>${data.price}</strong></p>
  <p> Number Sold : ${data.numSoldOfItem} </p>
  <hr>
@@ -1269,6 +1270,8 @@ async function main() {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
+    // from: `ryanbrownmedia@gmail.com`, // sender address
+    // to: "ryanbrownmedia@gmail.com", // list of receivers
     // from: `ryanbrownmedia@gmail.com`, // sender address
     // to: "ryanbrownmedia@gmail.com", // list of receivers
     from: `michael.judy@colemandefense.com`, // sender address

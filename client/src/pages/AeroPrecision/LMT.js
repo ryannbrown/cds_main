@@ -25,9 +25,6 @@ class LMT extends Component {
    
   };
 
-
-
-
   render() {
 
    return (
@@ -45,7 +42,7 @@ class LMT extends Component {
       <div className="f5 f3-m lh-copy">
         <div className="cf dt-l w-100 bt b--black-10 pv4">
           <div className="dtc-l v-mid mw6 pr3-l">
-            <img className="w-100" src="https://lmtdefense.com/media/2019/05/REFT_AZ_DAY5_P2_PRINT_0189-e1588100010731.jpg" alt="" />
+            <img className="w-100" src="https://i.ibb.co/j3gcgDQ/twnd15-lm8mws-lead.jpg" alt="" />
           </div>
           <div className="dtc-l v-mid f6 f5-m f4-l measure-l tc">
             <p className="measure pv4-l center">
@@ -82,10 +79,10 @@ class LMT extends Component {
             <img className="db w-100" src="http://mrmrs.github.io/photos/010.jpg" alt="Photo of a dusk skyline above a grassy rockface covered in trees." />
           </div> */}
           <div className="fl w-50 w-50-l pl2 pl0-l pr2-l pb3">
-            <img className="db w-100" src="https://lmtdefense.com/cms/wp-content/themes/lmtdefense-2019/style/img/family-bg-mrp.jpg" alt="DSC-6668" />
+            <img className="db w-100" src="https://i.ibb.co/GHfKKDH/lmt1.jpg" alt="DSC-6668" />
           </div>
           <div className="fl w-50 w-50-l pr1 pr0-l pl2-l pb3">
-            <img className="db w-100" src="https://lmtdefense.com/cms/wp-content/themes/lmtdefense-2019/style/img/family-bg-spm.jpg" alt="DSC-1494" />
+            <img className="db w-100" src="https://i.ibb.co/qygGP8K/lmt2.jpg" alt="DSC-1494" />
           </div>
           {/* <div className="fl w-100 w-50-l pl2-l">
             <img className="db w-100" src="http://mrmrs.github.io/photos/013.jpg" alt="Photo of the foundations of a building on a cliff overlooking a lighthouse." />

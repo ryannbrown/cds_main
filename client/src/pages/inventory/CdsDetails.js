@@ -153,7 +153,8 @@ if (e.target.value > this.state.gunData.quantity) {
               </Col>
               <Col className="price-box" sm={12} md={4}>
                 <h1 style={{ padding: '15px' }} className="">{gunData.product_name}</h1>
-                <h2 className="retail-price">{gunData.msrp_price}</h2>
+         
+                {gunData.msrp_price !== '$0.00' && <h2 className="retail-price">{gunData.msrp_price}</h2>}
                 <h1>{gunData.sale_price}</h1>
                 {gunData.quantity > 0 ? <h4>{gunData.quantity} In Stock</h4>
                 :<div>Sold Out</div>}

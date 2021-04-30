@@ -54,9 +54,9 @@ componentDidMount () {
         />
         <h3 style= {{padding: '15px'}} className="text-center">{item.product_name}</h3>
          {/* <p className="text-center gun-desc">{item.product_description}</p> */}
-         <h5 className="text-center retail-price">{item.msrp_price}</h5>
+         {item.msrp_price !== '$0.00' && <h5 className="text-center retail-price">{item.msrp_price}</h5>}
          <h4 className="text-center">{item.sale_price}</h4>
-          <h4 className="text-center">{item.quantity}</h4>
+          <h4 className="text-center">{item.quantity} Available</h4>
          {/* <h4 className="text-center">{item.caliber}</h4> */}
          </a>
         </Card>

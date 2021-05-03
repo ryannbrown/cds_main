@@ -195,6 +195,7 @@ class EditNewItem extends Component {
                                 <option>parts/accessories</option>
                                 <option>night vision</option>
                                 <option>ammunition</option>
+                                <option>lower receivers</option>
                                 </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formFeatured">

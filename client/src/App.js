@@ -35,6 +35,7 @@ import zandersDetails from "./pages/inventory/zanders/zandersDetails.js"
 import LMT from "./pages/AeroPrecision/LMT.js"
 import NotFoundPage from "./pages/NotFoundPage/index.js"
 import ScrollToTop from "./utils/scrollToTop.js"
+import Terms from "./pages/Terms/index"
 import {
   ThemeContextConsumer,
   ThemeContextProvider,
@@ -129,6 +130,7 @@ class App extends Component {
 
             <Route path="/cds/transfers" component={Transfers} />
             <Route path="/cds/about" component={About} />
+            <Route path="/terms" component={Terms} />
             <Route path="/profile" component={ () => <Profile loggedIn={this.state.loggedIn} user={this.state.user} userData={context.userData} />} />
 
 

@@ -8,7 +8,8 @@ body, p, li, h1, h2, h3, h4  {
   font-family: "Bebas Neue" !important;
 }
 input {
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+  font-family:'Courier New', Courier, monospace !important;
   font-weight:500;
 
 }

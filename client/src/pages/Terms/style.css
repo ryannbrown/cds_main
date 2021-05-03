@@ -1,0 +1,9 @@
+.terms-page {
+ max-width:1200px;
+ margin:50px auto;
+
+}
+
+.terms-content p, .terms-content li {
+  font-family:'Courier New', Courier, monospace !important;
+}

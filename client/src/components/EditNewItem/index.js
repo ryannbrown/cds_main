@@ -39,6 +39,7 @@ class EditNewItem extends Component {
         this.msrp = React.createRef();
         this.price = React.createRef();
         this.location = React.createRef();
+        this.isFeatured = React.createRef();
     }
 
 
@@ -90,6 +91,7 @@ class EditNewItem extends Component {
         let msrp = this.msrp.current.value
         let price = this.price.current.value
         let location = this.location.current.value.toLowerCase()
+        let isFeatured = this.isFeatured.current.checked
 
        
     //     const filename = this.state.file[0].name
@@ -136,7 +138,8 @@ class EditNewItem extends Component {
                     msrp_price: msrp,
                     sale_price: price,
                     location: location,
-                    id: this.props.id
+                    id: this.props.id,
+                    isFeatured: isFeatured
                 })
                 }).then(response => {
                     console.log("Updated!")
@@ -179,10 +182,26 @@ class EditNewItem extends Component {
                             <Form.Label>Product Description: {gunData.product_description}</Form.Label>
                             <Form.Control ref={this.description} as="textarea" rows="5" placeholder="Edit Description" />
                         </Form.Group>
+                        
                        
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category: {gunData.category}</Form.Label>
-                            <Form.Control ref={this.category} type="text"  />
+                            <Form.Control ref={this.category} as="select">
+                                <option>suppressors</option>
+                                <option>handguns</option>
+                                <option>rifles</option>
+                                <option>shotguns</option>
+                                <option>optics</option>
+                                <option>parts/accessories</option>
+                                <option>night vision</option>
+                                <option>ammunition</option>
+                                </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formFeatured">
+                            {gunData.is_featured ?   <Form.Label>Item is <span style={{color:'green'}}>currently Featured</span></Form.Label> :  <Form.Label>Item is <span style={{color:'red'}}> NOT currently featured</span></Form.Label> }
+                         
+                            {!gunData.is_featured ? <Form.Check  ref={this.isFeatured} type="checkbox" label="Do you want to show this in featured slideshow?" /> :  <Form.Check  ref={this.isFeatured} type="checkbox" defaultChecked label="Do you want to show this in featured slideshow?" /> }
+                           
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Location on site: {gunData.location}</Form.Label>

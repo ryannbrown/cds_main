@@ -38,6 +38,7 @@ class AddItem extends Component {
         this.msrp = React.createRef();
         this.price = React.createRef();
         this.location = React.createRef();
+        this.isFeatured = React.createRef();
     }
 
 
@@ -73,6 +74,7 @@ class AddItem extends Component {
         let msrp = this.msrp.current.value
         let price = this.price.current.value
         let location = this.location.current.value
+        let isFeatured = this.isFeatured.current.checked
 
 
         const filename = this.state.file[0].name
@@ -116,7 +118,8 @@ class AddItem extends Component {
                     upcNumber: upcNumber,
                     msrp_price: msrp,
                     sale_price: price,
-                    location: location
+                    location: location,
+                    isFeatured: isFeatured
                 })
             }).then(response => {
                 console.log("hey i did it")
@@ -142,7 +145,7 @@ class AddItem extends Component {
                     <h1>Add Item</h1>
                     <form onSubmit={this.handleSubmit} encType="multipart/form-data" >
 
-                        <Form.Label>Item Image</Form.Label>
+                        <Form.Label>Image</Form.Label>
                         <input
                             onChange={this.fileChanged.bind(this)}
                             ref={this.img}
@@ -151,7 +154,16 @@ class AddItem extends Component {
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category</Form.Label>
-                            <Form.Control ref={this.category} type="text" placeholder="What kind of product is this?.. suppressors, long guns, optics etc" />
+                            <Form.Control ref={this.category} as="select" placeholder="What kind of product is this?.. suppressors, long guns, optics etc">
+                            <option>suppressors</option>
+                                <option>handguns</option>
+                                <option>rifles</option>
+                                <option>shotguns</option>
+                                <option>optics</option>
+                                <option>parts/accessories</option>
+                                <option>night vision</option>
+                                <option>ammunition</option>
+                                </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Location on site:</Form.Label>
@@ -160,6 +172,9 @@ class AddItem extends Component {
                                 <option>aeroprecision</option>
                                 <option>lmt</option>
                             </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="formFeatured">
+                            <Form.Check  ref={this.isFeatured} type="checkbox" label="Do you want to show this in featured slideshow?" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Product Name</Form.Label>

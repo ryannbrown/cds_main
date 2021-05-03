@@ -161,12 +161,13 @@ app.post("/api/post", function (req, res) {
     sights: req.body.sights,
     upcNumber: req.body.upcNumber,
     location: req.body.location,
+    isFeatured: req.body.isFeatured
   };
 
   posts.push(data);
 
-  const query = `INSERT INTO cds_inventory( uuid, image, product_name, Product_description, msrp_price, sale_price, category, caliber, manufacturer, model, type, barrelLength, finish, quantity, capacity, sights, upcNumber, location )
-     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)`;
+  const query = `INSERT INTO cds_inventory( uuid, image, product_name, Product_description, msrp_price, sale_price, category, caliber, manufacturer, model, type, barrelLength, finish, quantity, capacity, sights, upcNumber, location, is_featured )
+     VALUES(uuid_generate_v4(),$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, $18)`;
   const values = [
     data.image,
     data.product_name,
@@ -185,6 +186,7 @@ app.post("/api/post", function (req, res) {
     data.sights,
     data.upcNumber,
     data.location,
+    data.isFeatured
   ];
   //  FOR DEV
   // console.log(query);
@@ -221,7 +223,11 @@ app.post("/api/update", function (req, res) {
     sights: req.body.sights,
     upcNumber: req.body.upcNumber,
     location: req.body.location,
+    isFeatured: req.body.isFeatured
+
   };
+
+  console.log(data)
 
   // TODO: Potential way to cleanup below code
   // Object.keys(data).forEach(k => (!data[k] && data[k] !== undefined) && delete data[k]);
@@ -462,6 +468,31 @@ app.post("/api/update", function (req, res) {
       criteria += `location = '${data.location}'`;
     }
   }
+  if (data.isFeatured || !data.isFeatured) {
+    if (
+      data.product_name ||
+      data.product_description ||
+      data.msrp_price ||
+      data.sale_price ||
+      data.category ||
+      data.manufacturer ||
+      data.caliber ||
+      data.model ||
+      data.barrelLength ||
+      data.finish ||
+      data.quantity ||
+      data.capacity ||
+      data.sights ||
+      data.upcNumber ||
+      data.location
+    ) {
+      criteria += `, is_featured = '${data.isFeatured}'`;
+    } else {
+      criteria += `is_featured = '${data.isFeatured}'`;
+    }
+  }
+
+  console.log(criteria)
   //#endregion
 
   const query = `UPDATE cds_inventory SET ${criteria}

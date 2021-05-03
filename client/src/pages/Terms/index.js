@@ -64,13 +64,6 @@ Attempting to copy, duplicate, reproduce, sell, trade, or resell our Resources i
 <h2>GUARANTEE</h2>
 <p>UNLESS OTHERWISE EXPRESSED, Coleman Defense LLC EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.</p>
 
-<h2>TERMS AND CONDITIONS OF BONUS BUCKS</h2>
-<p>The following terms and conditions apply to any Coleman Defense rewards that expire given by Coleman Defense or for no additional consideration, including with as a reward for purchases made or otherwise, as part of the Coleman Defense ‎[promotional rewards program]‎ (the "Bonus Bucks").</p>
-
-<p>
-By accepting and retaining the Bonus Bucks or using the Bonus Bucks, you agree to these terms and conditions, as well as future terms and conditions and program/service changes. We reserve the right to change the format, elements, and terms and conditions of the Bonus Bucks program at any time without notice. The Bonus Bucks and associated offers are void where prohibited by law.</p>
-
-<p>Coleman Defense is not responsible for pricing, typographical, or other errors, in any offer by Coleman Defense and reserves the right to cancel any orders resulting from such errors.</p>
      
         </div>
       </div>

@@ -239,7 +239,7 @@ class AdminPanel extends Component {
                 opacity: 1,
               }}
             >
-              parts/accessories
+              parts & accessories
             </NavLink>
             <NavLink
               to="/inventory/current/night vision"

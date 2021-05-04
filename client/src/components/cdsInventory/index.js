@@ -24,7 +24,7 @@ class CdsInventory extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts/${this.props.selection}`)
+        fetch(`/api/posts/${this.props.selection}/all`)
         .then(res => res.json())
         .then(json => {
           console.log("json", json)
@@ -47,7 +47,7 @@ componentDidMount () {
         const { isLoading, posts } = this.state;
         const items = this.state.posts.map((item, i) =>
         <Card className= 'card inventory-card'>
-            <a href={`/cds/details/${item.uuid}`}>
+            <a href={`/details/${item.uuid}`}>
        <img className="gun-img" alt={`${item.itemdesc1}`}
         src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}
         onError={this.usePlaceholderImg}

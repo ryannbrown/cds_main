@@ -409,7 +409,7 @@ if (firstItem) {
       var renderCartItems = cartItems.map((item, i) => {
         return (
           <div className="cart-item">
-                <Link to={`/cds/details/${item.uuid}`}>
+                <Link to={`/details/${item.uuid}`}>
                 <img src={`https://cdsinventoryimages.s3.amazonaws.com/${item.image}`}/>
                   </Link>
             <div className="profile-details">

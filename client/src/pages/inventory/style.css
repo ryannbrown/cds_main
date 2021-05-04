@@ -1,8 +1,10 @@
 .card-deck {
-    width: 75%;
+    width: 100%;
     margin: 0px auto;
     border-radius: 25px;
+    padding:25px 75px;
 }
+
 
 .order-block {
     display: flex;
@@ -14,6 +16,23 @@
     height:50px;
 }
 
+
+.side-menu {
+    display:flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */
+    position:fixed;
+    top:50%;
+    margin-top:-148px;
+    left:5%;
+    font-size:22px;
+}
+
+.side-menu a {
+opacity:.5;
+}
+
+
 .order-block +p {
     margin-top: 10px;
 }
@@ -21,17 +40,39 @@
 
 @media (min-width:997px) {
     .card-deck {
-        max-width: 1200px;
+        max-width: 750px;
+    }
+    .card-deck .card {
+        flex: 1 0 25%;
+}
+
+.mobile-menu {
+    display:none;
+}
+
+}
+@media (min-width:1200px) {
+    .card-deck {
+        max-width: 950px;
         margin: 0px auto;
         border-radius: 25px;
         /* padding: 150px; */
     }
-}
+  
+
+    }
 
 
 @media(max-width:997px){
     img.gun-img {
         max-width: 250px;
+    }
+    .side-menu {
+        display:none;
+    }
+    .mobile-menu {
+        position:absolute;
+        padding:50px;
     }
 }
 @media(min-width:997px){
@@ -91,7 +132,7 @@
 }
 
 .inventory-card:hover {
-    transform:scale(1.1);
+    transform:scale(1.05);
     /* transition-duration: .25s; */
 
 }
@@ -193,8 +234,16 @@
     font-size:1.25rem;
 }
 
+.item-container {
+    margin-top:100px;
+}
+
 .cds-inv-page{
+    display:flex;
     position:relative;
+    min-height:80vh;
+    align-content: center;
+    justify-content: center;
 }
 
 .cds-inv-page .transf-back-btn{

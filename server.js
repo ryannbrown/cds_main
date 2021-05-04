@@ -78,15 +78,29 @@ app.get("/api/posts", cors(), function (req, response) {
     response.send(JSON.stringify({ data }));
   });
 });
-app.get("/api/posts/:selection", cors(), function (req, response) {
+
+
+app.get("/api/posts/:selection/:category", cors(), function (req, response) {
   const data = {
     selection: req.params.selection,
+    category: req.params.category
   };
 
+  console.log(data)
+  if (data.category === 'featured') {
+    console.log("special")
+    var query = `SELECT * FROM cds_inventory WHERE is_featured = true`;
+  } 
+
 //  console.log(data.selection)
-  if (data.selection === 'current') {
+  else if (data.selection === 'current' && data.category === 'all') {
     // console.log('is current')
+ 
     var query = `SELECT * FROM cds_inventory`;
+   
+  } else if (data.selection ==='current') {
+    var values = [data.category];
+    var query = `SELECT * FROM cds_inventory WHERE category = $1 `;
   } else {
     var values = [data.selection];
     var query = `SELECT * FROM cds_inventory WHERE location = $1`;

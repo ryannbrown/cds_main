@@ -187,6 +187,7 @@ class EditNewItem extends Component {
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Product Category: {gunData.category}</Form.Label>
                             <Form.Control ref={this.category} as="select">
+                            <option selected>{gunData.category}</option>
                                 <option>suppressors</option>
                                 <option>handguns</option>
                                 <option>rifles</option>

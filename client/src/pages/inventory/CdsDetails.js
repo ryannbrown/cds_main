@@ -135,7 +135,7 @@ if (e.target.value > this.state.gunData.quantity) {
               <Col>
                 {/* back button logic */}
                 {gunData.location == 'featured' || gunData.location == 'current' ? (
-                  <Link to="/cds/inventory/current"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></Link>
+                  <Link to="/inventory/current/all"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Current Inventory</Button></Link>
                 ) : gunData.location == 'aeroprecision' ? (
                   <Link to="/aeroprecision"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Aero Precision</Button></Link>
                 ) : (<Link to="/lmt"><Button style={{ backgroundColor: 'rgb(221, 103, 23)', fontSize: '24px' }} variant="dark">Back to Lewis Machine & Tool</Button></Link>)

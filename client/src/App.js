@@ -113,7 +113,7 @@ class App extends Component {
 
             <Route path="/silencers/:manufacturer" component={SilencerInventory} />
 
-            <Route path="/inventory/:distributor/model/:item_no" component={Details} />
+            {/* <Route path="/inventory/:distributor/model/:item_no" component={Details} /> */}
 
 
             {/* <Route path="/inventory/2/model/:item_no" component={zandersDetails} />
@@ -125,8 +125,8 @@ class App extends Component {
 
             <Route path="/api/post" component={AdminPage} />
 
-            <Route exact path="/cds/inventory/:selection" component={CdsInventory} />
-            <Route path="/cds/details/:id" component={CdsDetails} />
+            <Route exact path="/inventory/:selection/:category" component={CdsInventory} />
+            <Route path="/details/:id" component={CdsDetails} />
 
             <Route path="/cds/transfers" component={Transfers} />
             <Route path="/cds/about" component={About} />

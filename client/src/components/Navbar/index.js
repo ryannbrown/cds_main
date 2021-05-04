@@ -145,21 +145,50 @@ class Navigation extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               
-              <Nav.Link eventKey="2"  as={Link} to="/">Home</Nav.Link>
-              <Nav.Link eventKey="3" as={Link} to="/cds/transfers">Transfers</Nav.Link>
-              <Nav.Link eventKey="4" as={Link} to="/cds/about">About</Nav.Link>
+              <Nav.Link eventKey="1"  as={Link} to="/">Home</Nav.Link>
+              <Nav.Link eventKey="2" as={Link} to="/cds/transfers">Transfers</Nav.Link>
+              <Nav.Link eventKey="3" as={Link} to="/cds/about">About</Nav.Link>
               {/* <Nav.Link to="/inventory">Shop</Nav.Link> */}
               <NavDropdown title="Browse" id="basic-nav-dropdown">
-                <NavDropdown.Item eventKey="5"  as={Link} to="/cds/inventory/current">
-                  Current Inventory
+                <NavDropdown.Item eventKey="4"  as={Link} to="/inventory/current/all">
+                  All Inventory
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="5" as={Link} to="/aeroprecision">
+                  {" "}
+                  Aero Precision
                 </NavDropdown.Item>
                 <NavDropdown.Item eventKey="6" as={Link} to="/lmt">
                   {" "}
                   Lewis Machine & Tool
                 </NavDropdown.Item>
-                <NavDropdown.Item eventKey="7" as={Link} to="/aeroprecision">
-                  Aero Precision
+                {/* <NavDropdown.Divider />
+                <NavDropdown.Item eventKey="7" as={Link} to="/inventory/current/suppressors">
+                  suppressors
                 </NavDropdown.Item>
+                <NavDropdown.Item eventKey="8" as={Link} to="/inventory/current/handguns">
+                  handguns
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="9" as={Link} to="/inventory/current/rifles">
+                  rifles
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="10" as={Link} to="/inventory/current/shotguns">
+                  shotguns
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="11" as={Link} to="/inventory/current/optics">
+                  optics
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="12" as={Link} to="/inventory/current/parts & accessories">
+                  parts & accessories
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="13" as={Link} to="/inventory/current/night vision">
+                  night vision
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="14" as={Link} to="/inventory/current/ammunition">
+                  ammunition
+                </NavDropdown.Item>
+                <NavDropdown.Item eventKey="15" as={Link} to="/inventory/current/lower receivers">
+                  lower receivers
+                </NavDropdown.Item> */}
                 {/* <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item> */}
               </NavDropdown>
             </Nav>

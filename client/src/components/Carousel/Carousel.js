@@ -23,7 +23,7 @@ class AdminPanel extends Component {
 
 
     fetchPosts() {
-        fetch(`/api/posts/current`)
+        fetch(`/api/posts/current/featured`)
             .then(res => res.json())
             .then(json => {
                 // console.log("json", json)
@@ -53,7 +53,7 @@ class AdminPanel extends Component {
                 />
                 <Carousel.Caption>
                     <h3>{item.product_name}</h3>
-                    <a href={`/cds/details/${item.uuid}`}><p>Click here for more information</p></a>
+                    <a href={`/details/${item.uuid}`}><p>Click here for more information</p></a>
                 </Carousel.Caption>
             </Carousel.Item>
 

@@ -160,7 +160,7 @@ class AddItem extends Component {
                                 <option>rifles</option>
                                 <option>shotguns</option>
                                 <option>optics</option>
-                                <option>parts/accessories</option>
+                                <option>parts & accessories</option>
                                 <option>night vision</option>
                                 <option>ammunition</option>
                                 <option>lower receivers</option>

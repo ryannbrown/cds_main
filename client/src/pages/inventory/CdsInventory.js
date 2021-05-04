@@ -61,10 +61,11 @@ class AdminPanel extends Component {
   }
 
   render() {
-    // console.log(this.state.posts)
+    console.log(this.state.posts)
     const { isLoading } = this.state;
     const items = this.state.posts.map((item, i) => (
       <Card className="card inventory-card">
+        
         <Link to={`/details/${item.uuid}`}>
           <img
             className="gun-img"
@@ -278,7 +279,9 @@ class AdminPanel extends Component {
             <h1 style={{ textTransform: "uppercase" }} className="mt-5">
               {this.props.match.params.category}
             </h1>
-            <CardDeck className="mb-5">{items}</CardDeck>
+            <CardDeck className="mb-5">
+            {this.state.posts.length < 1 && <h2>No items currently available in this category</h2>}
+                {items}</CardDeck>
             {/* <a href="tel:9193571884"> <div className="order-box center-block"> <p className="order-box-text ">Call To Order</p></div></a> */}
           </div>
         </div>

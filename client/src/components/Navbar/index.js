@@ -161,7 +161,7 @@ class Navigation extends Component {
                   {" "}
                   Lewis Machine & Tool
                 </NavDropdown.Item>
-                {/* <NavDropdown.Divider />
+                <NavDropdown.Divider />
                 <NavDropdown.Item eventKey="7" as={Link} to="/inventory/current/suppressors">
                   suppressors
                 </NavDropdown.Item>
@@ -188,7 +188,7 @@ class Navigation extends Component {
                 </NavDropdown.Item>
                 <NavDropdown.Item eventKey="15" as={Link} to="/inventory/current/lower receivers">
                   lower receivers
-                </NavDropdown.Item> */}
+                </NavDropdown.Item>
                 {/* <NavDropdown.Item href="/#tabber">Browse All</NavDropdown.Item> */}
               </NavDropdown>
             </Nav>

@@ -24,7 +24,7 @@
     "cors": "^2.8.5",
     "csv-parser": "^2.3.3",
     "dotenv": "^8.2.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "ftp": "^0.3.10",
     "morgan": "^1.10.0",
